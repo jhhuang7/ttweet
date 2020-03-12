@@ -8,12 +8,12 @@ Components
 
 sets up a TCP connection with the server and calls `client`
 
-### `client`
+#### `client`
 
 begins a loop, each iteration receiving input from the user and
 calling respective helper procedures below
 
-### `tweet`, `subscribe`, `unsubscribe`, `timeline`, `getusers`, `gettweets`, `exit`
+##### `tweet`, `subscribe`, `unsubscribe`, `timeline`, `getusers`, `gettweets`, `exit`
 
 may take char * arguments if the respective command takes string
 arguments
@@ -28,14 +28,14 @@ sets up a listening socket and necessary data structures
 
 calls server when an incoming connection is received
 
-### `server`
+#### `server`
 
 sets up a connection socket
 
 begins a loop, each iteration receiving input from the client, parsing
 it, and calling respective helper procedures below
 
-### `tweet`, `subscribe`, `unsubscribe`, `getusers`, `gettweets`, `exit`
+##### `tweet`, `subscribe`, `unsubscribe`, `getusers`, `gettweets`, `exit`
 
 may take char * arguments if the respective command takes string
 arguments
