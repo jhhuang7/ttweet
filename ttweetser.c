@@ -1,6 +1,11 @@
 #include "ttweet.h"
 
 /**
+ * Functions for Processing client requests ...
+ * (store stuff, send back messages, etc.)
+ */
+
+/**
  * Function for connection Server to given port forever.
  * Params: Port number.
  * Returns 0 if there's a problem with the connection, 1 on success.
@@ -9,11 +14,8 @@ int network_connection(int port) {
     int serverfd; 
     struct sockaddr_in address; 
     int opt = 1; 
-    int addrlen = sizeof(address); 
-
+    int addrlen = sizeof(address);
     char buffer[BUFFERSIZE] = {0}; 
-    char message[BUFFERSIZE];
-    strcpy(message, "EMPTYMSG"); 
    
     serverfd = socket(AF_INET, SOCK_STREAM, 0);
     if (serverfd == 0) {
@@ -42,29 +44,28 @@ int network_connection(int port) {
 
         if (socket >= 0) { 
             read(socket, buffer, BUFFERSIZE);
-            
-            if (strncmp(buffer, "-u", 2) == 0) {
-                memset(message, 0, sizeof(message));
-                strncpy(message, buffer + 2, MSGMAX);
-                send(socket, SUCCOP, strlen(SUCCOP), 0);
-                printf("%s\n", "-u");
-            } else if (strncmp(buffer, "-d", 2) == 0) {
-                send(socket, message, strlen(message), 0);
-                printf("%s\n", "-d");
-            } 
-    
+
+            printf("%s\n", buffer);
+
             fflush(stdout);
             memset(buffer, 0, sizeof(buffer));
         }
+
+        // Use multi-threading to turn this into handling up to 5 clients.
+        // For each client read their request and send this for processing.
+        // May need locking.
+
     }
 
     return 1; 
 }
 
 /**
- * Main function of program.
+ * Checks whether the given command lines arguemnts are valid.
+ * Params: argc and argv from the main function.
+ * Returns 1 if ok and 0 otherwise.
  */
-int main(int argc, char** argv) {
+int check_args(int argc, char** argv) {
     // Check valid number of arguments
     if (argc != 2) {
         printf("%s", SARGE);
@@ -80,7 +81,19 @@ int main(int argc, char** argv) {
         printf("%s", INVSERPORT);
         return 0;
     }
-    
+
     // Server running forever
     return network_connection(portnum);
+}
+
+/**
+ * Main function of program.
+ */
+int main(int argc, char** argv) {
+    int args = check_args(argc, argv);
+    if (!args) {
+        return 0;
+    }
+
+    return 1;
 }
