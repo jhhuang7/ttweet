@@ -1,4 +1,5 @@
-#include <unistd.h> 
+#include <unistd.h>
+#include <ctype.h>
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h> 
@@ -10,7 +11,7 @@
 #define MIN 0
 #define MAXCONNS 5
 #define MSGMAX 150
-#define BUFFERSIZE 300
+#define BUFFERSIZE 1000
 #define MAXPORT 65535
 #define HASHTAG '#'
 #define SARGE "error: args should contain <ServerPort>\n"
@@ -35,3 +36,7 @@
 #define GETUSERS "getusers"
 #define GETTWEETS "gettweets"
 #define EXIT "exit"
+
+// Global variables
+
+// Structs
