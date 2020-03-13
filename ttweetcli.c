@@ -1,20 +1,17 @@
 #include "ttweet.h"
 
 /**
+ * Client request processing functions...
+ */
+
+/**
  * Function for connection Client to given port and IP.
- * Params: Port number, IP string, Message string, Client mode string.
+ * Params: Port number, IP string, username string.
  * Returns 0 if there's a problem with the connection, 1 on success.
  */
-int network_connection(int port, char* ip, char* message, char* mode) {
-    int sock = 0; 
-    struct sockaddr_in servAddr; 
+int network_connection(int port, char* ip, char* username) {
+    struct sockaddr_in servAddr;
     char buffer[BUFFERSIZE] = {0}; 
-
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (sock < 0) { 
-        printf("%s", CONER); 
-        return 0;
-    } 
 
     servAddr.sin_family = AF_INET; 
     servAddr.sin_port = htons(port); 
@@ -24,25 +21,31 @@ int network_connection(int port, char* ip, char* message, char* mode) {
         return 0;
     } 
    
-    if (connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0) { 
-        printf("%s", CONER); 
-        return 0;
-    }
+    // Check if given username is already connected.
 
-    if (strcmp(mode, "-u") == 0) {
-        // Build message to send to Server
-        char info[BUFFERSIZE];
-        strcpy(info, "-u");
-        strcat(info, message);
-        strcat(info, "\0");
+    // Use while loop to connect user and continue to taken in their requests
+    // from stdin, break if "exit". For each request, send message according
+    // to protocol to server and directly print out message back from server.
+    // A function will be needed to check each user request, then function(s)
+    // to process the request.
 
-        send(sock, info, strlen(info), 0);
-        read(sock, buffer, BUFFERSIZE); 
-        printf("%s", buffer);
-    } else if (strcmp(mode, "-d") == 0) {
-        send(sock, "-d", strlen("-d"), 0);
-        read(sock, buffer, BUFFERSIZE); 
-        printf("%s\n", buffer);
+    while (1) {
+        int sock = socket(AF_INET, SOCK_STREAM, 0);
+
+        if (connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0) { 
+            printf("%s", CONER); 
+            return 0;
+        }
+
+        if (sock < 0) { 
+            printf("%s", CONER); 
+            return 0;
+        } else {
+            scanf("%s", buffer);
+            send(sock, buffer, strlen(buffer), 0);
+            fflush(stdin);
+            memset(buffer, 0, sizeof(buffer));
+        }
     }
 
     fflush(stdout);
@@ -51,31 +54,22 @@ int network_connection(int port, char* ip, char* message, char* mode) {
 }
 
 /**
- * Main function of program.
+ * Checks whether the given command lines arguemnts are valid.
+ * Params: argc and argv from the main function.
+ * Returns 1 if ok and 0 otherwise.
  */
-int main(int argc, char** argv) {
+int check_args(int argc, char** argv) {
     // Check valid number of arguments
-    if (argc != 4 && argc != 5) {
+    if (argc != 4) {
         printf("%s", CARGE);
         return 0;
     }
 
-    // Check if valid mode
-    char* mode = argv[1];
-    if (argc == 5 && strcmp(mode, "-u") != 0) {
-        printf("%s", CARGE);
-        return 0;
-    }
-    if (argc == 4 && strcmp(mode, "-d") != 0) {
-        printf("%s", CARGE);
-        return 0;
-    }
-
-    // Get the IP
-    char* ip = argv[2];
+    // Get the IP (IP is checked when trying to create connection)
+    char* ip = argv[1];
 
     // Check if valid port
-    char* port = argv[3];
+    char* port = argv[2];
     char* porterr;
     int portnum = strtol(port, &porterr, 10);
 
@@ -84,16 +78,27 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    // Check if valid message
-    char* message ;
-    if (argc == 5) {
-        message = argv[4];
-
-        if (strlen(message) > MSGMAX) {
-            printf("%s", ILLMSGLEN);
+    // Check if valid username (username existence is checked when connecting)
+    char* username;
+    username = argv[3];
+    for (int i = 0; i < strlen(username); i++) {
+        if (!isalnum((int)username[i])) {
+            printf("%s", INVUSER);
             return 0;
         }
     }
 
-    return network_connection(portnum, ip, message, mode);
+    return network_connection(portnum, ip, username);
+}
+
+/**
+ * Main function of program.
+ */
+int main(int argc, char** argv) {
+    int args = check_args(argc, argv);
+    if (!args) {
+        return 0;
+    }
+
+    return 1;   
 }
