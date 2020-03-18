@@ -3,6 +3,8 @@
 /**
  * Client request processing functions...
  */
+int handle_client_requests(char*, int);
+int parse_client_input(char*);
 
 /**
  * Function for connection Client to given port and IP.
@@ -11,7 +13,9 @@
  */
 int network_connection(int port, char* ip, char* username) {
     struct sockaddr_in servAddr;
-    char buffer[BUFFERSIZE] = {0}; 
+    char buffer[BUFFERSIZE] = {0};
+    //memset(buffer, 0, sizeof(buffer));
+
 
     servAddr.sin_family = AF_INET; 
     servAddr.sin_port = htons(port); 
@@ -41,7 +45,14 @@ int network_connection(int port, char* ip, char* username) {
             printf("%s", CONER); 
             return 0;
         } else {
-            scanf("%s", buffer);
+
+            //TODO: add handling for messages over the buffer size
+            //scanf("%s", buffer);
+
+            fgets(buffer, BUFFERSIZE, stdin);
+
+            handle_client_requests(buffer, sock);
+
             send(sock, buffer, strlen(buffer), 0);
             fflush(stdin);
             memset(buffer, 0, sizeof(buffer));
@@ -52,6 +63,103 @@ int network_connection(int port, char* ip, char* username) {
 
     return 1;
 }
+
+/*  
+    Take the clients inputted text and parse it into components delimited by spaces
+    and ending with a new line character. 
+*/
+int parse_client_input(char* buffer, char* command, char* hashtag, )
+{
+
+}
+
+int handle_client_requests(char* buffer, int sock)
+{
+    int command_size = 0;
+    // get the inital command which should be no longer then 12 characters
+    for (int i = 0; i < 12; i++)
+    {
+        // if buffer[i] is a space or carriage return (Enter key), stop copy
+        if (buffer[i] == ' ' || buffer[i] == 0x0A)
+        {
+            printf("Break condition: %d", command_size);
+            command_size++;
+            break;
+        }
+        command_size++;
+    }
+
+    if (command_size == 0)
+    {
+        printf("Command size is zero%s", ILLHASH);
+    }
+
+    char *command = malloc(sizeof(char) * command_size);
+
+    printf("Command size: %ld", sizeof(command));
+
+    for (int j = 0; j < command_size; j++)
+    {
+        command[j] = buffer[j];
+    }
+
+    // printf("BEGIN");
+    // for (int k = 0; k < sizeof(command); k++)
+    // {
+    //     printf("\n");
+    //     printf("%c", command[k]);
+    //             printf("\n");
+    // }
+    // printf("END");
+
+    if (strcmp(command, "tweet") == 0)
+    {
+        //todo TWEET
+        printf("tweet");            
+    }
+    else if (strcmp(command, "subscribe") == 0)
+    {
+        //todo subscribe #hashtag
+        printf("subscribe");
+    }
+    else if (strcmp(command, "unsubscribe") == 0)
+    {
+        //todo unsubscribe #hashtag                
+        printf("unsubscribe");
+    }
+    else if (strcmp(command, "timeline") == 0)
+    {
+        printf("timeline");
+    }
+    else if (strcmp(command, "getusers") == 0)
+    {
+        printf("getusers");
+    }
+    else if (strcmp(command, "gettweets") == 0)
+    {
+        printf("gettweets");
+    }
+    else if (strcmp(command, "exit") == 0)
+    {
+        if (strcmp(buffer, "exit"))
+        {
+            printf("SPLOSH %s", ILLHASH);
+        }
+        else
+        {
+            printf("exit");
+            send(sock, command, strlen(command), 0);
+            fflush(stdin);
+            free(command);
+            //memset(command, 0, sizeof(command));
+        }
+    }
+    else
+    {
+        printf("%s", ILLHASH);
+    }
+}
+
 
 /**
  * Checks whether the given command lines arguemnts are valid.
