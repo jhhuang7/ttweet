@@ -1,3 +1,4 @@
+// Hash includes
 #include <unistd.h>
 #include <ctype.h>
 #include <stdio.h> 
@@ -44,5 +45,19 @@
 #define EXIT 	  "exit"
 
 // Global variables
+int numusers = 0;
 
 // Structs
+typedef struct {
+    char* message;
+    char* hashtag;
+} Tweet;
+
+typedef struct {
+    int socket;
+    char* username;
+    int numsusbs;
+    char* subscriptions[MAXHASH];
+    int numtwts;
+    Tweet* tweets;
+} User;
