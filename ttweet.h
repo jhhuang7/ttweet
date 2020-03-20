@@ -1,3 +1,4 @@
+// Hash includes
 #include <unistd.h>
 #include <ctype.h>
 #include <stdio.h> 
@@ -8,12 +9,15 @@
 #include <arpa/inet.h> 
 #include <pthread.h>
 
+// Hash defines
 #define MIN 0
+#define MAXHASH 3
 #define MAXCONNS 5
 #define MSGMAX 150
-#define BUFFERSIZE 1000
+#define BUFFERSIZE 10000
 #define MAXPORT 65535
 #define HASHTAG '#'
+#define ALL "#ALL"
 #define SARGE "error: args should contain <ServerPort>\n"
 #define SERCON "server get connection!\n"
 #define CARGE "error: args should contain <ServerIP> <ServerPort> <Username>\n"
@@ -38,5 +42,19 @@
 #define EXIT "exit"
 
 // Global variables
+int numusers = 0;
 
 // Structs
+typedef struct {
+    char* message;
+    char* hashtag;
+} Tweet;
+
+typedef struct {
+    int socket;
+    char* username;
+    int numsusbs;
+    char* subscriptions[MAXHASH];
+    int numtwts;
+    Tweet* tweets;
+} User;
