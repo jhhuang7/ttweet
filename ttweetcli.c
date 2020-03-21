@@ -3,8 +3,8 @@
 /**
  * Client request processing functions...
  */
-int handle_client_requests(char*, int);
-int parse_client_input(char*);
+int parse_client_input(char*, int);
+int handle_client_request(char*, char*, char*, int);
 
 /**
  * Function for connection Client to given port and IP.
@@ -51,8 +51,7 @@ int network_connection(int port, char* ip, char* username) {
 
             fgets(buffer, BUFFERSIZE, stdin);
 
-            //handle_client_requests(buffer, sock);
-            parse_client_input(buffer);
+            parse_client_input(buffer, sock);
 
             send(sock, buffer, strlen(buffer), 0);
             fflush(stdin);
@@ -67,9 +66,14 @@ int network_connection(int port, char* ip, char* username) {
 
 /*  
     Take the clients inputted text and parse it into components delimited by spaces
-    and ending with a new line character. 
+    and ending with a new line character. Calls handle_client_request with the socket
+    and the message components.
+
+    Note: this function only validates too many words and/or if the second word has more
+    than 150 characters. All other error checking is done in handle_client_request so
+    that error handling specific to each command can be performed.
 */
-int parse_client_input(char* buffer)
+int parse_client_input(char* buffer, int sock)
 {
     int status = -1;
 
@@ -112,12 +116,16 @@ int parse_client_input(char* buffer)
             }
             else if (word_count == 2)
             {
-                second_word_char_count = i - first_word_char_count;
+                second_word_char_count = i - (first_word_char_count + 1);
                 //printf("2nd word char count: %d\n", second_word_char_count);
+                if (second_word_char_count > 150)
+                {
+                    printf("%s", ILLMSGLEN);
+                }
             }
             else if (word_count == 3)
             {
-                third_word_char_count = i - second_word_char_count;
+                third_word_char_count = i - (second_word_char_count + 1);
                 //printf("End line cond char count: %d\n", third_word_char_count);
             }
             else
@@ -145,96 +153,75 @@ int parse_client_input(char* buffer)
     for (int j = 0; j < first_word_char_count; j++)
     {
         command[j] = buffer[j];
-        //printf("Command[j] %c\n", command[j]);
+        printf("Command[j] %c\n", command[j]);
     }
+
+    if (word_count > 1)
+    {       
+        second_word = malloc(second_word_char_count * sizeof(char));
+        if (second_word == NULL)
+        {
+            printf("%s\n", "Error allocating memory.");
+        }
+
+        int char_index_into_buffer = ++first_word_char_count;
+        for (int k = 0; k < second_word_char_count; k++)
+        {
+            second_word[k] = buffer[char_index_into_buffer];
+            // printf("second_word[k] %c\n", second_word[k]);
+            // printf("buffer[char_count] %c\n", buffer[char_count]);
+            char_index_into_buffer++;
+        }
+
+        if (word_count == 3)
+        {
+            //TODO: format the last word
+        }
+    }
+    status = handle_client_request(command, second_word, third_word, sock);
 
     return status;
 }
 
-int handle_client_requests(char* buffer, int sock)
+int handle_client_request(char* command, char* second_word, char* third_word, int sock)
 {
-    int command_size = 0;
-    // get the inital command which should be no longer then 12 characters
-    for (int i = 0; i < 12; i++)
-    {
-        // if buffer[i] is a space or carriage return (Enter key), stop copy
-        if (buffer[i] == ' ' || buffer[i] == 0x0A)
-        {
-            printf("Break condition: %d", command_size);
-            command_size++;
-            break;
-        }
-        command_size++;
-    }
+    int status = -1;
 
-    if (command_size == 0)
-    {
-        printf("Command size is zero%s", ILLHASH);
-    }
-
-    char *command = malloc(sizeof(char) * command_size);
-
-    printf("Command size: %ld", sizeof(command));
-
-    for (int j = 0; j < command_size; j++)
-    {
-        command[j] = buffer[j];
-    }
-
-    // printf("BEGIN");
-    // for (int k = 0; k < sizeof(command); k++)
-    // {
-    //     printf("\n");
-    //     printf("%c", command[k]);
-    //             printf("\n");
-    // }
-    // printf("END");
-
-    if (strcmp(command, "tweet") == 0)
+    if (strcmp(command, "tweet") == 0) // For some reason, #define tweet doesn't work here. Perhaps it's confusion with the stuct Tweet type
     {
         //todo TWEET
         printf("tweet");            
     }
-    else if (strcmp(command, "subscribe") == 0)
+    else if (strcmp(command, SUBS) == 0)
     {
         //todo subscribe #hashtag
         printf("subscribe");
     }
-    else if (strcmp(command, "unsubscribe") == 0)
+    else if (strcmp(command, UNSUBS) == 0)
     {
         //todo unsubscribe #hashtag                
         printf("unsubscribe");
     }
-    else if (strcmp(command, "timeline") == 0)
+    else if (strcmp(command, TIMELINE) == 0)
     {
         printf("timeline");
     }
-    else if (strcmp(command, "getusers") == 0)
+    else if (strcmp(command, GETUSERS) == 0)
     {
         printf("getusers");
     }
-    else if (strcmp(command, "gettweets") == 0)
+    else if (strcmp(command, GETTWEETS) == 0)
     {
         printf("gettweets");
     }
-    else if (strcmp(command, "exit") == 0)
+    else if (strcmp(command, EXIT) == 0)
     {
-        if (strcmp(buffer, "exit"))
-        {
-            printf("SPLOSH %s", ILLHASH);
-        }
-        else
-        {
-            printf("exit");
-            send(sock, command, strlen(command), 0);
-            fflush(stdin);
-            free(command);
-            //memset(command, 0, sizeof(command));
-        }
+        printf("exit");
     }
     else
     {
         printf("%s", ILLHASH);
+        return status;
     }
 }
 
