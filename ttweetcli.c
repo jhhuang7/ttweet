@@ -125,7 +125,7 @@ int parse_client_input(char* buffer, int sock)
             }
             else if (word_count == 3)
             {
-                third_word_char_count = i - (second_word_char_count + 1);
+                third_word_char_count = i - (first_word_char_count + second_word_char_count + 1);
                 //printf("End line cond char count: %d\n", third_word_char_count);
             }
             else
@@ -164,7 +164,7 @@ int parse_client_input(char* buffer, int sock)
             printf("%s\n", "Error allocating memory.");
         }
 
-        int char_index_into_buffer = ++first_word_char_count;
+        int char_index_into_buffer = (first_word_char_count + 1);
         for (int k = 0; k < second_word_char_count; k++)
         {
             second_word[k] = buffer[char_index_into_buffer];
@@ -175,7 +175,20 @@ int parse_client_input(char* buffer, int sock)
 
         if (word_count == 3)
         {
-            //TODO: format the last word
+            third_word = malloc(third_word_char_count * sizeof(char));
+            if (third_word == NULL)
+            {
+                printf("%s\n", "Error allocating memory.");
+            }
+
+            char_index_into_buffer = (second_word_char_count + first_word_char_count + 1);
+            for (int m = 0; m < third_word_char_count; m++)
+            {
+                third_word[m] = buffer[char_index_into_buffer];
+                // printf("third_word[m] %c\n", third_word[m]);
+                // printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
+                char_index_into_buffer++;
+            }
         }
     }
     status = handle_client_request(command, second_word, third_word, sock);
