@@ -90,7 +90,7 @@ int parse_client_input(char* buffer, int sock)
 
     for (int i = 0; i < BUFFERSIZE; i++)
     {
-        //printf("Buffer[i] %c\n", buffer[i]);
+        // Every time a space is reached, the word count and character counts get updated.
         if (buffer[i] == ' ')
         {
             ++word_count;
@@ -106,6 +106,10 @@ int parse_client_input(char* buffer, int sock)
             }
         }
 
+
+        /* The newline character at the end of the user's inputted command is handled here.
+           The character counts for the first, second, and third words are updated here as applicable.
+           If this condition is reached, the for loop is exited. */
         if (buffer[i] == 0x0A && word_count <= 3)
         {
             ++word_count;
@@ -118,10 +122,6 @@ int parse_client_input(char* buffer, int sock)
             {
                 second_word_char_count = i - (first_word_char_count + 1);
                 //printf("2nd word char count: %d\n", second_word_char_count);
-                if (second_word_char_count > 150)
-                {
-                    printf("%s", ILLMSGLEN);
-                }
             }
             else if (word_count == 3)
             {
@@ -136,6 +136,30 @@ int parse_client_input(char* buffer, int sock)
             break;
         }
 
+        /* For tweets, the message is wrapped in quotes. This statement and for loop will
+        search for matching quote at the end of the message. If not found, the status is returned
+        as failed after the illegal message length error is returned to the console.*/
+        if (buffer[i] == '"')
+        {
+            int start_quote_index = ++i;
+            
+            for (int j = start_quote_index; j < 152; j++)
+            {
+                if (j == 151)
+                {
+                    printf("%s", ILLMSGLEN);
+                    return status;
+                }
+
+                if (buffer[j] == '"')
+                {
+                    i = j;
+                    break;
+                }
+            }
+        }
+
+        // last ditch effort to catch when too many arguements are inputted
         if (word_count > 3)
         {
             printf("%s", WRONGPARAMS);
@@ -153,7 +177,7 @@ int parse_client_input(char* buffer, int sock)
     for (int j = 0; j < first_word_char_count; j++)
     {
         command[j] = buffer[j];
-        printf("Command[j] %c\n", command[j]);
+        //printf("Command[j] %c\n", command[j]);
     }
 
     if (word_count > 1)
@@ -202,17 +226,14 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
 
     if (strcmp(command, "tweet") == 0) // For some reason, #define tweet doesn't work here. Perhaps it's confusion with the stuct Tweet type
     {
-        //todo TWEET
         printf("tweet");            
     }
     else if (strcmp(command, SUBS) == 0)
     {
-        //todo subscribe #hashtag
         printf("subscribe");
     }
     else if (strcmp(command, UNSUBS) == 0)
     {
-        //todo unsubscribe #hashtag                
         printf("unsubscribe");
     }
     else if (strcmp(command, TIMELINE) == 0)
