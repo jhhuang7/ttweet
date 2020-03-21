@@ -51,7 +51,8 @@ int network_connection(int port, char* ip, char* username) {
 
             fgets(buffer, BUFFERSIZE, stdin);
 
-            handle_client_requests(buffer, sock);
+            //handle_client_requests(buffer, sock);
+            parse_client_input(buffer);
 
             send(sock, buffer, strlen(buffer), 0);
             fflush(stdin);
@@ -70,6 +71,48 @@ int network_connection(int port, char* ip, char* username) {
 */
 int parse_client_input(char* buffer, char* command, char* hashtag, )
 {
+    int word_count = 0;
+    int first_word_char_count = 0;
+    char* command;
+
+    char* second_word;
+    int second_word_char_count = 0;
+    
+    char* third_word
+    int third_word_char_count;
+
+    for (int i = 0; i < BUFFERSIZE; i++)
+    {
+        if (buffer[i] == ' ')
+        {
+            word_count++;
+            printf("1st condition word count: %d", word_count);
+        }
+        if (buffer[i] == 0x0A && word_count < 3)
+        {
+            word_count++;
+            third_word_char_count = i;
+            printf("End line cond char count: %d", third_word_char_count);
+            break;
+        }
+
+        if (word_count == 1)
+        {
+            printf("2nd condition word count: %d", word_count);
+            first_word_char_count = i;
+            printf("2nd condition char count: %d", first_word_char_count);
+            //check for legal command here instead of continuing?
+        }
+        else if (word_count == 2)
+        {
+            second_word_char_count = i;
+        }
+        else if (word_count > 3)
+        {
+            printf("%s", WRONGPARAMS);
+        }
+    }
+
 
 }
 
