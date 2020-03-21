@@ -86,50 +86,69 @@ int parse_client_input(char* buffer)
 
     for (int i = 0; i < BUFFERSIZE; i++)
     {
+        //printf("Buffer[i] %c\n", buffer[i]);
         if (buffer[i] == ' ')
         {
-            word_count++;
-            printf("1st condition word count: %d\n", word_count);
+            ++word_count;
+            if (word_count == 1)
+            {
+                first_word_char_count = i;
+                //printf("1st word char count: %d\n", first_word_char_count);
+            }
+            else if (word_count == 2)
+            {
+                second_word_char_count = i - first_word_char_count;
+                //printf("2nd word char count: %d\n", second_word_char_count);
+            }
         }
 
-        if (i = 0 && buffer[i] == ' ')
+        if (buffer[i] == 0x0A && word_count <= 3)
         {
-            printf("%s\n", MSGNONE);
-        }
-
-        if (buffer[i] == 0x0A && word_count < 2)
-        {
-            word_count++;
-            third_word_char_count = i;
-            printf("End line cond char count: %d\n", third_word_char_count);
+            ++word_count;
+            if (word_count == 1)
+            {
+                first_word_char_count = i;
+                //printf("1st word char count: %d\n", first_word_char_count);
+            }
+            else if (word_count == 2)
+            {
+                second_word_char_count = i - first_word_char_count;
+                //printf("2nd word char count: %d\n", second_word_char_count);
+            }
+            else if (word_count == 3)
+            {
+                third_word_char_count = i - second_word_char_count;
+                //printf("End line cond char count: %d\n", third_word_char_count);
+            }
+            else
+            {
+                printf("%s", WRONGPARAMS);
+                return status;
+            }
             break;
         }
 
-        if (word_count == 0)
-        {
-            first_word_char_count = i;
-            printf("1st word char count: %d\n", first_word_char_count);
-        }
-        else if (word_count == 1)
-        {
-            second_word_char_count = i - first_word_char_count;
-            printf("2nd word char count: %d\n", second_word_char_count);
-
-        }
-        else if (word_count > 3)
+        if (word_count > 3)
         {
             printf("%s", WRONGPARAMS);
             return status;
         }
     }
 
-    // Extract the command string
-    for (int i = 0; i < first_word_char_count; i++)
+    command = malloc((first_word_char_count + 1) * sizeof(char));
+    if (command == NULL)
     {
-
+        printf("%s\n", "Error allocating memory.");
     }
 
+    // Extract the command string
+    for (int j = 0; j < first_word_char_count; j++)
+    {
+        command[j] = buffer[j];
+        //printf("Command[j] %c\n", command[j]);
+    }
 
+    return status;
 }
 
 int handle_client_requests(char* buffer, int sock)

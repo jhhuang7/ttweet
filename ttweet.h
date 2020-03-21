@@ -10,14 +10,14 @@
 #include <pthread.h>
 
 // Hash defines
-#define MIN 0
-#define MAXHASH 3
-#define MAXCONNS 5
-#define MSGMAX 150
+#define MIN        0
+#define MAXHASH    3
+#define MAXCONNS   5
+#define MSGMAX     150
 #define BUFFERSIZE 10000
-#define MAXPORT 65535
-#define HASHTAG '#'
-#define ALL "#ALL"
+#define MAXPORT    65535
+#define HASHTAG    '#'
+#define ALL        "#ALL"
 
 // Error Messages 
 #define SARGE       "error: args should contain <ServerPort>\n"
