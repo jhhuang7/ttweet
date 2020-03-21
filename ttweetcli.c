@@ -69,16 +69,19 @@ int network_connection(int port, char* ip, char* username) {
     Take the clients inputted text and parse it into components delimited by spaces
     and ending with a new line character. 
 */
-int parse_client_input(char* buffer, char* command, char* hashtag, )
+int parse_client_input(char* buffer)
 {
+    int status = -1;
+
     int word_count = 0;
-    int first_word_char_count = 0;
+
     char* command;
+    int first_word_char_count = 0;
 
     char* second_word;
     int second_word_char_count = 0;
     
-    char* third_word
+    char* third_word;
     int third_word_char_count;
 
     for (int i = 0; i < BUFFERSIZE; i++)
@@ -86,31 +89,44 @@ int parse_client_input(char* buffer, char* command, char* hashtag, )
         if (buffer[i] == ' ')
         {
             word_count++;
-            printf("1st condition word count: %d", word_count);
+            printf("1st condition word count: %d\n", word_count);
         }
-        if (buffer[i] == 0x0A && word_count < 3)
+
+        if (i = 0 && buffer[i] == ' ')
+        {
+            printf("%s\n", MSGNONE);
+        }
+
+        if (buffer[i] == 0x0A && word_count < 2)
         {
             word_count++;
             third_word_char_count = i;
-            printf("End line cond char count: %d", third_word_char_count);
+            printf("End line cond char count: %d\n", third_word_char_count);
             break;
         }
 
-        if (word_count == 1)
+        if (word_count == 0)
         {
-            printf("2nd condition word count: %d", word_count);
             first_word_char_count = i;
-            printf("2nd condition char count: %d", first_word_char_count);
-            //check for legal command here instead of continuing?
+            printf("1st word char count: %d\n", first_word_char_count);
         }
-        else if (word_count == 2)
+        else if (word_count == 1)
         {
-            second_word_char_count = i;
+            second_word_char_count = i - first_word_char_count;
+            printf("2nd word char count: %d\n", second_word_char_count);
+
         }
         else if (word_count > 3)
         {
             printf("%s", WRONGPARAMS);
+            return status;
         }
+    }
+
+    // Extract the command string
+    for (int i = 0; i < first_word_char_count; i++)
+    {
+
     }
 
 

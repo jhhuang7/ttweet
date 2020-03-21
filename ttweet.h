@@ -9,14 +9,17 @@
 #include <arpa/inet.h> 
 #include <pthread.h>
 
-#define MIN        0
-#define MAXCONNS   5
-#define MSGMAX     150
-#define BUFFERSIZE 1000
-#define MAXPORT    65535
-#define HASHTAG    '#'
+// Hash defines
+#define MIN 0
+#define MAXHASH 3
+#define MAXCONNS 5
+#define MSGMAX 150
+#define BUFFERSIZE 10000
+#define MAXPORT 65535
+#define HASHTAG '#'
+#define ALL "#ALL"
 
-/* Error Messages */
+// Error Messages 
 #define SARGE       "error: args should contain <ServerPort>\n"
 #define SERCON      "server get connection!\n"
 #define CARGE       "error: args should contain <ServerIP> <ServerPort> <Username>\n"
@@ -31,11 +34,11 @@
 #define ILLHASH     "hashtag illegal format, connection refused.\n"
 #define LOGIN       "username legal, connection established.\n"
 
-/* Success Messages */
+// Success Messages
 #define BYE    "bye bye\n"
 #define SUCCOP "operation success\n"
 
-/* Valid Commands */
+// Valid Commands
 #define TWEET     "tweet​"
 #define SUBS      "subscribe"
 #define UNSUBS    "unsubscribe"
