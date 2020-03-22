@@ -1,4 +1,4 @@
-// Hash includes
+// Hash includes (imports)
 #include <unistd.h>
 #include <ctype.h>
 #include <stdio.h> 
@@ -9,7 +9,7 @@
 #include <arpa/inet.h> 
 #include <pthread.h>
 
-// Hash defines
+// Hash defines (no MAGIC or overly repeated values)
 #define MIN 0
 #define MAXHASH 3
 #define MAXCONNS 5
@@ -33,13 +33,20 @@
 #define LOGIN "username legal, connection established.\n"
 #define BYE "bye bye\n"
 #define SUCCOP "operation success\n"
-#define TWEET "tweet​"
+#define TWT "tweet​"
 #define SUBS "subscribe"
-#define UNSEBS "unsubscribe"
+#define UNSUBS "unsubscribe"
 #define TIMELINE "timeline"
 #define GETUSERS "getusers"
 #define GETTWEETS "gettweets"
 #define EXIT "exit"
+#define TWTCODE "-w 
+#define SUBSCODE "-s 
+#define UNSCODE "-n" 
+#define TIMECODE "-i" 
+#define GTUSRCODE "-u" 
+#define GTTWTCODE "-t" 
+#define EXITCODE "-e"
 
 // Global variables
 int numusers = 0;
