@@ -17,7 +17,7 @@
 #define MAXCONNS   5
 #define MAXHASHLEN 15
 #define MSGMAX     150
-#define BUFFERSIZE 10000
+#define BUFFERSIZE 1000
 #define MAXPORT    65535
 #define HASHTAG    '#'
 #define ALL        "#ALL"

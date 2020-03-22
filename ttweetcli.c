@@ -16,8 +16,6 @@ int handle_client_request(char*, char*, char*, int, int, int, int);
 int network_connection(int port, char* ip, char* username) {
     struct sockaddr_in servAddr;
     char buffer[BUFFERSIZE] = {0};
-    //memset(buffer, 0, sizeof(buffer));
-
 
     servAddr.sin_family = AF_INET; 
     servAddr.sin_port = htons(port); 
@@ -34,6 +32,15 @@ int network_connection(int port, char* ip, char* username) {
     // to protocol to server and directly print out message back from server.
     // A function will be needed to check each user request, then function(s)
     // to process the request.
+/*
+    printf("Checking hash_check function: ");
+    printf("#hash: %d\n", check_hashtag("#hash", 4));
+    printf("#hash#hash: %d\n", check_hashtag("#hash#hash", 10));
+    printf("##hash: %d\n", check_hashtag("##hash", 5));
+    printf("#h#h#h#h: %d\n", check_hashtag("#h#h#h#h", 8));
+    printf("#: %d\n", check_hashtag("#", 1));
+    printf("#h789&: %d\n", check_hashtag("#h789&", 6));
+    printf("#h.789: %d\n", check_hashtag("#h.789", 6));*/
 
     while (1) {
         int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -48,17 +55,21 @@ int network_connection(int port, char* ip, char* username) {
             return 0;
         } else {
 
-            fgets(buffer, BUFFERSIZE, stdin);
+            if (fgets(buffer, BUFFERSIZE, stdin) != NULL);
+            {                
+                parse_client_input(buffer, sock);
+                //setbuf(stdin, NULL);
 
-            parse_client_input(buffer, sock);
+                //send(sock, buffer, strlen(buffer), 0);
+                //fflush(stdin);
+                memset(buffer, 0, sizeof(buffer));
+            }
 
-            //send(sock, buffer, strlen(buffer), 0);
-            fflush(stdin);
-            memset(buffer, 0, sizeof(buffer));
         }
+        //fflush(stdout);
+        //setbuf(stdout, NULL);
     }
 
-    fflush(stdout);
 
     return 1;
 }
@@ -86,7 +97,7 @@ int parse_client_input(char* buffer, int sock)
     int second_word_char_count = 0;
     
     char* third_word;
-    int third_word_char_count;
+    int third_word_char_count = 0;
 
     for (int i = 0; i < BUFFERSIZE; i++)
     {
@@ -97,12 +108,12 @@ int parse_client_input(char* buffer, int sock)
             if (word_count == 1)
             {
                 first_word_char_count = i;
-                //printf("1st word char count: %d\n", first_word_char_count);
+                printf("1st word char count: %d\n", first_word_char_count);
             }
             else if (word_count == 2)
             {
-                second_word_char_count = i - first_word_char_count;
-                //printf("2nd word char count: %d\n", second_word_char_count);
+                second_word_char_count = i - (first_word_char_count + 1);
+                printf("2nd word char count: %d\n", second_word_char_count);
             }
         }
 
@@ -112,6 +123,7 @@ int parse_client_input(char* buffer, int sock)
            If this condition is reached, the for loop is exited. */
         if (buffer[i] == 0x0A && word_count <= 3)
         {
+            printf("End line condition\n");
             ++word_count;
             if (word_count == 1)
             {
@@ -167,7 +179,7 @@ int parse_client_input(char* buffer, int sock)
         }
     }
 
-    command = malloc((first_word_char_count + 1) * sizeof(char));
+    command = calloc((first_word_char_count + 1), sizeof(char));
     if (command == NULL)
     {
         printf("%s\n", "Error allocating memory.");
@@ -177,12 +189,12 @@ int parse_client_input(char* buffer, int sock)
     for (int j = 0; j < first_word_char_count; j++)
     {
         command[j] = buffer[j];
-        printf("Command[j] %c\n", command[j]);
+        //printf("Command[j] %c\n", command[j]);
     }
 
     if (word_count > 1)
     {       
-        second_word = malloc(second_word_char_count * sizeof(char));
+        second_word = calloc(second_word_char_count, sizeof(char));
         if (second_word == NULL)
         {
             printf("%s\n", "Error allocating memory.");
@@ -192,15 +204,15 @@ int parse_client_input(char* buffer, int sock)
         for (int k = 0; k < second_word_char_count; k++)
         {
             second_word[k] = buffer[char_index_into_buffer];
-            // printf("second_word[k] %c\n", second_word[k]);
-            // printf("buffer[char_count] %c\n", buffer[char_count]);
+            printf("second_word[k] %c\n", second_word[k]);
+            printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
             char_index_into_buffer++;
         }
 
         if (word_count == 3)
         {
 
-            third_word = malloc(third_word_char_count * sizeof(char));
+            third_word = calloc(third_word_char_count, sizeof(char));
             if (third_word == NULL)
             {
                 printf("%s\n", "Error allocating memory.");
@@ -217,6 +229,8 @@ int parse_client_input(char* buffer, int sock)
         }
     }
     status = handle_client_request(command, second_word, third_word, second_word_char_count, third_word_char_count, sock, word_count);
+
+    printf("Word count: %d \n", word_count);
 
     switch (word_count)
     {
@@ -248,11 +262,7 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
         {
             //send message
             printf("%s\n", SUCCOP);
-        }
-        else
-        {
-            // This may not be necessary since check_hashtag throws errors...
-            printf("%s\n", ILLHASH);
+            return VALID;
         }
     }
     else if (strcmp(command, SUBS) == 0)
@@ -262,11 +272,7 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
         {
             //send message
             printf("%s\n", SUCCOP);
-        }
-        else
-        {
-            // This may not be necessary since check_hashtag throws errors...
-            printf("%s\n", ILLHASH);
+            return VALID;
         }
     }
     else if (strcmp(command, UNSUBS) == 0)
@@ -276,11 +282,7 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
         {
             //send message
             printf("%s\n", SUCCOP);
-        }
-        else
-        {
-            // This may not be necessary since check_hashtag throws errors...
-            printf("%s\n", ILLHASH);
+            return VALID;
         }
     }
     else if (strcmp(command, TIMELINE) == 0)
@@ -290,10 +292,7 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
         {
             //send message
             printf("%s\n", SUCCOP);
-        }
-        else
-        {
-            printf("%s\n", ILLHASH);           
+            return VALID;
         }
     }
     else if (strcmp(command, GETUSERS) == 0)
@@ -303,16 +302,14 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
         {
             //send message
             printf("%s\n", SUCCOP);
-        }
-        else
-        {
-            printf("%s\n", ILLHASH);           
+            return VALID;
         }
     }
     else if (strcmp(command, GETTWEETS) == 0)
     {
         printf("gettweets\n");
         //TODO: username validation
+        return VALID;
     }
     else if (strcmp(command, EXIT) == 0)
     {
@@ -321,17 +318,12 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
         {
             //send message
             printf("%s\n", SUCCOP);
-        }
-        else
-        {
-            printf("%s\n", ILLHASH);           
+            return VALID;
         }
     }
-    else
-    {
-        printf("%s", ILLHASH);
-        return INVALID;
-    }
+
+    printf("%s", ILLHASH);
+    return INVALID;
 }
 
 int check_alpha_num(char ch)
@@ -362,13 +354,11 @@ int check_hashtag(char* word, int size)
 {
     if (size < 2 || size > MAXHASHLEN)
     {
-        printf("%s\n", ILLHASH);
         return INVALID;
     }
 
-    if (word[0] != '#')
+    if (word[0] != '#' || (!check_alpha_num(word[size - 1])))
     {
-        printf("%s\n", ILLHASH);
         return INVALID;
     }
 
@@ -379,7 +369,6 @@ int check_hashtag(char* word, int size)
             int p = n + 1;
             if (!(check_alpha_num(word[p])))
             {   
-                printf("%s\n", ILLHASH);
                 return INVALID;
             }
 
@@ -392,7 +381,6 @@ int check_hashtag(char* word, int size)
                 }
                 if (!(check_alpha_num(word[p])))
                 {   
-                    printf("%s\n", ILLHASH);
                     return INVALID;
                 }
                 p++;
