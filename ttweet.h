@@ -11,6 +11,8 @@
 
 // Hash defines
 #define MIN        0
+#define VALID      1
+#define INVALID    0
 #define MAXHASH    3
 #define MAXCONNS   5
 #define MAXHASHLEN 15

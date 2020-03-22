@@ -4,8 +4,9 @@
  * Client request processing functions...
  */
 int check_alpha_num(char);
+int check_hashtag(char*, int);
 int parse_client_input(char*, int);
-int handle_client_request(char*, char*, char*, int);
+int handle_client_request(char*, char*, char*, int, int, int, int);
 
 /**
  * Function for connection Client to given port and IP.
@@ -47,14 +48,11 @@ int network_connection(int port, char* ip, char* username) {
             return 0;
         } else {
 
-            //TODO: add handling for messages over the buffer size
-            //scanf("%s", buffer);
-
             fgets(buffer, BUFFERSIZE, stdin);
 
             parse_client_input(buffer, sock);
 
-            send(sock, buffer, strlen(buffer), 0);
+            //send(sock, buffer, strlen(buffer), 0);
             fflush(stdin);
             memset(buffer, 0, sizeof(buffer));
         }
@@ -65,15 +63,15 @@ int network_connection(int port, char* ip, char* username) {
     return 1;
 }
 
-/*  
-    Take the clients inputted text and parse it into components delimited by spaces
-    and ending with a new line character. Calls handle_client_request with the socket
-    and the message components.
-
-    Note: this function validates too many words and/or if the second word has more
-    than 150 characters. It also checks hashtag structure and length.
-    All other error checking is done in handle_client_request so
-    that error handling specific to each command can be performed.
+/**  
+*   Take the clients inputted text and parse it into components delimited by spaces
+*   and ending with a new line character. Calls handle_client_request with the socket
+*   and the message components.
+*
+*   Note: this function validates too many words and/or if the second word has more
+*   than 150 characters. It also checks hashtag structure and length.
+*   All other error checking is done in handle_client_request so
+*   that error handling specific to each command can be performed.
 */
 int parse_client_input(char* buffer, int sock)
 {
@@ -179,7 +177,7 @@ int parse_client_input(char* buffer, int sock)
     for (int j = 0; j < first_word_char_count; j++)
     {
         command[j] = buffer[j];
-        //printf("Command[j] %c\n", command[j]);
+        printf("Command[j] %c\n", command[j]);
     }
 
     if (word_count > 1)
@@ -201,13 +199,6 @@ int parse_client_input(char* buffer, int sock)
 
         if (word_count == 3)
         {
-            if (third_word_char_count < 2 || third_word_char_count > MAXHASHLEN)
-            {
-                printf("%s\n", ILLHASH);
-                free(command);
-                free(second_word);
-                return status;
-            }
 
             third_word = malloc(third_word_char_count * sizeof(char));
             if (third_word == NULL)
@@ -219,122 +210,198 @@ int parse_client_input(char* buffer, int sock)
             for (int m = 0; m < third_word_char_count; m++)
             {
                 third_word[m] = buffer[char_index_into_buffer];
-                // printf("third_word[m] %c\n", third_word[m]);
-                // printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
+                //printf("third_word[m] %c\n", third_word[m]);
+                //printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
                 char_index_into_buffer++;
             }
-
-            if (third_word[0] != '#')
-            {
-                printf("%s\n", ILLHASH);
-                free(command);
-                free(second_word);
-                free(third_word);
-                return status;
-            }
-
-            for (int n = 0; n < third_word_char_count - 1; n++)
-            {
-                if (third_word[n] == '#')
-                {
-                    int p = n + 1;
-                    if (!(check_alpha_num(third_word[p])))
-                    {   
-                        printf("%s\n", ILLHASH);
-                        free(command);
-                        free(second_word);
-                        free(third_word);
-                        return status;
-                    }
-
-                    while (p < third_word_char_count - 1)
-                    {
-                        if (third_word[p] == '#')
-                        {
-                            // exit this loop early since another hashtag unit has been detected
-                            break;
-                        }
-                        if (!(check_alpha_num(third_word[p])))
-                        {   
-                            printf("%s\n", ILLHASH);
-                            free(command);
-                            free(second_word);
-                            free(third_word);
-                            return status;
-                        }
-                        p++;
-                    }
-                }
-            }
-
-
         }
     }
-    status = handle_client_request(command, second_word, third_word, sock);
+    status = handle_client_request(command, second_word, third_word, second_word_char_count, third_word_char_count, sock, word_count);
 
-    //TODO: free memory!
+    switch (word_count)
+    {
+        case 1:
+            free(command);
+            break;
+        case 2:
+            free(command);
+            free(second_word);
+            break;
+        case 3:
+            free(command);
+            free(second_word);
+            free(third_word);
+            break;
+    }
+
     return status;
+} /* parse_client_input */
+
+
+int handle_client_request(char* command, char* second_word, char* third_word, int second_word_size, int third_word_size, int sock, int word_count)
+{
+
+    if (strcmp(command, "tweet") == 0) // For some reason, #define tweet doesn't work here. Perhaps it's confusion with the stuct Tweet type
+    {
+        printf("tweet\n");
+        if (word_count == 3 && check_hashtag(third_word, third_word_size))
+        {
+            //send message
+            printf("%s\n", SUCCOP);
+        }
+        else
+        {
+            // This may not be necessary since check_hashtag throws errors...
+            printf("%s\n", ILLHASH);
+        }
+    }
+    else if (strcmp(command, SUBS) == 0)
+    {
+        printf("subscribe\n");
+        if (word_count == 2 && check_hashtag(second_word, second_word_size))
+        {
+            //send message
+            printf("%s\n", SUCCOP);
+        }
+        else
+        {
+            // This may not be necessary since check_hashtag throws errors...
+            printf("%s\n", ILLHASH);
+        }
+    }
+    else if (strcmp(command, UNSUBS) == 0)
+    {
+        printf("unsubscribe\n");
+        if (word_count == 2 && check_hashtag(second_word, second_word_size))
+        {
+            //send message
+            printf("%s\n", SUCCOP);
+        }
+        else
+        {
+            // This may not be necessary since check_hashtag throws errors...
+            printf("%s\n", ILLHASH);
+        }
+    }
+    else if (strcmp(command, TIMELINE) == 0)
+    {
+        printf("timeline\n");
+        if (word_count == 1)
+        {
+            //send message
+            printf("%s\n", SUCCOP);
+        }
+        else
+        {
+            printf("%s\n", ILLHASH);           
+        }
+    }
+    else if (strcmp(command, GETUSERS) == 0)
+    {
+        printf("getusers\n");
+        if (word_count == 1)
+        {
+            //send message
+            printf("%s\n", SUCCOP);
+        }
+        else
+        {
+            printf("%s\n", ILLHASH);           
+        }
+    }
+    else if (strcmp(command, GETTWEETS) == 0)
+    {
+        printf("gettweets\n");
+        //TODO: username validation
+    }
+    else if (strcmp(command, EXIT) == 0)
+    {
+        printf("exit\n");
+        if (word_count == 1)
+        {
+            //send message
+            printf("%s\n", SUCCOP);
+        }
+        else
+        {
+            printf("%s\n", ILLHASH);           
+        }
+    }
+    else
+    {
+        printf("%s", ILLHASH);
+        return INVALID;
+    }
 }
 
 int check_alpha_num(char ch)
 {
     if (ch >= 'A' && ch <= 'Z')
     {
-        return 1;
+        return VALID;
     }
     else if (ch >= 'a' && ch <= 'z')
     {
-        return 1;
+        return VALID;
     }
     else if (ch >= '0' && ch <= '9')
     {
-        return 1;
+        return VALID;
     }
     else
     {
-        return 0;
+        return INVALID;
     }
-}
+} /* check_alpha_num */
 
-int handle_client_request(char* command, char* second_word, char* third_word, int sock)
+/** 
+* Checks the validity of the hashtag. Returns 1 on valid and 0 on invalid.
+* Calling method should free the memory.
+*/
+int check_hashtag(char* word, int size)
 {
-    int status = -1;
+    if (size < 2 || size > MAXHASHLEN)
+    {
+        printf("%s\n", ILLHASH);
+        return INVALID;
+    }
 
-    if (strcmp(command, "tweet") == 0) // For some reason, #define tweet doesn't work here. Perhaps it's confusion with the stuct Tweet type
+    if (word[0] != '#')
     {
-        printf("tweet\n");            
+        printf("%s\n", ILLHASH);
+        return INVALID;
     }
-    else if (strcmp(command, SUBS) == 0)
-    {
-        printf("subscribe\n");
-    }
-    else if (strcmp(command, UNSUBS) == 0)
-    {
-        printf("unsubscribe\n");
-    }
-    else if (strcmp(command, TIMELINE) == 0)
-    {
-        printf("timeline\n");
-    }
-    else if (strcmp(command, GETUSERS) == 0)
-    {
-        printf("getusers\n");
-    }
-    else if (strcmp(command, GETTWEETS) == 0)
-    {
-        printf("gettweets\n");
-    }
-    else if (strcmp(command, EXIT) == 0)
-    {
-        printf("exit\n");
-    }
-    else
-    {
-        printf("%s", ILLHASH);
-        return status;
-    }
-}
 
+    for (int n = 0; n < size - 1; n++)
+    {
+        if (word[n] == '#')
+        {
+            int p = n + 1;
+            if (!(check_alpha_num(word[p])))
+            {   
+                printf("%s\n", ILLHASH);
+                return INVALID;
+            }
+
+            while (p < size - 1)
+            {
+                if (word[p] == '#')
+                {
+                    // exit this inner loop early since another hashtag unit has been detected
+                    break;
+                }
+                if (!(check_alpha_num(word[p])))
+                {   
+                    printf("%s\n", ILLHASH);
+                    return INVALID;
+                }
+                p++;
+            }
+        }
+    }
+
+    return VALID;
+} /* check_hashtag */
 
 /**
  * Checks whether the given command lines arguemnts are valid.
