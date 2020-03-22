@@ -15,7 +15,7 @@ int handle_tweet(User* users, int id, char* tweet, char** hashtag, int hashes) {
         strcat(users[id].tweets[users[id].numtwts].hashtag, hashtag[i]);
     }
     users[id].numtwts += 1;
-    // For tweet operation, no feedback needed
+    send(users[id].socket, NOFEEDBACK, strlen(NOFEEDBACK), 0);
 
     // Deliver to all the clients who are subscribed to the hashtag
     char response[BUFFERSIZE];
@@ -207,6 +207,58 @@ int handle_exit(User* users, int id) {
     strcpy(users[id].username, "\0");
     numusers -= 1;
     return 1;
+}
+
+/**
+ * Gets the id position of the user in the users list given username.
+ * This function can also be used to check if a given user is connected or not.
+ * Params: users list, username string.
+ * Return the int position of user in list.
+ */
+int get_user_id(User* users, char* username) {
+    int id = -1;
+
+    for (int i = 0; i < MAXCONNS; i++) {
+        if (strcmp(username, users[i].username) == 0) {
+            id = i;
+            break;
+        }
+    }
+
+    return id;
+}
+
+/**
+ * Completes the given client requests by calling relevant functions based on 
+ * given command.
+ * Params: users list, username string, command code string, 
+ * first and second strings follwoing command code.
+ * Returns 1 on success and 0 on failure.
+ */
+int complete_request(User* users, char* username, char* command, 
+        char* first, char* second) {
+    int id = get_user_id(users, username);
+
+    if (strcmp(command, TWTCODE) == 0) {
+        // Need to break up second into a list of individual hashtags
+        int hashes = 0;
+        char** hashtag = malloc(sizeof(char*) * MAXHASH);
+        return handle_tweet(users, id, first, hashtag, hashes);
+    } else if (strcmp(command, SUBSCODE) == 0) {
+        return handle_subscribe(users, id, first);
+    } else if (strcmp(command, UNSCODE) == 0) {
+        return handle_unsubscribe(users, id, first);
+    } else if (strcmp(command, TIMECODE) == 0) {
+        return handle_timeline(users, id);
+    } else if (strcmp(command, GTUSRCODE) == 0) {
+        return handle_getusers(users, id);
+    } else if (strcmp(command, GTTWTCODE) == 0) {
+        return handle_gettweets(users, id, first);
+    } else if (strcmp(command, EXITCODE) == 0) {
+        return handle_exit(users, id);
+    }
+
+    return 0;
 }
 
 /**

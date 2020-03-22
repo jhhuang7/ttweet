@@ -33,6 +33,7 @@
 #define LOGIN "username legal, connection established.\n"
 #define BYE "bye bye\n"
 #define SUCCOP "operation success\n"
+#define NOFEEDBACK "\n"
 #define TWT "tweet​"
 #define SUBS "subscribe"
 #define UNSUBS "unsubscribe"
@@ -40,8 +41,8 @@
 #define GETUSERS "getusers"
 #define GETTWEETS "gettweets"
 #define EXIT "exit"
-#define TWTCODE "-w 
-#define SUBSCODE "-s 
+#define TWTCODE "-w"
+#define SUBSCODE "-s" 
 #define UNSCODE "-n" 
 #define TIMECODE "-i" 
 #define GTUSRCODE "-u" 
