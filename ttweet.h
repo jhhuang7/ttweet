@@ -13,6 +13,7 @@
 #define MIN        0
 #define MAXHASH    3
 #define MAXCONNS   5
+#define MAXHASHLEN 15
 #define MSGMAX     150
 #define BUFFERSIZE 10000
 #define MAXPORT    65535

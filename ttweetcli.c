@@ -3,6 +3,7 @@
 /**
  * Client request processing functions...
  */
+int check_alpha_num(char);
 int parse_client_input(char*, int);
 int handle_client_request(char*, char*, char*, int);
 
@@ -69,8 +70,9 @@ int network_connection(int port, char* ip, char* username) {
     and ending with a new line character. Calls handle_client_request with the socket
     and the message components.
 
-    Note: this function only validates too many words and/or if the second word has more
-    than 150 characters. All other error checking is done in handle_client_request so
+    Note: this function validates too many words and/or if the second word has more
+    than 150 characters. It also checks hashtag structure and length.
+    All other error checking is done in handle_client_request so
     that error handling specific to each command can be performed.
 */
 int parse_client_input(char* buffer, int sock)
@@ -199,6 +201,14 @@ int parse_client_input(char* buffer, int sock)
 
         if (word_count == 3)
         {
+            if (third_word_char_count < 2 || third_word_char_count > MAXHASHLEN)
+            {
+                printf("%s\n", ILLHASH);
+                free(command);
+                free(second_word);
+                return status;
+            }
+
             third_word = malloc(third_word_char_count * sizeof(char));
             if (third_word == NULL)
             {
@@ -213,11 +223,77 @@ int parse_client_input(char* buffer, int sock)
                 // printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
                 char_index_into_buffer++;
             }
+
+            if (third_word[0] != '#')
+            {
+                printf("%s\n", ILLHASH);
+                free(command);
+                free(second_word);
+                free(third_word);
+                return status;
+            }
+
+            for (int n = 0; n < third_word_char_count - 1; n++)
+            {
+                if (third_word[n] == '#')
+                {
+                    int p = n + 1;
+                    if (!(check_alpha_num(third_word[p])))
+                    {   
+                        printf("%s\n", ILLHASH);
+                        free(command);
+                        free(second_word);
+                        free(third_word);
+                        return status;
+                    }
+
+                    while (p < third_word_char_count - 1)
+                    {
+                        if (third_word[p] == '#')
+                        {
+                            // exit this loop early since another hashtag unit has been detected
+                            break;
+                        }
+                        if (!(check_alpha_num(third_word[p])))
+                        {   
+                            printf("%s\n", ILLHASH);
+                            free(command);
+                            free(second_word);
+                            free(third_word);
+                            return status;
+                        }
+                        p++;
+                    }
+                }
+            }
+
+
         }
     }
     status = handle_client_request(command, second_word, third_word, sock);
 
+    //TODO: free memory!
     return status;
+}
+
+int check_alpha_num(char ch)
+{
+    if (ch >= 'A' && ch <= 'Z')
+    {
+        return 1;
+    }
+    else if (ch >= 'a' && ch <= 'z')
+    {
+        return 1;
+    }
+    else if (ch >= '0' && ch <= '9')
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int handle_client_request(char* command, char* second_word, char* third_word, int sock)
@@ -226,31 +302,31 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
 
     if (strcmp(command, "tweet") == 0) // For some reason, #define tweet doesn't work here. Perhaps it's confusion with the stuct Tweet type
     {
-        printf("tweet");            
+        printf("tweet\n");            
     }
     else if (strcmp(command, SUBS) == 0)
     {
-        printf("subscribe");
+        printf("subscribe\n");
     }
     else if (strcmp(command, UNSUBS) == 0)
     {
-        printf("unsubscribe");
+        printf("unsubscribe\n");
     }
     else if (strcmp(command, TIMELINE) == 0)
     {
-        printf("timeline");
+        printf("timeline\n");
     }
     else if (strcmp(command, GETUSERS) == 0)
     {
-        printf("getusers");
+        printf("getusers\n");
     }
     else if (strcmp(command, GETTWEETS) == 0)
     {
-        printf("gettweets");
+        printf("gettweets\n");
     }
     else if (strcmp(command, EXIT) == 0)
     {
-        printf("exit");
+        printf("exit\n");
     }
     else
     {
