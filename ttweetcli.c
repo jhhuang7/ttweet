@@ -53,19 +53,18 @@ int network_connection(int port, char* ip, char* username) {
         if (sock < 0) { 
             printf("%s", CONER); 
             return 0;
-        } else {
+        } 
 
-            if (fgets(buffer, BUFFERSIZE, stdin) != NULL);
-            {                
-                parse_client_input(buffer, sock);
-                //setbuf(stdin, NULL);
+        if (fgets(buffer, BUFFERSIZE, stdin) != NULL);
+        {                
+            parse_client_input(buffer, sock);
+            //setbuf(stdin, NULL);
 
-                //send(sock, buffer, strlen(buffer), 0);
-                //fflush(stdin);
-                memset(buffer, 0, sizeof(buffer));
-            }
-
+            send(sock, buffer, strlen(buffer), 0);
+            //fflush(stdin);
+            memset(buffer, 0, sizeof(buffer));
         }
+
         //fflush(stdout);
         //setbuf(stdout, NULL);
     }
@@ -86,8 +85,6 @@ int network_connection(int port, char* ip, char* username) {
 */
 int parse_client_input(char* buffer, int sock)
 {
-    int status = -1;
-
     int word_count = 0;
 
     char* command;
@@ -108,12 +105,12 @@ int parse_client_input(char* buffer, int sock)
             if (word_count == 1)
             {
                 first_word_char_count = i;
-                printf("1st word char count: %d\n", first_word_char_count);
+                //printf("1st word char count: %d\n", first_word_char_count);
             }
             else if (word_count == 2)
             {
                 second_word_char_count = i - (first_word_char_count + 1);
-                printf("2nd word char count: %d\n", second_word_char_count);
+                //printf("2nd word char count: %d\n", second_word_char_count);
             }
         }
 
@@ -123,7 +120,7 @@ int parse_client_input(char* buffer, int sock)
            If this condition is reached, the for loop is exited. */
         if (buffer[i] == 0x0A && word_count <= 3)
         {
-            printf("End line condition\n");
+            //printf("End line condition\n");
             ++word_count;
             if (word_count == 1)
             {
@@ -137,13 +134,13 @@ int parse_client_input(char* buffer, int sock)
             }
             else if (word_count == 3)
             {
-                third_word_char_count = i - (first_word_char_count + second_word_char_count + 1);
-                //printf("End line cond char count: %d\n", third_word_char_count);
+                third_word_char_count = i - (first_word_char_count + second_word_char_count + 2);
+                //printf("End line Char Cnt: %d\n", third_word_char_count);
             }
             else
             {
                 printf("%s", WRONGPARAMS);
-                return status;
+                return INVALID;
             }
             break;
         }
@@ -160,7 +157,7 @@ int parse_client_input(char* buffer, int sock)
                 if (j == 151)
                 {
                     printf("%s", ILLMSGLEN);
-                    return status;
+                    return INVALID;
                 }
 
                 if (buffer[j] == '"')
@@ -175,7 +172,7 @@ int parse_client_input(char* buffer, int sock)
         if (word_count > 3)
         {
             printf("%s", WRONGPARAMS);
-            return status;
+            return INVALID;
         }
     }
 
@@ -204,8 +201,8 @@ int parse_client_input(char* buffer, int sock)
         for (int k = 0; k < second_word_char_count; k++)
         {
             second_word[k] = buffer[char_index_into_buffer];
-            printf("second_word[k] %c\n", second_word[k]);
-            printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
+            //printf("second_word[k] %c\n", second_word[k]);
+            //printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
             char_index_into_buffer++;
         }
 
@@ -218,7 +215,7 @@ int parse_client_input(char* buffer, int sock)
                 printf("%s\n", "Error allocating memory.");
             }
 
-            char_index_into_buffer = (second_word_char_count + first_word_char_count + 1);
+            char_index_into_buffer = (second_word_char_count + first_word_char_count + 2);
             for (int m = 0; m < third_word_char_count; m++)
             {
                 third_word[m] = buffer[char_index_into_buffer];
@@ -228,9 +225,7 @@ int parse_client_input(char* buffer, int sock)
             }
         }
     }
-    status = handle_client_request(command, second_word, third_word, second_word_char_count, third_word_char_count, sock, word_count);
-
-    printf("Word count: %d \n", word_count);
+    int status = handle_client_request(command, second_word, third_word, second_word_char_count, third_word_char_count, sock, word_count);
 
     switch (word_count)
     {
@@ -255,7 +250,7 @@ int parse_client_input(char* buffer, int sock)
 int handle_client_request(char* command, char* second_word, char* third_word, int second_word_size, int third_word_size, int sock, int word_count)
 {
 
-    if (strcmp(command, "tweet") == 0) // For some reason, #define tweet doesn't work here. Perhaps it's confusion with the stuct Tweet type
+    if (strcmp(command, "tweet") == 0) // For some reason, "#define TWEET" doesn't work here. Perhaps it's confusion with the stuct Tweet type
     {
         printf("tweet\n");
         if (word_count == 3 && check_hashtag(third_word, third_word_size))
