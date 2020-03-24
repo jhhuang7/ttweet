@@ -48,14 +48,15 @@
 #define GTUSRCODE "-u" 
 #define GTTWTCODE "-t" 
 #define EXITCODE "-e"
+#define CONNCECTCODE "-c"
 
 // Global variables
 int numusers = 0;
 
 // Structs
 typedef struct {
-    char* message;
-    char* hashtag;
+    char message[BUFFERSIZE];
+    char hashtag[BUFFERSIZE];
 } Tweet;
 
 typedef struct {
