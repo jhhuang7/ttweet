@@ -278,6 +278,7 @@ int network_connection(int port, User* users) {
     int opt = 1; 
     int addrlen = sizeof(address);
     char buffer[BUFFERSIZE] = {0}; 
+    char response[BUFFERSIZE] = {0}; 
    
     serverfd = socket(AF_INET, SOCK_STREAM, 0);
     if (serverfd == 0) {
@@ -307,7 +308,10 @@ int network_connection(int port, User* users) {
         if (socket >= 0) {
             read(socket, buffer, BUFFERSIZE);
             printf("%s\n", buffer);
-            send(socket, buffer, strlen(buffer), 0);
+
+            strcpy(response, "Client requested: ");
+            strcat(response, buffer);
+            send(socket, response, strlen(response), 0);
 
             fflush(stdout);
             memset(buffer, 0, sizeof(buffer));
