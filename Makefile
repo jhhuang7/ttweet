@@ -15,6 +15,5 @@ ttweetsrv.o: ttweetser.c
 ttweetcli.o: ttweetcli.c
 	gcc $(CFLAGS) -c ttweetcli.c
 
-
 clean:
 	rm ttweetser ttweetcli ttweetser.o ttweetcli.o
