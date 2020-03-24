@@ -236,14 +236,20 @@ int get_user_id(User* users, char* username) {
  * Returns 1 on success and 0 on failure.
  */
 int complete_request(User* users, char* username, char* command, 
-        char* first, char* second) {
+        char* first, char** second, int hashes) {
     int id = get_user_id(users, username);
 
-    if (strcmp(command, TWTCODE) == 0) {
-        // Need to break up second into a list of individual hashtags
-        int hashes = 0;
-        char** hashtag = malloc(sizeof(char*) * MAXHASH);
-        return handle_tweet(users, id, first, hashtag, hashes);
+    if (strcmp(command, CONNCECTCODE) == 0) {
+        int status = get_user_id(users, first);
+        if (status == -1) {
+            strcpy(username, first);
+            send(users[id].socket, LOGIN, strlen(LOGIN), 0);
+        } else {
+            send(users[id].socket, LOGGEDIN, strlen(LOGGEDIN), 0);
+        }
+        return status;
+    } else if (strcmp(command, TWTCODE) == 0) {
+        return handle_tweet(users, id, first, second, hashes);
     } else if (strcmp(command, SUBSCODE) == 0) {
         return handle_subscribe(users, id, first);
     } else if (strcmp(command, UNSCODE) == 0) {
@@ -266,7 +272,7 @@ int complete_request(User* users, char* username, char* command,
  * Params: Port number.
  * Returns 0 if there's a problem with the connection, 1 on success.
  */
-int network_connection(int port) {
+int network_connection(int port, User* users) {
     int serverfd; 
     struct sockaddr_in address; 
     int opt = 1; 
@@ -298,10 +304,10 @@ int network_connection(int port) {
         int socket = accept(serverfd, (struct sockaddr*)&address, 
             (socklen_t*)&addrlen);
 
-        if (socket >= 0) { 
+        if (socket >= 0) {
             read(socket, buffer, BUFFERSIZE);
-
             printf("%s\n", buffer);
+            send(socket, buffer, strlen(buffer), 0);
 
             fflush(stdout);
             memset(buffer, 0, sizeof(buffer));
@@ -339,8 +345,21 @@ int check_args(int argc, char** argv) {
         return 0;
     }
 
+    // Initialize list of users for storage
+    User* users = malloc(sizeof(User) * MAXCONNS);
+    for (int i = 0; i < MAXCONNS; i++) {
+        users[i].socket = 0;
+        users[i].username = malloc(sizeof(char) * BUFFERSIZE);
+        users[i].numsusbs = 0;
+        for (int j = 0; j < MAXHASH; j++) {
+            users[i].subscriptions[j] = malloc(sizeof(char) * BUFFERSIZE);
+        }
+        users[i].numtwts = 0;
+        users[i].tweets = malloc(sizeof(Tweet) * BUFFERSIZE);
+    }
+
     // Server running forever
-    return network_connection(portnum);
+    return network_connection(portnum, users);
 }
 
 /**
