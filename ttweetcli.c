@@ -12,6 +12,7 @@
 int network_connection(int port, char* ip, char* username) {
     struct sockaddr_in servAddr;
     char buffer[BUFFERSIZE] = {0}; 
+    char response[BUFFERSIZE] = {0}; 
 
     servAddr.sin_family = AF_INET; 
     servAddr.sin_port = htons(port); 
@@ -43,6 +44,8 @@ int network_connection(int port, char* ip, char* username) {
         } else {
             scanf("%s", buffer);
             send(sock, buffer, strlen(buffer), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response); 
             fflush(stdin);
             memset(buffer, 0, sizeof(buffer));
         }
