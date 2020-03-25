@@ -17,6 +17,7 @@ int network_connection(int port, char* ip, char* username) {
     struct sockaddr_in servAddr;
     char buffer[BUFFERSIZE] = {0}; 
     char response[BUFFERSIZE] = {0}; 
+    int valid_user = 1; //TODO: change to 0 when server response gets worked out
 
     servAddr.sin_family = AF_INET; 
     servAddr.sin_port = htons(port); 
@@ -33,15 +34,6 @@ int network_connection(int port, char* ip, char* username) {
     // to protocol to server and directly print out message back from server.
     // A function will be needed to check each user request, then function(s)
     // to process the request.
-/*
-    printf("Checking hash_check function: ");
-    printf("#hash: %d\n", check_hashtag("#hash", 4));
-    printf("#hash#hash: %d\n", check_hashtag("#hash#hash", 10));
-    printf("##hash: %d\n", check_hashtag("##hash", 5));
-    printf("#h#h#h#h: %d\n", check_hashtag("#h#h#h#h", 8));
-    printf("#: %d\n", check_hashtag("#", 1));
-    printf("#h789&: %d\n", check_hashtag("#h789&", 6));
-    printf("#h.789: %d\n", check_hashtag("#h.789", 6));*/
 
     while (1) {
         int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -56,24 +48,26 @@ int network_connection(int port, char* ip, char* username) {
             return 0;
         } 
 
-        //TODO: Username validation?
+        if (!valid_user)
+        {
+            strcat(buffer, "-c");
+            strcat(buffer, username);
+            send(sock, buffer, strlen(buffer), 0);
+            read(sock, buffer, BUFFERSIZE);
+            //todo: add some kind of way to respond if the user is not valid. What's the server sending back?
+
+            memset(buffer, 0, sizeof(buffer));
+        }
 
         if (fgets(buffer, BUFFERSIZE, stdin) != NULL)
         {                
             int status = parse_client_input(buffer, sock);
-
-            if (status) {
-                read(sock, response, BUFFERSIZE);
-                printf("%s\n", response);
-            }
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
             
-            //setbuf(stdin, NULL);
-            //fflush(stdin);
             memset(buffer, 0, sizeof(buffer));
+            memset(response, 0, sizeof(response));
         }
-
-        //fflush(stdout);
-        //setbuf(stdout, NULL);
     }
 
 
@@ -112,12 +106,10 @@ int parse_client_input(char* buffer, int sock)
             if (word_count == 1)
             {
                 first_word_char_count = i;
-                //printf("1st word char count: %d\n", first_word_char_count);
             }
             else if (word_count == 2)
             {
                 second_word_char_count = i - (first_word_char_count + 1);
-                //printf("2nd word char count: %d\n", second_word_char_count);
             }
         }
 
@@ -127,22 +119,18 @@ int parse_client_input(char* buffer, int sock)
            If this condition is reached, the for loop is exited. */
         if (buffer[i] == 0x0A && word_count <= 3)
         {
-            //printf("End line condition\n");
             ++word_count;
             if (word_count == 1)
             {
                 first_word_char_count = i;
-                //printf("1st word char count: %d\n", first_word_char_count);
             }
             else if (word_count == 2)
             {
                 second_word_char_count = i - (first_word_char_count + 1);
-                //printf("2nd word char count: %d\n", second_word_char_count);
             }
             else if (word_count == 3)
             {
                 third_word_char_count = i - (first_word_char_count + second_word_char_count + 2);
-                //printf("End line Char Cnt: %d\n", third_word_char_count);
             }
             else
             {
@@ -193,7 +181,6 @@ int parse_client_input(char* buffer, int sock)
     for (int j = 0; j < first_word_char_count; j++)
     {
         command[j] = buffer[j];
-        //printf("Command[j] %c\n", command[j]);
     }
 
     // Extract the second (and third if needed) argument provided by the user
@@ -209,8 +196,6 @@ int parse_client_input(char* buffer, int sock)
         for (int k = 0; k < second_word_char_count; k++)
         {
             second_word[k] = buffer[char_index_into_buffer];
-            //printf("second_word[k] %c\n", second_word[k]);
-            //printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
             char_index_into_buffer++;
         }
 
@@ -227,12 +212,11 @@ int parse_client_input(char* buffer, int sock)
             for (int m = 0; m < third_word_char_count; m++)
             {
                 third_word[m] = buffer[char_index_into_buffer];
-                //printf("third_word[m] %c\n", third_word[m]);
-                //printf("buffer[char_count] %c\n", buffer[char_index_into_buffer]);
                 char_index_into_buffer++;
             }
         }
     }
+
     int status = handle_client_request(command, second_word, third_word, second_word_char_count, third_word_char_count, sock, word_count);
 
     switch (word_count)
@@ -262,151 +246,100 @@ int parse_client_input(char* buffer, int sock)
 */
 int handle_client_request(char* command, char* second_word, char* third_word, int second_word_size, int third_word_size, int sock, int word_count)
 {
-    int status;
     char send_msg[BUFFERSIZE] = {0};
+    char response[BUFFERSIZE] = {0};
 
-    if (strcmp(command, "tweet") == 0) // For some reason, "#define TWEET" doesn't work here. Perhaps it's confusion with the stuct Tweet type
+    memset(send_msg, 0, sizeof(send_msg));
+    memset(response, 0, sizeof(response));
+
+    if (strcmp(command, TWT) == 0) // For some reason, "#define TWEET" doesn't work here. Perhaps it's confusion with the stuct Tweet type
     {
-        printf("tweet\n");
         if (word_count == 3 && check_hashtag(third_word, third_word_size))
         {
-            strcat(send_msg, command);
-            strcat(send_msg, " ");
+            strcpy(send_msg, TWTCODE);
             strcat(send_msg, second_word);
-            strcat(send_msg, " ");
             strcat(send_msg, third_word);
 
-            status = send(sock, send_msg, strlen(send_msg), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", SUCCOP);
-                return VALID;
-            }
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
     }
     else if (strcmp(command, SUBS) == 0)
     {
-        printf("subscribe\n");
         if (word_count == 2 && check_hashtag(second_word, second_word_size))
         {
-            strcat(send_msg, command);
-            strcat(send_msg, " ");
+            strcpy(send_msg, SUBSCODE);
             strcat(send_msg, second_word);
 
-            status = send(sock, send_msg, strlen(send_msg), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", SUCCOP);
-                return VALID;
-            }
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
     }
     else if (strcmp(command, UNSUBS) == 0)
     {
-        printf("unsubscribe\n");
         if (word_count == 2 && check_hashtag(second_word, second_word_size))
         {
-            strcat(send_msg, command);
-            strcat(send_msg, " ");
+            strcpy(send_msg, UNSCODE);
             strcat(send_msg, second_word);
 
-            status = send(sock, send_msg, strlen(send_msg), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", SUCCOP);
-                return VALID;
-            }
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
     }
     else if (strcmp(command, TIMELINE) == 0)
     {
-        printf("timeline\n");
         if (word_count == 1)
         {
-            status = send(sock, command, strlen(command), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", SUCCOP);
-                return VALID;
-            }
+            strcpy(send_msg, TIMECODE);
+
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
     }
     else if (strcmp(command, GETUSERS) == 0)
     {
-        printf("getusers\n");
         if (word_count == 1)
         {
-            status = send(sock, command, strlen(command), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", SUCCOP);
-                return VALID;
-            }
+            strcpy(send_msg, GTUSRCODE);
+
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
     }
     else if (strcmp(command, GETTWEETS) == 0)
     {
         if (word_count == 2)
         {
-            strcat(send_msg, command);
-            strcat(send_msg, " ");
+            strcpy(send_msg, GTTWTCODE);
             strcat(send_msg, second_word);
 
-            status = send(sock, send_msg, strlen(send_msg), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", SUCCOP);
-                return VALID;
-            }
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
 
     }
     else if (strcmp(command, EXIT) == 0)
     {
-        printf("exit\n");
         if (word_count == 1)
         {
-            status = send(sock, command, strlen(command), 0);
-            if (status < 0)
-            {
-                printf("%s\n", CONER);
-                return INVALID;
-            }
-            else
-            {            
-                printf("%s\n", BYE);
-                return VALID;
-            }
+            strcpy(send_msg, EXITCODE);
+
+            send(sock, send_msg, strlen(send_msg), 0);
+            read(sock, response, BUFFERSIZE);
+            printf("%s\n", response);
+            return VALID;
         }
     }
 

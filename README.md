@@ -2,7 +2,7 @@
 
 ## PA2Group 49:
 - Juhua Huang (903572368), jhuang499@gatech.edu
-- Lorin Achey (GTID), lorin.achey@gatech.edu
+- Lorin Achey (903089055), lorin.achey@gatech.edu
 - Patrick Coppock (GTID), pcoppock3@gatech.edu
 
 ## Division of Work:
