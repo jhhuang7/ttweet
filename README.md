@@ -25,7 +25,7 @@ the command and the reading two strings are specific to the command.
 The string buffer will consist of a command code (first two characters) with the 
 second and third strings read from stdin appended onto the end.
 - Command codes: -w for tweet​; -s for subscribe; -n for unsubscribe; 
--i for timeline; -u for getusers; -t for gettweets; -e for exit
+-i for timeline; -u for getusers; -t for gettweets; -e for exit; -c for connect.
 - Once the sever receives the string buffer from the client, it will parse the 
 buffer and split the buffer into 3 strings. Based on the first string 
 (command code), the server will then use the second and third strings to 
