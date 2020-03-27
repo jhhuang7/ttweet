@@ -1,12 +1,47 @@
 #include "ttweet.h"
 
 /**
- * Client request processing functions...
+ * Client request processing function declarations.
  */
 int check_alpha_num(char);
 int check_hashtag(char*, int);
 int parse_client_input(char*, int);
 int handle_client_request(char*, char*, char*, int, int, int, int);
+
+/**
+ * Estalish initial connection to server checking if username is ok.
+ * Params: socket stuff to connect, username string to be checked.
+ * Returns 0 if there's a problem, 1 on success.
+ */
+int check_user(int sock, char* username, struct sockaddr_in servAddr) {
+    // Connect to server
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0) { 
+            printf("%s", CONER); 
+            return 0;
+        }
+    if (sock < 0) { 
+        printf("%s", CONER); 
+        return 0;
+    }
+
+    // Send message to server
+    char connectmsg[BUFFERSIZE];
+    strcpy(connectmsg, CONNCECTCODE);
+    strcat(connectmsg, username);
+    send(sock, connectmsg, strlen(connectmsg), 0);
+
+    // Check if username is indeed valid
+    char response[BUFFERSIZE] = {0};
+    int status = INVALID;
+    read(sock, response, BUFFERSIZE);
+    if (strcmp(response, LOGIN) == 0) {
+        status = VALID;
+    }
+    printf("%s", response);
+
+    return status;
+}
 
 /**
  * Function for connection Client to given port and IP.
@@ -16,8 +51,7 @@ int handle_client_request(char*, char*, char*, int, int, int, int);
 int network_connection(int port, char* ip, char* username) {
     struct sockaddr_in servAddr;
     char buffer[BUFFERSIZE] = {0}; 
-    char response[BUFFERSIZE] = {0}; 
-    int valid_user = 1; //TODO: change to 0 when server response gets worked out
+    int sock = 0;
 
     servAddr.sin_family = AF_INET; 
     servAddr.sin_port = htons(port); 
@@ -28,6 +62,10 @@ int network_connection(int port, char* ip, char* username) {
     } 
    
     // Check if given username is already connected.
+    int valid_user = check_user(sock, username, servAddr);
+    if (!valid_user) {
+        return valid_user;
+    }
 
     // Use while loop to connect user and continue to taken in their requests
     // from stdin, break if "exit". For each request, send message according
@@ -36,7 +74,7 @@ int network_connection(int port, char* ip, char* username) {
     // to process the request.
 
     while (1) {
-        int sock = socket(AF_INET, SOCK_STREAM, 0);
+        sock = socket(AF_INET, SOCK_STREAM, 0);
 
         if (connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0) { 
             printf("%s", CONER); 
@@ -48,44 +86,31 @@ int network_connection(int port, char* ip, char* username) {
             return 0;
         } 
 
-        if (!valid_user)
-        {
-            strcat(buffer, "-c");
-            strcat(buffer, username);
-            send(sock, buffer, strlen(buffer), 0);
-            read(sock, buffer, BUFFERSIZE);
-            //todo: add some kind of way to respond if the user is not valid. What's the server sending back?
-
-            memset(buffer, 0, sizeof(buffer));
-        }
-
-        if (fgets(buffer, BUFFERSIZE, stdin) != NULL)
-        {                
+        if (fgets(buffer, BUFFERSIZE, stdin) != NULL) {                
             int status = parse_client_input(buffer, sock);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
-            
-            memset(buffer, 0, sizeof(buffer));
-            memset(response, 0, sizeof(response));
+            if (status == VALID + VALID) {
+                // Exit program is client wants to exit
+                break;
+            }
         }
+        memset(buffer, 0, sizeof(buffer));
+        fflush(stdin);
     }
-
 
     return 1;
 }
 
 /**  
-*   Take the clients inputted text and parse it into components delimited by spaces
-*   and ending with a new line character. Calls handle_client_request with the socket
-*   and the message components.
+* Take the clients inputted text and parse it into components delimited by spaces
+* and ending with a new line character. Calls handle_client_request with the socket
+* and the message components.
 *
-*   Note: this function validates too many words and/or if the second word has more
-*   than 150 characters. It also checks hashtag structure and length.
-*   All other error checking is done in handle_client_request so
-*   that error handling specific to each command can be performed.
+* Note: this function validates too many words and/or if the second word has more
+* than 150 characters. It also checks hashtag structure and length.
+* All other error checking is done in handle_client_request so
+* that error handling specific to each command can be performed.
 */
-int parse_client_input(char* buffer, int sock)
-{
+int parse_client_input(char* buffer, int sock) {
     int word_count = 0;
 
     char* command;
@@ -97,22 +122,16 @@ int parse_client_input(char* buffer, int sock)
     char* third_word;
     int third_word_char_count = 0;
 
-    for (int i = 0; i < BUFFERSIZE; i++)
-    {
+    for (int i = 0; i < BUFFERSIZE; i++) {
         // Every time a space is reached, the word count and character counts get updated.
-        if (buffer[i] == ' ')
-        {
+        if (buffer[i] == ' ') {
             ++word_count;
-            if (word_count == 1)
-            {
+            if (word_count == 1) {
                 first_word_char_count = i;
-            }
-            else if (word_count == 2)
-            {
+            } else if (word_count == 2) {
                 second_word_char_count = i - (first_word_char_count + 1);
             }
         }
-
 
         /* The newline character at the end of the user's inputted command is handled here.
            The character counts for the first, second, and third words are updated here as applicable.
@@ -217,7 +236,9 @@ int parse_client_input(char* buffer, int sock)
         }
     }
 
-    int status = handle_client_request(command, second_word, third_word, second_word_char_count, third_word_char_count, sock, word_count);
+    int status = handle_client_request(command, second_word, third_word, 
+        second_word_char_count, third_word_char_count, sock, word_count);
+    fflush(stdout);
 
     switch (word_count)
     {
@@ -244,7 +265,8 @@ int parse_client_input(char* buffer, int sock)
 * Returns 1 on valid and 0 on invalid.
 * Calling method should free the memory.
 */
-int handle_client_request(char* command, char* second_word, char* third_word, int second_word_size, int third_word_size, int sock, int word_count)
+int handle_client_request(char* command, char* second_word, char* third_word, 
+        int second_word_size, int third_word_size, int sock, int word_count)
 {
     char send_msg[BUFFERSIZE] = {0};
     char response[BUFFERSIZE] = {0};
@@ -252,7 +274,7 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
     memset(send_msg, 0, sizeof(send_msg));
     memset(response, 0, sizeof(response));
 
-    if (strcmp(command, TWT) == 0) // For some reason, "#define TWEET" doesn't work here. Perhaps it's confusion with the stuct Tweet type
+    if (strcmp(command, "tweet") == 0) // For some reason, "#define TWT" doesn't work here.
     {
         if (word_count == 3 && check_hashtag(third_word, third_word_size))
         {
@@ -339,11 +361,15 @@ int handle_client_request(char* command, char* second_word, char* third_word, in
             send(sock, send_msg, strlen(send_msg), 0);
             read(sock, response, BUFFERSIZE);
             printf("%s\n", response);
-            return VALID;
+            return VALID + VALID;
         }
     }
 
-    printf("%s", MSGNONE);
+    // else Command invalid
+    strcpy(send_msg, MSGNONE);
+    send(sock, send_msg, strlen(send_msg), 0);
+    read(sock, response, BUFFERSIZE);
+    printf("%s\n", response);
     return INVALID;
 }
 
