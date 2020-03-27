@@ -229,6 +229,38 @@ int get_user_id(User* users, char* username) {
 }
 
 /**
+ * Handles initila user connection.
+ * Params: users list, username to be change, buffer socket info of client.
+ * Returns 1 on success and 0 on failure.
+ */
+int user_connection(User* users, char* username, char* buffer, int socket) {
+    char name[BUFFERSIZE];
+    strncpy(name, buffer + 2, strlen(buffer) - 2);
+
+    int status = get_user_id(users, name);
+    int id;
+    if (status == -1 && numusers <= MAXCONNS) {
+        strcpy(username, name);
+
+        for (int i = 0; i < MAXCONNS; i++) {
+            if (strcmp(users[i].username, "") == 0) {
+                users[i].socket = socket;
+                strcpy(users[i].username, username);
+                id = i;
+                numusers += 1;
+            }
+        }
+
+        send(users[id].socket, LOGIN, strlen(LOGIN), 0);
+    } else {
+        send(socket, LOGGEDIN, strlen(LOGGEDIN), 0);
+        return 0;
+    }
+
+    return 1;
+}
+
+/**
  * Completes the given client requests by calling relevant functions based on 
  * given command.
  * Params: users list, username string, command code string, 
@@ -239,16 +271,7 @@ int complete_request(User* users, char* username, char* command,
         char* first, char** second, int hashes) {
     int id = get_user_id(users, username);
 
-    if (strcmp(command, CONNCECTCODE) == 0) {
-        int status = get_user_id(users, first);
-        if (status == -1) {
-            strcpy(username, first);
-            send(users[id].socket, LOGIN, strlen(LOGIN), 0);
-        } else {
-            send(users[id].socket, LOGGEDIN, strlen(LOGGEDIN), 0);
-        }
-        return status;
-    } else if (strcmp(command, TWTCODE) == 0) {
+    if (strcmp(command, TWTCODE) == 0) {
         return handle_tweet(users, id, first, second, hashes);
     } else if (strcmp(command, SUBSCODE) == 0) {
         return handle_subscribe(users, id, first);
@@ -267,6 +290,46 @@ int complete_request(User* users, char* username, char* command,
     return 0;
 }
 
+/** 
+ * Parses the read buffer from client.
+ * Params users list, string buffer, socket fd.
+ * Returns 0 if there's a problem, 1 on success.
+ */
+int parse_buffer(User* users, char* buffer, char* username) {
+    char cmd[BUFFERSIZE];
+    strncpy(cmd, buffer, 2);
+
+    char first[BUFFERSIZE];
+    int len = 0;
+    int index = 3;
+    char** second = malloc(sizeof(char*) * BUFFERSIZE);
+    int hashes = 0;
+    if (strcmp(cmd, TWTCODE) != 0) {
+        strncpy(first, buffer + 2, strlen(buffer) - 2);
+    } else {
+        first[len++] = buffer[index++];
+        while (1) {
+            if (buffer[index] == '"') {
+                first[len++] = buffer[index++];
+                break;
+            }
+
+            first[len++] = buffer[index++];
+        } 
+        strcat(first, "\0");
+
+        char rest[BUFFERSIZE];
+        strncpy(rest, buffer + 2 + len, strlen(buffer) - 2 - len);
+        char* hash = strtok(rest, HASHTAG);
+        while (hash != NULL) {
+            second[hashes++] = hash;
+            hash = strtok(NULL, HASHTAG);
+        }
+    }
+
+    return complete_request(users, username, cmd, first, second, hashes);
+}
+
 /**
  * Function for connection Server to given port forever.
  * Params: Port number.
@@ -277,8 +340,10 @@ int network_connection(int port, User* users) {
     struct sockaddr_in address; 
     int opt = 1; 
     int addrlen = sizeof(address);
+    int sock = 0;
     char buffer[BUFFERSIZE] = {0}; 
-    char response[BUFFERSIZE] = {0}; 
+    char response[BUFFERSIZE] = {0};
+    char username[BUFFERSIZE] = {0}; 
    
     serverfd = socket(AF_INET, SOCK_STREAM, 0);
     if (serverfd == 0) {
@@ -301,27 +366,34 @@ int network_connection(int port, User* users) {
         return 0; 
     }
 
+    printf("%s", SERCON); // connected
+
     while (1) {
-        int socket = accept(serverfd, (struct sockaddr*)&address, 
+        sock = accept(serverfd, (struct sockaddr*)&address, 
             (socklen_t*)&addrlen);
 
-        if (socket >= 0) {
-            read(socket, buffer, BUFFERSIZE);
-            printf("%s\n", buffer);
+        if (sock >= 0) {
+            read(sock, buffer, BUFFERSIZE);
+            printf("Client requested: %s\n", buffer);
 
-            strcpy(response, "Client requested: ");
-            strcat(response, buffer);
-            send(socket, response, strlen(response), 0);
+            if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
+                user_connection(users, username, buffer, sock);
+            } else if (strcmp(buffer, MSGNONE) == 0) {
+                strcpy(response, MSGNONE);
+                send(sock, response, strlen(response), 0);
+            } else {
+                parse_buffer(users, buffer, username);
+            }
 
             fflush(stdout);
             memset(buffer, 0, sizeof(buffer));
+            memset(response, 0, sizeof(response));
         }
 
         // Use multi-threading to turn this into handling up to 5 clients.
         // For each client read their request and send this along with 
         // relevant info for processing.
         // May need locking.
-
     }
 
     return 1; 
