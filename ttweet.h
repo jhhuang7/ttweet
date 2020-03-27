@@ -19,7 +19,7 @@
 #define MSGMAX     150
 #define BUFFERSIZE 1000
 #define MAXPORT    65535
-#define HASHTAG    '#'
+#define HASHTAG    "#"
 #define ALL        "#ALL"
 
 // Error Messages 
