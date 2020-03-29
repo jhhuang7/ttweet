@@ -44,6 +44,28 @@ int check_user(int sock, char* username, struct sockaddr_in servAddr) {
 }
 
 /**
+ * Loops forever and prints out anything from the server.
+ * This function is used for pthread_create.
+ * Parameterss: a void pointer of arguments.
+ * Returns: a void pointer (NULL).
+ */
+void* handle_response(void* arg) {
+    Response* rsp = (Response*)arg;
+    char response[BUFFERSIZE] = {0};
+    
+    while (1) {
+        read(rsp->socket, response, BUFFERSIZE);
+        if (strcmp(response, BYE) == 0) {
+            break;
+        }
+        printf("%s", response);
+        memset(response, 0, sizeof(response));
+    }
+    
+    return NULL; 
+}
+
+/**
  * Function for connection Client to given port and IP.
  * Params: Port number, IP string, username string.
  * Returns 0 if there's a problem with the connection, 1 on success.
@@ -67,12 +89,6 @@ int network_connection(int port, char* ip, char* username) {
         return valid_user;
     }
 
-    // Use while loop to connect user and continue to taken in their requests
-    // from stdin, break if "exit". For each request, send message according
-    // to protocol to server and directly print out message back from server.
-    // A function will be needed to check each user request, then function(s)
-    // to process the request.
-
     while (1) {
         sock = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -84,7 +100,13 @@ int network_connection(int port, char* ip, char* username) {
         if (sock < 0) { 
             printf("%s", CONER); 
             return 0;
-        } 
+        }
+
+        // Handle forever printing out server messages
+        pthread_t threadId;
+        Response rsp;
+        rsp.socket = sock;
+        pthread_create(&threadId, NULL, handle_response, &rsp);
 
         if (fgets(buffer, BUFFERSIZE, stdin) != NULL) {                
             int status = parse_client_input(buffer, sock);
@@ -283,8 +305,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcat(send_msg, third_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+            
             return VALID;
         }
     }
@@ -296,8 +317,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcat(send_msg, second_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+            
             return VALID;
         }
     }
@@ -309,8 +329,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcat(send_msg, second_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+            
             return VALID;
         }
     }
@@ -321,8 +340,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcpy(send_msg, TIMECODE);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+            
             return VALID;
         }
     }
@@ -333,8 +351,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcpy(send_msg, GTUSRCODE);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+            
             return VALID;
         }
     }
@@ -346,8 +363,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcat(send_msg, second_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+
             return VALID;
         }
 
@@ -358,9 +374,11 @@ int handle_client_request(char* command, char* second_word, char* third_word,
         {
             strcpy(send_msg, EXITCODE);
 
+            // Need this read for exit message
             send(sock, send_msg, strlen(send_msg), 0);
             read(sock, response, BUFFERSIZE);
-            printf("%s\n", response);
+            printf("%s", response);
+
             return VALID + VALID;
         }
     }
@@ -368,8 +386,6 @@ int handle_client_request(char* command, char* second_word, char* third_word,
     // else Command invalid
     strcpy(send_msg, MSGNONE);
     send(sock, send_msg, strlen(send_msg), 0);
-    read(sock, response, BUFFERSIZE);
-    printf("%s\n", response);
     return INVALID;
 }
 
