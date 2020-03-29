@@ -12,6 +12,7 @@ int handle_tweet(User* users, int id, char* tweet, char** hashtag, int hashes) {
     strcpy(users[id].tweets[users[id].numtwts].message, tweet);
     strcpy(users[id].tweets[users[id].numtwts].hashtag, "");
     for (int i = 0; i < hashes; i++) {
+        strcat(users[id].tweets[users[id].numtwts].hashtag, HASHTAG);
         strcat(users[id].tweets[users[id].numtwts].hashtag, hashtag[i]);
     }
     users[id].numtwts += 1;
@@ -20,10 +21,10 @@ int handle_tweet(User* users, int id, char* tweet, char** hashtag, int hashes) {
     // Deliver to all the clients who are subscribed to the hashtag
     char response[BUFFERSIZE];
     strcpy(response, "");
-    strcat(response, "\"");
     strcat(response, tweet);
-    strcat(response, "\" ");
+    strcat(response, " ");
     for (int i = 0; i < hashes; i++) {
+        strcat(response, HASHTAG);
         strcat(response, hashtag[i]);
     }
     strcat(response, "\n");
@@ -31,8 +32,11 @@ int handle_tweet(User* users, int id, char* tweet, char** hashtag, int hashes) {
     for (int i = 0; i < MAXCONNS; i++) {
         for (int j = 0; j < MAXHASH; j++) {
             for (int k = 0; k < hashes; k++) {
-                if (strcmp(users[i].subscriptions[j], hashtag[k]) == 0 
-                        || strcmp(users[i].subscriptions[j], ALL) == 0) {
+                char tag[BUFFERSIZE];
+                strcpy(tag, HASHTAG);
+                strcat(tag, hashtag[k]);
+                if (strcmp(users[i].subscriptions[j], tag) == 0 ||
+                        strcmp(users[i].subscriptions[j], ALL) == 0) {
                     send(users[i].socket, response, strlen(response), 0);
                     break;
                 }
@@ -51,12 +55,13 @@ int handle_tweet(User* users, int id, char* tweet, char** hashtag, int hashes) {
  */
 int handle_subscribe(User* users, int id, char* hashtag) {
     // Max hashtag limit reached
+    char response[BUFFERSIZE];
+    strcpy(response, "");
+    strcat(response, "operation failed: sub ");
+    strcat(response, hashtag);
+    strcat(response, " failed, already exists or exceeds 3 limitation\n");
+    
     if (users[id].numsusbs >= MAXHASH) {
-        char response[BUFFERSIZE];
-        strcpy(response, "");
-        strcat(response, "operation failed: sub ");
-        strcat(response, hashtag);
-        strcat(response, " failed, already exists or exceeds 3 limitation\n");
         send(users[id].socket, response, strlen(response), 0);
         return 0;
     }
@@ -66,6 +71,9 @@ int handle_subscribe(User* users, int id, char* hashtag) {
         if (strcmp(users[id].subscriptions[i], "") == 0) {
             strcpy(users[id].subscriptions[i], hashtag);
             break;
+        } else if (strcmp(users[id].subscriptions[i], hashtag) == 0) {
+            send(users[id].socket, response, strlen(response), 0);
+            return 0;
         }
     }
     users[id].numsusbs += 1;
@@ -117,9 +125,9 @@ int handle_timeline(User* users, int id) {
     for (int i = 0; i < numusers; i++) {
         for (int j = 0; j < users[i].numtwts; j++) {
             strcat(response, users[i].username);
-            strcat(response, ": \"");
+            strcat(response, ": ");
             strcat(response, users[i].tweets[j].message);
-            strcat(response, "\" ");
+            strcat(response, " ");
             strcat(response, users[i].tweets[j].hashtag);
             strcat(response, "\n");
         }
@@ -140,10 +148,9 @@ int handle_getusers(User* users, int id) {
     strcpy(response, "");
 
     // Build up all usernames
-    for (int i = 0; i < numusers; i++) {
-        strcat(response, users[i].username);
-
+    for (int i = 0; i < MAXCONNS; i++) {
         if (strcmp(users[i].username, "") != 0) {
+            strcat(response, users[i].username);
             strcat(response, "\n");
         }
     }
@@ -162,14 +169,14 @@ int handle_gettweets(User* users, int id, char* username) {
     char response[BUFFERSIZE];
     strcpy(response, "");
 
-    for (int i = 0; i < numusers; i++) {
+    for (int i = 0; i < MAXCONNS; i++) {
         if (strcmp(users[i].username, username) == 0) {
             // If username exists then build message to send to client
             for (int j = 0; j < users[i].numtwts; j++) {
                 strcat(response, username);
-                strcat(response, ": \"");
+                strcat(response, ": ");
                 strcat(response, users[i].tweets[j].message);
-                strcat(response, "\" ");
+                strcat(response, " ");
                 strcat(response, users[i].tweets[j].hashtag);
                 strcat(response, "\n");
             }
@@ -180,9 +187,9 @@ int handle_gettweets(User* users, int id, char* username) {
     }
 
     // No user error message
-    strcat(response, "no user");
+    strcat(response, "no user ");
     strcat(response, username);
-    strcat(response, "in the system\n\0");
+    strcat(response, " in the system\n");
     send(users[id].socket, response, strlen(response), 0);
     return 0;
 }
@@ -203,7 +210,7 @@ int handle_exit(User* users, int id) {
     for (int i = 0; i < MAXHASH; i++) {
         strcpy(users[id].subscriptions[i], "\0");
     }
-    free(users[id].tweets);
+    users[id].tweets = malloc(sizeof(Tweet) * BUFFERSIZE);
     strcpy(users[id].username, "\0");
     numusers -= 1;
     return 1;
@@ -229,7 +236,7 @@ int get_user_id(User* users, char* username) {
 }
 
 /**
- * Handles initila user connection.
+ * Handles initial user connection.
  * Params: users list, username to be change, buffer socket info of client.
  * Returns 1 on success and 0 on failure.
  */
@@ -248,6 +255,7 @@ int user_connection(User* users, char* username, char* buffer, int socket) {
                 strcpy(users[i].username, username);
                 id = i;
                 numusers += 1;
+                break;
             }
         }
 
@@ -268,8 +276,9 @@ int user_connection(User* users, char* username, char* buffer, int socket) {
  * Returns 1 on success and 0 on failure.
  */
 int complete_request(User* users, char* username, char* command, 
-        char* first, char** second, int hashes) {
+        char* first, char** second, int hashes, int sock) {
     int id = get_user_id(users, username);
+    users[id].socket = sock;
 
     if (strcmp(command, TWTCODE) == 0) {
         return handle_tweet(users, id, first, second, hashes);
@@ -295,13 +304,13 @@ int complete_request(User* users, char* username, char* command,
  * Params users list, string buffer, socket fd.
  * Returns 0 if there's a problem, 1 on success.
  */
-int parse_buffer(User* users, char* buffer, char* username) {
+int parse_buffer(User* users, char* buffer, char* username, int sock) {
     char cmd[BUFFERSIZE];
     strncpy(cmd, buffer, 2);
 
     char first[BUFFERSIZE];
     int len = 0;
-    int index = 3;
+    int index = 2;
     char** second = malloc(sizeof(char*) * BUFFERSIZE);
     int hashes = 0;
     if (strcmp(cmd, TWTCODE) != 0) {
@@ -318,8 +327,10 @@ int parse_buffer(User* users, char* buffer, char* username) {
         } 
         strcat(first, "\0");
 
-        char rest[BUFFERSIZE];
+        char rest[BUFFERSIZE] = {0};
         strncpy(rest, buffer + 2 + len, strlen(buffer) - 2 - len);
+        strcat(rest, "\0");
+
         char* hash = strtok(rest, HASHTAG);
         while (hash != NULL) {
             second[hashes++] = hash;
@@ -327,7 +338,7 @@ int parse_buffer(User* users, char* buffer, char* username) {
         }
     }
 
-    return complete_request(users, username, cmd, first, second, hashes);
+    return complete_request(users, username, cmd, first, second, hashes, sock);
 }
 
 /**
@@ -382,7 +393,7 @@ int network_connection(int port, User* users) {
                 strcpy(response, MSGNONE);
                 send(sock, response, strlen(response), 0);
             } else {
-                parse_buffer(users, buffer, username);
+                parse_buffer(users, buffer, username, sock);
             }
 
             fflush(stdout);
