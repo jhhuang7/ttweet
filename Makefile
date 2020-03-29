@@ -3,17 +3,11 @@ CFLAGS = -Wall -pedantic -std=gnu99 -g -pthread
 .DEFAULT_GOAL := all
 all: ttweetser ttweetcli
 
-ttweetser: ttweetser.o
-	gcc ttweetser.o -o ttweetser
+ttweetser: ttweetser.c
+	gcc $(CFLAGS) ttweetser.c -o ttweetser
 
-ttweetcli: ttweetcli.o
-	gcc ttweetcli.o -o ttweetcli
-
-ttweetsrv.o: ttweetser.c
-	gcc $(CFLAGS) -c ttweetser.c
-
-ttweetcli.o: ttweetcli.c
-	gcc $(CFLAGS) -c ttweetcli.c
-
+ttweetcli: ttweetcli.c
+	gcc $(CFLAGS) ttweetcli.c -o ttweetcli
+	
 clean:
-	rm ttweetser ttweetcli ttweetser.o ttweetcli.o
+	rm ttweetser ttweetcli
