@@ -76,3 +76,7 @@ typedef struct {
     int numtwts;
     Tweet* tweets;
 } User;
+
+typedef struct {
+    int socket;
+} Response;
