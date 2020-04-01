@@ -314,7 +314,11 @@ int parse_buffer(User* users, char* buffer, char* username, int sock) {
     char** second = malloc(sizeof(char*) * BUFFERSIZE);
     int hashes = 0;
     if (strcmp(cmd, TWTCODE) != 0) {
-        strncpy(first, buffer + 2, strlen(buffer) - 2);
+        int i;
+        for (i = 2; i < strlen(buffer); i++) {
+            first[i - 2] = buffer[i];
+        }
+        first[i - 2] = '\0';
     } else {
         first[len++] = buffer[index++];
         while (1) {
@@ -324,8 +328,8 @@ int parse_buffer(User* users, char* buffer, char* username, int sock) {
             }
 
             first[len++] = buffer[index++];
-        } 
-        strcat(first, "\0");
+        }
+        first[len] = '\0';
 
         char rest[BUFFERSIZE] = {0};
         strncpy(rest, buffer + 2 + len, strlen(buffer) - 2 - len);
