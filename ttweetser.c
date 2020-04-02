@@ -346,6 +346,41 @@ int parse_buffer(User* users, char* buffer, char* username, int sock) {
 }
 
 /**
+ * Function for handling multiple connections in threads.
+ * Parameters: void pointer arguments.
+ * Returns: a void pointer.
+ */
+void* new_connection(void* arg) {
+    Connectinfo* connectinfo = (Connectinfo*)arg;
+
+    char buffer[BUFFERSIZE] = {0}; 
+    char response[BUFFERSIZE] = {0};
+    char username[BUFFERSIZE] = {0};
+
+    while(1) {
+        read(connectinfo->socket, buffer, BUFFERSIZE);
+        printf("Client requested: %s\n", buffer);
+
+        if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
+            user_connection(connectinfo->users, username, 
+                buffer, connectinfo->socket);
+        } else if (strcmp(buffer, MSGNONE) == 0) {
+            strcpy(response, MSGNONE);
+            send(connectinfo->socket, response, strlen(response), 0);
+        } else {
+            parse_buffer(connectinfo->users, buffer, username, 
+                connectinfo->socket);
+        }
+
+        fflush(stdout);
+        memset(buffer, 0, sizeof(buffer));
+        memset(response, 0, sizeof(response));
+    }
+
+    return NULL;
+}
+
+/**
  * Function for connection Server to given port forever.
  * Params: Port number.
  * Returns 0 if there's a problem with the connection, 1 on success.
@@ -356,9 +391,6 @@ int network_connection(int port, User* users) {
     int opt = 1; 
     int addrlen = sizeof(address);
     int sock = 0;
-    char buffer[BUFFERSIZE] = {0}; 
-    char response[BUFFERSIZE] = {0};
-    char username[BUFFERSIZE] = {0}; 
    
     serverfd = socket(AF_INET, SOCK_STREAM, 0);
     if (serverfd == 0) {
@@ -388,27 +420,12 @@ int network_connection(int port, User* users) {
             (socklen_t*)&addrlen);
 
         if (sock >= 0) {
-            read(sock, buffer, BUFFERSIZE);
-            printf("Client requested: %s\n", buffer);
-
-            if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
-                user_connection(users, username, buffer, sock);
-            } else if (strcmp(buffer, MSGNONE) == 0) {
-                strcpy(response, MSGNONE);
-                send(sock, response, strlen(response), 0);
-            } else {
-                parse_buffer(users, buffer, username, sock);
-            }
-
-            fflush(stdout);
-            memset(buffer, 0, sizeof(buffer));
-            memset(response, 0, sizeof(response));
+            Connectinfo connectinfo;
+            connectinfo.socket = sock;
+            connectinfo.users = users;
+            pthread_t pid;
+            pthread_create(&pid, NULL, new_connection, &connectinfo);
         }
-
-        // Use multi-threading to turn this into handling up to 5 clients.
-        // For each client read their request and send this along with 
-        // relevant info for processing.
-        // May need locking.
     }
 
     return 1; 
