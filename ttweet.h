@@ -80,3 +80,8 @@ typedef struct {
 typedef struct {
     int socket;
 } Response;
+
+typedef struct {
+    int socket;
+    User* users;
+} Connectinfo;
