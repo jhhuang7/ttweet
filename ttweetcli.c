@@ -13,18 +13,7 @@ int handle_client_request(char*, char*, char*, int, int, int, int);
  * Params: socket stuff to connect, username string to be checked.
  * Returns 0 if there's a problem, 1 on success.
  */
-int check_user(int sock, char* username, struct sockaddr_in servAddr) {
-    // Connect to server
-    sock = socket(AF_INET, SOCK_STREAM, 0);
-    if (connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0) { 
-            printf("%s", CONER); 
-            return 0;
-        }
-    if (sock < 0) { 
-        printf("%s", CONER); 
-        return 0;
-    }
-
+int check_user(int sock, char* username) {
     // Send message to server
     char connectmsg[BUFFERSIZE];
     strcpy(connectmsg, CONNCECTCODE);
@@ -71,53 +60,56 @@ void* handle_response(void* arg) {
  * Returns 0 if there's a problem with the connection, 1 on success.
  */
 int network_connection(int port, char* ip, char* username) {
-    struct sockaddr_in servAddr;
+	struct sockaddr_in serverAddr;
     char buffer[BUFFERSIZE] = {0}; 
-    int sock = 0;
+    int sock;
+    int con;
 
-    servAddr.sin_family = AF_INET; 
-    servAddr.sin_port = htons(port); 
-    
-    if (inet_pton(AF_INET, ip, &servAddr.sin_addr) <= 0) { 
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock < 0) {
+		printf("%s", CONER); 
+        return 0;
+	}
+
+	memset(&serverAddr, '\0', sizeof(serverAddr));
+	serverAddr.sin_family = AF_INET;
+	serverAddr.sin_port = htons(port);
+	serverAddr.sin_addr.s_addr = inet_addr(ip);
+    if (serverAddr.sin_addr.s_addr <= 0) { 
         printf("%s", INVSERIP); 
         return 0;
     } 
-   
+
+	con = connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+	if(con < 0){
+		printf("%s", CONER); 
+        return 0;
+	}
+
     // Check if given username is already connected.
-    int valid_user = check_user(sock, username, servAddr);
-    if (!valid_user) {
-        return valid_user;
+    if (!check_user(sock, username)) {
+        return INVALID;
     }
 
-    while (1) {
-        sock = socket(AF_INET, SOCK_STREAM, 0);
+    // Handle forever printing out server messages
+    pthread_t threadId;
+    Response rsp;
+    rsp.socket = sock;
+    pthread_create(&threadId, NULL, handle_response, &rsp);
 
-        if (connect(sock, (struct sockaddr*)&servAddr, sizeof(servAddr)) < 0) { 
-            printf("%s", CONER); 
-            return 0;
+	while (1) {
+        fgets(buffer, BUFFERSIZE, stdin);
+
+        if (parse_client_input(buffer, sock) == VALID + VALID) {
+            // Exit program is client wants to exit
+            close(sock);
+            break;
         }
 
-        if (sock < 0) { 
-            printf("%s", CONER); 
-            return 0;
-        }
-
-        // Handle forever printing out server messages
-        pthread_t threadId;
-        Response rsp;
-        rsp.socket = sock;
-        pthread_create(&threadId, NULL, handle_response, &rsp);
-
-        if (fgets(buffer, BUFFERSIZE, stdin) != NULL) {                
-            int status = parse_client_input(buffer, sock);
-            if (status == VALID + VALID) {
-                // Exit program is client wants to exit
-                break;
-            }
-        }
         memset(buffer, 0, sizeof(buffer));
         fflush(stdin);
-    }
+        fflush(stdout);
+	}
 
     return 1;
 }
@@ -420,11 +412,13 @@ int check_hashtag(char* word, int size)
 {
     if (size < 2 || size > MAXHASHLEN)
     {
+        printf("%s", ILLHASH);
         return INVALID;
     }
 
     if (word[0] != '#' || (!check_alpha_num(word[size - 1])))
     {
+        printf("%s", ILLHASH);
         return INVALID;
     }
 
@@ -435,6 +429,7 @@ int check_hashtag(char* word, int size)
             int p = n + 1;
             if (!(check_alpha_num(word[p])))
             {   
+                printf("%s", ILLHASH);
                 return INVALID;
             }
 
@@ -447,6 +442,7 @@ int check_hashtag(char* word, int size)
                 }
                 if (!(check_alpha_num(word[p])))
                 {   
+                    printf("%s", ILLHASH);
                     return INVALID;
                 }
                 p++;
