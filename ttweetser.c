@@ -359,7 +359,9 @@ void* new_connection(void* arg) {
 
     while(1) {
         read(connectinfo->socket, buffer, BUFFERSIZE);
-        printf("Client requested: %s\n", buffer);
+        if (strlen(buffer) != 0) {
+            printf("Client requested: %s\n", buffer);
+        }
 
         if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
             user_connection(connectinfo->users, username, 
@@ -386,47 +388,54 @@ void* new_connection(void* arg) {
  * Returns 0 if there's a problem with the connection, 1 on success.
  */
 int network_connection(int port, User* users) {
-    int serverfd; 
-    struct sockaddr_in address; 
-    int opt = 1; 
-    int addrlen = sizeof(address);
-    int sock = 0;
-   
-    serverfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (serverfd == 0) {
-        return 0;
-    } 
-    
-    if (setsockopt(serverfd, SOL_SOCKET, SO_REUSEADDR | 
-            SO_REUSEPORT, &opt, sizeof(opt))) {
-        return 0; 
-    }
-    address.sin_family = AF_INET; 
-    address.sin_addr.s_addr = INADDR_ANY; 
-    address.sin_port = htons(port);
-    
-    if (bind(serverfd, (struct sockaddr*)&address, sizeof(address)) < 0) { 
-        return 0; 
-    }
+	struct sockaddr_in serverAddr;
+    int sockfd;
+    int ret;
+	struct sockaddr_in newAddr;
+    socklen_t addr_size;
+    int newSocket;
 
-    if (listen(serverfd, 3) < 0) { 
-        return 0; 
-    }
+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	if (sockfd < 0) {
+        printf("%s", CONER);
+		return 0;
+	}
+
+	memset(&serverAddr, '\0', sizeof(serverAddr));
+	serverAddr.sin_family = AF_INET;
+	serverAddr.sin_port = htons(port);
+	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // server to localhost
+
+	ret = bind(sockfd, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
+	if (ret < 0) {
+		printf("%s", CONER);
+		return 0;
+	}
+
+	if (listen(sockfd, MAXCONNS) != 0) {
+		printf("%s", CONER);
+		return 0;
+	}
 
     printf("%s", SERCON); // connected
 
-    while (1) {
-        sock = accept(serverfd, (struct sockaddr*)&address, 
-            (socklen_t*)&addrlen);
+	while (1) {
+		newSocket = accept(sockfd, (struct sockaddr*)&newAddr, &addr_size);
 
-        if (sock >= 0) {
+		if (newSocket < 0) {
+			printf("%s", CONER);
+		    return 0;
+		} else {
+            // Use threads to handle multiple clients
             Connectinfo connectinfo;
-            connectinfo.socket = sock;
+            connectinfo.socket = newSocket;
             connectinfo.users = users;
             pthread_t pid;
             pthread_create(&pid, NULL, new_connection, &connectinfo);
         }
-    }
+	}
+
+	close(newSocket);
 
     return 1; 
 }
