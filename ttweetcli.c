@@ -88,7 +88,7 @@ int network_connection(int port, char* ip, char* username) {
 
     // Check if given username is already connected.
     if (!check_user(sock, username)) {
-        return INVALID;
+        return 0;
     }
 
     // Handle forever printing out server messages
@@ -115,15 +115,16 @@ int network_connection(int port, char* ip, char* username) {
 }
 
 /**  
-* Take the clients inputted text and parse it into components delimited by spaces
-* and ending with a new line character. Calls handle_client_request with the socket
-* and the message components.
-*
-* Note: this function validates too many words and/or if the second word has more
-* than 150 characters. It also checks hashtag structure and length.
-* All other error checking is done in handle_client_request so
-* that error handling specific to each command can be performed.
-*/
+ * Parse_client_input.
+ * Take the clients inputted text and parse it into components delimited by 
+ * spaces and ending with a new line character. Calls handle_client_request 
+ * with the socket and the message components.
+ *
+ * Note: this function validates too many words and/or if the second word has 
+ * more than 150 characters. It also checks hashtag structure and length.
+ * All other error checking is done in handle_client_request so
+ * that error handling specific to each command can be performed.
+ */
 int parse_client_input(char* buffer, int sock) {
     int word_count = 0;
 
@@ -137,7 +138,7 @@ int parse_client_input(char* buffer, int sock) {
     int third_word_char_count = 0;
 
     for (int i = 0; i < BUFFERSIZE; i++) {
-        // Every time a space is reached, the word count and character counts get updated.
+        // Every time a space is reached, the word character counts get updated.
         if (buffer[i] == ' ') {
             ++word_count;
             if (word_count == 1) {
@@ -147,49 +148,40 @@ int parse_client_input(char* buffer, int sock) {
             }
         }
 
-        /* The newline character at the end of the user's inputted command is handled here.
-           The character counts for the first, second, and third words are updated here as applicable.
-           If this condition is reached, the for loop is exited. */
-        if (buffer[i] == 0x0A && word_count <= 3)
-        {
+        // The newline character at the end of the user's inputted command is 
+        // handled here. The character counts for the first, second, and third 
+        // words are updated here as applicable.
+        // If this condition is reached, the for loop is exited.
+        if (buffer[i] == 0x0A && word_count <= 3) {
             ++word_count;
-            if (word_count == 1)
-            {
+            if (word_count == 1) {
                 first_word_char_count = i;
-            }
-            else if (word_count == 2)
-            {
+            } else if (word_count == 2) {
                 second_word_char_count = i - (first_word_char_count + 1);
-            }
-            else if (word_count == 3)
-            {
-                third_word_char_count = i - (first_word_char_count + second_word_char_count + 2);
-            }
-            else
-            {
+            } else if (word_count == 3) {
+                third_word_char_count = i - 
+                    (first_word_char_count + second_word_char_count + 2);
+            } else {
                 printf("%s", WRONGPARAMS);
                 return INVALID;
             }
             break;
         }
 
-        /* For tweets, the message is wrapped in quotes. This statement and for loop will
-        search for matching quote at the end of the message. If not found, the status is returned
-        as failed after the illegal message length error is returned to the console.*/
-        if (buffer[i] == '"')
-        {
+        // For tweets, the message is wrapped in quotes. 
+        // This statement and for loop will search for matching quote at the 
+        // end of the message. If not found, the status is returned
+        // as failed after the illegal message length error is returned.
+        if (buffer[i] == '"') {
             int start_quote_index = ++i;
             
-            for (int j = start_quote_index; j < 152; j++)
-            {
-                if (j == 151)
-                {
+            for (int j = start_quote_index; j < MSGMAX + 2; j++) {
+                if (j == MSGMAX + 1) {
                     printf("%s", ILLMSGLEN);
                     return INVALID;
                 }
 
-                if (buffer[j] == '"')
-                {
+                if (buffer[j] == '"') {
                     i = j;
                     break;
                 }
@@ -197,53 +189,45 @@ int parse_client_input(char* buffer, int sock) {
         }
 
         // last ditch effort to catch when too many arguements are inputted
-        if (word_count > 3)
-        {
+        if (word_count > 3) {
             printf("%s", WRONGPARAMS);
             return INVALID;
         }
     }
 
     command = calloc((first_word_char_count + 1), sizeof(char));
-    if (command == NULL)
-    {
-        printf("%s\n", "Error allocating memory.");
+    if (command == NULL) {
+        printf("%s\n", WRONGPARAMS);
     }
 
     // Extract the command string
-    for (int j = 0; j < first_word_char_count; j++)
-    {
+    for (int j = 0; j < first_word_char_count; j++) {
         command[j] = buffer[j];
     }
 
     // Extract the second (and third if needed) argument provided by the user
-    if (word_count > 1)
-    {       
+    if (word_count > 1) {       
         second_word = calloc(second_word_char_count, sizeof(char));
-        if (second_word == NULL)
-        {
-            printf("%s\n", "Error allocating memory.");
+        if (second_word == NULL) {
+            printf("%s\n", WRONGPARAMS);
         }
 
         int char_index_into_buffer = (first_word_char_count + 1);
-        for (int k = 0; k < second_word_char_count; k++)
-        {
+        for (int k = 0; k < second_word_char_count; k++) {
             second_word[k] = buffer[char_index_into_buffer];
             char_index_into_buffer++;
         }
 
-        if (word_count == 3)
-        {
-
+        if (word_count == 3) {
             third_word = calloc(third_word_char_count, sizeof(char));
-            if (third_word == NULL)
-            {
-                printf("%s\n", "Error allocating memory.");
+            if (third_word == NULL) {
+                printf("%s\n", WRONGPARAMS);
             }
 
-            char_index_into_buffer = (second_word_char_count + first_word_char_count + 2);
-            for (int m = 0; m < third_word_char_count; m++)
-            {
+            char_index_into_buffer = 
+                (second_word_char_count + first_word_char_count + 2);
+
+            for (int m = 0; m < third_word_char_count; m++) {
                 third_word[m] = buffer[char_index_into_buffer];
                 char_index_into_buffer++;
             }
@@ -254,8 +238,7 @@ int parse_client_input(char* buffer, int sock) {
         second_word_char_count, third_word_char_count, sock, word_count);
     fflush(stdout);
 
-    switch (word_count)
-    {
+    switch (word_count) {
         case 1:
             free(command);
             break;
@@ -271,187 +254,144 @@ int parse_client_input(char* buffer, int sock) {
     }
 
     return status;
-} /* parse_client_input */
-
+}
 
 /** 
-* Checks the client command and args to ensure the command and arguemnts are valid. 
-* Returns 1 on valid and 0 on invalid.
-* Calling method should free the memory.
-*/
+ * Checks the client command and args to ensure they are valid. 
+ * Returns 1 on valid and 0 on invalid.
+ * Calling method should free the memory.
+ */
 int handle_client_request(char* command, char* second_word, char* third_word, 
-        int second_word_size, int third_word_size, int sock, int word_count)
-{
+        int second_word_size, int third_word_size, int sock, int word_count) {
     char send_msg[BUFFERSIZE] = {0};
     char response[BUFFERSIZE] = {0};
 
     memset(send_msg, 0, sizeof(send_msg));
     memset(response, 0, sizeof(response));
 
-    if (strcmp(command, "tweet") == 0) // For some reason, "#define TWT" doesn't work here.
-    {
-        if (word_count == 3 && check_hashtag(third_word, third_word_size))
-        {
+    if (strcmp(command, "tweet") == 0) { // "#define TWT" doesn't work here
+        if (word_count == 3 && check_hashtag(third_word, third_word_size)) {
             strcpy(send_msg, TWTCODE);
             strcat(send_msg, second_word);
             strcat(send_msg, third_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            
             return VALID;
         }
-    }
-    else if (strcmp(command, SUBS) == 0)
-    {
-        if (word_count == 2 && check_hashtag(second_word, second_word_size))
-        {
+    } else if (strcmp(command, SUBS) == 0) {
+        if (word_count == 2 && check_hashtag(second_word, second_word_size)) {
             strcpy(send_msg, SUBSCODE);
             strcat(send_msg, second_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            
             return VALID;
         }
-    }
-    else if (strcmp(command, UNSUBS) == 0)
-    {
-        if (word_count == 2 && check_hashtag(second_word, second_word_size))
-        {
+    } else if (strcmp(command, UNSUBS) == 0) {
+        if (word_count == 2 && check_hashtag(second_word, second_word_size)) {
             strcpy(send_msg, UNSCODE);
             strcat(send_msg, second_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            
             return VALID;
         }
-    }
-    else if (strcmp(command, TIMELINE) == 0)
-    {
-        if (word_count == 1)
-        {
+    } else if (strcmp(command, TIMELINE) == 0) {
+        if (word_count == 1) {
             strcpy(send_msg, TIMECODE);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            
             return VALID;
         }
-    }
-    else if (strcmp(command, GETUSERS) == 0)
-    {
-        if (word_count == 1)
-        {
+    } else if (strcmp(command, GETUSERS) == 0) {
+        if (word_count == 1) {
             strcpy(send_msg, GTUSRCODE);
 
             send(sock, send_msg, strlen(send_msg), 0);
-            
             return VALID;
         }
-    }
-    else if (strcmp(command, GETTWEETS) == 0)
-    {
-        if (word_count == 2)
-        {
+    } else if (strcmp(command, GETTWEETS) == 0) {
+        if (word_count == 2) {
             strcpy(send_msg, GTTWTCODE);
             strcat(send_msg, second_word);
 
             send(sock, send_msg, strlen(send_msg), 0);
-
             return VALID;
         }
-
-    }
-    else if (strcmp(command, EXIT) == 0)
-    {
-        if (word_count == 1)
-        {
+    } else if (strcmp(command, EXIT) == 0) {
+        if (word_count == 1) {
             strcpy(send_msg, EXITCODE);
 
             // Need this read for exit message
             send(sock, send_msg, strlen(send_msg), 0);
             read(sock, response, BUFFERSIZE);
             printf("%s", response);
-
             return VALID + VALID;
         }
     }
-
-    // else Command invalid
+    // else { Command invalid }
     strcpy(send_msg, MSGNONE);
     send(sock, send_msg, strlen(send_msg), 0);
     return INVALID;
 }
 
 /** 
-* Checks if character is A-Z, a-z, or 0-9. Returns 1 on valid and 0 on invalid.
-*/
-int check_alpha_num(char ch)
-{
-    if (ch >= 'A' && ch <= 'Z')
-    {
+ * Check_alpha_num.
+ * Checks if character is A-Z, a-z, or 0-9.
+ * Returns 1 on valid and 0 on invalid.
+ */
+int check_alpha_num(char ch) {
+    if (ch >= 'A' && ch <= 'Z') {
         return VALID;
-    }
-    else if (ch >= 'a' && ch <= 'z')
-    {
+    } else if (ch >= 'a' && ch <= 'z') {
         return VALID;
-    }
-    else if (ch >= '0' && ch <= '9')
-    {
+    } else if (ch >= '0' && ch <= '9') {
         return VALID;
-    }
-    else
-    {
+    } else {
         return INVALID;
     }
-} /* check_alpha_num */
+}
 
 /** 
-* Checks the validity of the hashtag. Returns 1 on valid and 0 on invalid.
-* Calling method should free the memory.
-*/
-int check_hashtag(char* word, int size)
-{
-    if (size < 2 || size > MAXHASHLEN)
-    {
+ * Check_hashtag.
+ * Checks the validity of the hashtag. Returns 1 on valid and 0 on invalid.
+ * Calling method should free the memory.
+ */
+int check_hashtag(char* word, int size) {
+    if (size < 2 || size > MAXHASHLEN) {
         printf("%s", ILLHASH);
         return INVALID;
     }
 
-    if (word[0] != '#' || (!check_alpha_num(word[size - 1])))
-    {
+    if (word[0] != '#' || (!check_alpha_num(word[size - 1]))) {
         printf("%s", ILLHASH);
         return INVALID;
     }
 
-    for (int n = 0; n < size - 1; n++)
-    {
-        if (word[n] == '#')
-        {
+    for (int n = 0; n < size - 1; n++) {
+        if (word[n] == '#') {
             int p = n + 1;
-            if (!(check_alpha_num(word[p])))
-            {   
+            if (!(check_alpha_num(word[p]))) {   
                 printf("%s", ILLHASH);
                 return INVALID;
             }
 
-            while (p < size - 1)
-            {
-                if (word[p] == '#')
-                {
-                    // exit this inner loop early since another hashtag unit has been detected
+            while (p < size - 1) {
+                if (word[p] == '#') {
+                    // exit inner loop early as another hashtag has been found
                     break;
                 }
-                if (!(check_alpha_num(word[p])))
-                {   
+
+                if (!(check_alpha_num(word[p]))) {   
                     printf("%s", ILLHASH);
                     return INVALID;
                 }
+
                 p++;
             }
         }
     }
 
     return VALID;
-} /* check_hashtag */
+}
 
 /**
  * Checks whether the given command lines arguemnts are valid.
