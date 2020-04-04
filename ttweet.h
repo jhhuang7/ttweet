@@ -61,6 +61,7 @@
 
 // Global variables
 int numusers = 0;
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 // Structs
 typedef struct {
