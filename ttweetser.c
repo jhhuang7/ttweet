@@ -355,35 +355,38 @@ int parse_buffer(User* users, char* buffer, char* username, int sock) {
  */
 void* new_connection(void* arg) {
     Connectinfo* connectinfo = (Connectinfo*)arg;
+    int sock = connectinfo->socket;
 
     char buffer[BUFFERSIZE] = {0}; 
     char response[BUFFERSIZE] = {0};
     char username[BUFFERSIZE] = {0};
+    
+    while (1) {
+        read(sock, buffer, BUFFERSIZE);
 
-    while(1) {
-        read(connectinfo->socket, buffer, BUFFERSIZE);
         if (strlen(buffer) != 0) {
-            printf("Client requested: %s\n", buffer);
+            printf("Client %s requested: %s\n", username, buffer);
         }
 
+        pthread_mutex_lock(&lock);
         if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
-            user_connection(connectinfo->users, username, 
-                buffer, connectinfo->socket);
+            user_connection(connectinfo->users, username, buffer, sock);
         } else if (strcmp(buffer, MSGNONE) == 0) {
             strcpy(response, MSGNONE);
-            send(connectinfo->socket, response, strlen(response), 0);
+            send(sock, response, strlen(response), 0);
         } else {
-            if (parse_buffer(connectinfo->users, buffer, username, 
-                connectinfo->socket) == 2) {
+            if (parse_buffer(connectinfo->users, buffer, username, sock) == 2) {
                 break;
             }
         }
+        pthread_mutex_unlock(&lock);
 
         fflush(stdout);
         memset(buffer, 0, sizeof(buffer));
         memset(response, 0, sizeof(response));
     }
 
+    pthread_exit(NULL);
     return NULL;
 }
 
@@ -423,10 +426,11 @@ int network_connection(int port, User* users) {
 	}
 
     printf("%s", SERCON); // connected
+    pthread_t pid;
 
 	while (1) {
 		sock = accept(serverfd, (struct sockaddr*)&newAddr, &addr_size);
-
+        
 		if (sock < 0) {
 			printf("%s", CONER);
 		    return 0;
@@ -435,7 +439,6 @@ int network_connection(int port, User* users) {
             Connectinfo connectinfo;
             connectinfo.socket = sock;
             connectinfo.users = users;
-            pthread_t pid;
             pthread_create(&pid, NULL, new_connection, &connectinfo);
         }
 	}
