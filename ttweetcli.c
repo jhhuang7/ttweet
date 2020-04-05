@@ -44,13 +44,11 @@ void* handle_response(void* arg) {
     
     while (1) {
         read(rsp->socket, response, BUFFERSIZE);
-        if (strcmp(response, BYE) == 0) {
-            break;
-        }
         printf("%s", response);
         memset(response, 0, sizeof(response));
     }
     
+    pthread_exit(NULL);
     return NULL; 
 }
 
@@ -320,10 +318,8 @@ int handle_client_request(char* command, char* second_word, char* third_word,
         if (word_count == 1) {
             strcpy(send_msg, EXITCODE);
 
-            // Need this read for exit message
             send(sock, send_msg, strlen(send_msg), 0);
-            read(sock, response, BUFFERSIZE);
-            printf("%s", response);
+            printf("%s", BYE); // Need this read for exit message
             return VALID + VALID;
         }
     }

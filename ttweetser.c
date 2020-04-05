@@ -202,10 +202,9 @@ int handle_gettweets(int sock, User* users, int id, char* username) {
  * Returns 1.
  */
 int handle_exit(int sock, User* users, int id) {
-    // Send client "bye bye"
-    send(sock, BYE, strlen(BYE), 0);
+    // Client will automatically print "bye bye"
 
-    // Clean up
+    // Clean up on server side
     users[id].numsusbs = 0;
     users[id].numtwts = 0;
     users[id].socket = 0;
@@ -386,6 +385,7 @@ void* new_connection(void* arg) {
         memset(response, 0, sizeof(response));
     }
 
+    memset(username, 0, sizeof(username));
     pthread_exit(NULL);
     return NULL;
 }
@@ -412,7 +412,6 @@ int network_connection(int port, User* users) {
 	memset(&serverAddr, '\0', sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
 	serverAddr.sin_port = htons(port);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // server at localhost
 
 	con = bind(serverfd, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if (con < 0) {
