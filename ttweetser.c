@@ -9,6 +9,12 @@
  */
 int handle_tweet(int sock, User* users, int id, char* tweet, 
         char** hashtag, int hashes) {
+    // Increase size of message list if limit is reached
+    if (users[id].numtwts % BUFFERSIZE == 0) {
+        users[id].tweets = (Tweet*)
+            realloc(users[id].tweets, sizeof(users[id].tweets) * BUFFERSIZE);
+    }
+    
     // Store the tweet
     strcpy(users[id].tweets[users[id].numtwts].message, tweet);
     strcpy(users[id].tweets[users[id].numtwts].hashtag, "");
@@ -40,10 +46,8 @@ int handle_tweet(int sock, User* users, int id, char* tweet,
                 if (strcmp(users[i].subscriptions[j], tag) == 0 ||
                         strcmp(users[i].subscriptions[j], ALL) == 0) {
                     send(users[i].socket, response, strlen(response), 0);
-                    break;
                 }
             }
-            break;
         }
     }
 
@@ -369,7 +373,9 @@ void* new_connection(void* arg) {
 
         pthread_mutex_lock(&lock);
         if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
-            user_connection(connectinfo->users, username, buffer, sock);
+            if (!user_connection(connectinfo->users, username, buffer, sock)) {
+                break;
+            }
         } else if (strcmp(buffer, MSGNONE) == 0) {
             strcpy(response, MSGNONE);
             send(sock, response, strlen(response), 0);
@@ -426,6 +432,7 @@ int network_connection(int port, User* users) {
 
     printf("%s", SERCON); // connected
     pthread_t pid;
+    Connectinfo connectinfo;
 
 	while (1) {
 		sock = accept(serverfd, (struct sockaddr*)&newAddr, &addr_size);
@@ -435,7 +442,6 @@ int network_connection(int port, User* users) {
 		    return 0;
 		} else {
             // Use threads to handle multiple clients
-            Connectinfo connectinfo;
             connectinfo.socket = sock;
             connectinfo.users = users;
             pthread_create(&pid, NULL, new_connection, &connectinfo);
