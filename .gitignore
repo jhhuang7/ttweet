@@ -1,2 +1,6 @@
 judge2.*.py
 *.txt
+ttweetcli
+ttweetser
+drive*.zip
+*~
