@@ -64,7 +64,7 @@ int network_connection(int port, char* ip, char* username) {
     int con;
 
 	sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock <= 0) {
+	if (sock < 0) {
 		printf("%s", CONER); 
         return 0;
 	}
@@ -79,8 +79,8 @@ int network_connection(int port, char* ip, char* username) {
     } 
 
 	con = connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-	if(con < 0){
-		printf("%s", INVSERPORT);
+	if (con < 0){
+		printf("%s", CONER);
         return 0;
 	}
 
@@ -129,7 +129,7 @@ int parse_client_input(char* buffer, int sock) {
     char* command;
     int first_word_char_count = 0;
 
-    char* second_word;
+    char second_word[BUFFERSIZE];
     int second_word_char_count = 0;
     
     char* third_word;
@@ -173,12 +173,7 @@ int parse_client_input(char* buffer, int sock) {
         if (buffer[i] == '"') {
             int start_quote_index = ++i;
             
-            for (int j = start_quote_index; j < MSGMAX + 2; j++) {
-                if (j == MSGMAX + 1) {
-                    printf("%s", ILLMSGLEN);
-                    return INVALID;
-                }
-
+            for (int j = start_quote_index; j < strlen(buffer); j++) {
                 if (buffer[j] == '"') {
                     i = j;
                     break;
@@ -205,15 +200,17 @@ int parse_client_input(char* buffer, int sock) {
 
     // Extract the second (and third if needed) argument provided by the user
     if (word_count > 1) {       
-        second_word = calloc(second_word_char_count, sizeof(char));
-        if (second_word == NULL) {
-            printf("%s\n", WRONGPARAMS);
-        }
-
         int char_index_into_buffer = (first_word_char_count + 1);
-        for (int k = 0; k < second_word_char_count; k++) {
+        int k;
+        for (k = 0; k < second_word_char_count; k++) {
             second_word[k] = buffer[char_index_into_buffer];
             char_index_into_buffer++;
+        }
+        second_word[k] = '\0';
+
+        if (strlen(second_word) > MSGMAX + 2) {
+            printf("%s", ILLMSGLEN);
+            return INVALID;
         }
 
         if (word_count == 3) {
@@ -242,11 +239,9 @@ int parse_client_input(char* buffer, int sock) {
             break;
         case 2:
             free(command);
-            free(second_word);
             break;
         case 3:
             free(command);
-            free(second_word);
             free(third_word);
             break;
     }
@@ -414,7 +409,7 @@ int check_args(int argc, char** argv) {
     char* porterr;
     int portnum = strtol(port, &porterr, 10);
 
-    if (portnum < MIN ||portnum > MAXPORT || strcmp(porterr, "") != 0) {
+    if (portnum <= MIN + 80 ||portnum > MAXPORT || strcmp(porterr, "") != 0) {
         printf("%s", INVSERPORT);
         return 0;
     }
