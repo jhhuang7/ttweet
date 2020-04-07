@@ -64,7 +64,7 @@ int network_connection(int port, char* ip, char* username) {
     int con;
 
 	sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock < 0) {
+	if (sock <= 0) {
 		printf("%s", CONER); 
         return 0;
 	}
@@ -80,7 +80,7 @@ int network_connection(int port, char* ip, char* username) {
 
 	con = connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if(con < 0){
-		printf("%s", CONER); 
+		printf("%s", INVSERPORT);
         return 0;
 	}
 
@@ -268,7 +268,8 @@ int handle_client_request(char* command, char* second_word, char* third_word,
     memset(response, 0, sizeof(response));
 
     if (strcmp(command, "tweet") == 0) { // "#define TWT" doesn't work here
-        if (word_count == 3 && check_hashtag(third_word, third_word_size)) {
+        if (word_count == 3 && strcmp(second_word, "\"\"") != 0 
+                && check_hashtag(third_word, third_word_size)) {
             strcpy(send_msg, TWTCODE);
             strcat(send_msg, second_word);
             strcat(send_msg, third_word);
@@ -317,7 +318,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
     } else if (strcmp(command, EXIT) == 0) {
         if (word_count == 1) {
             strcpy(send_msg, EXITCODE);
-
+            
             send(sock, send_msg, strlen(send_msg), 0);
             printf("%s", BYE); // Need this read for exit message
             return VALID + VALID;
@@ -401,8 +402,12 @@ int check_args(int argc, char** argv) {
         return 0;
     }
 
-    // Get the IP (IP is checked when trying to create connection)
+    // Get and check range of the IP (IP is checked again when connecting)
     char* ip = argv[1];
+    if (ip[0] - '2' >= 0) {
+        printf("%s", INVSERIP);
+        return 0;
+    }
 
     // Check if valid port
     char* port = argv[2];
@@ -417,6 +422,10 @@ int check_args(int argc, char** argv) {
     // Check if valid username (username existence is checked when connecting)
     char* username;
     username = argv[3];
+    if (strcmp(username, "") == 0) {
+        printf("%s", INVUSER);
+        return 0;
+    }
     for (int i = 0; i < strlen(username); i++) {
         if (!isalnum((int)username[i])) {
             printf("%s", INVUSER);

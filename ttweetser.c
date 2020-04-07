@@ -425,7 +425,7 @@ int network_connection(int port, User* users) {
 		return 0;
 	}
 
-	if (listen(serverfd, MAXCONNS) != 0) {
+	if (listen(serverfd, 100) != 0) {
 		printf("%s", CONER);
 		return 0;
 	}
