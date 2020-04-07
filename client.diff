@@ -1,13 +1,14 @@
 diff --git a/their_client.txt b/our_client.txt
-index 4004ba7..34f3f58 100644
+index 4004ba7..f5ff9d6 100644
 --- a/their_client.txt
 +++ b/our_client.txt
 @@ -1,180 +1,132 @@
  test_no_server
  
 -run command: java -jar ttweetcli.jar 127.0.0.1 13000 cxworks
+-connection error, please check your server: Connection refused
 +run command: ./ttweetcli 127.0.0.1 13000 cxworks
- connection error, please check your server: Connection refused
++error: server ip invalid, connection refused.
  test_no_server _ end
  
 -run command on server: java -jar ttweetser.jar 13000
@@ -15,29 +16,25 @@ index 4004ba7..34f3f58 100644
  test_illegal_input
  
 -run command: java -jar ttweetcli.jar 
--error: args should contain <ServerIP>   <ServerPort>   <Username>
 +run command: ./ttweetcli 
-+error: args should contain <ServerIP> <ServerPort> <Username>
+ error: args should contain <ServerIP>   <ServerPort>   <Username>
  
 -run command: java -jar ttweetcli.jar 127.0.0.1
--error: args should contain <ServerIP>   <ServerPort>   <Username>
 +run command: ./ttweetcli 127.0.0.1
-+error: args should contain <ServerIP> <ServerPort> <Username>
+ error: args should contain <ServerIP>   <ServerPort>   <Username>
  
 -run command: java -jar ttweetcli.jar 324.1.1.4 13000 cx1
--error: server ip invalid, connection refused.
 +run command: ./ttweetcli 324.1.1.4 13000 cx1
-+connection error, please check your server: Connection refused
+ error: server ip invalid, connection refused.
  
 -run command: java -jar ttweetcli.jar 127.0.0.1 -3 cx1
--error: server port invalid, connection refused.
 +run command: ./ttweetcli 127.0.0.1 -3 cx1
-+server port invalid, connection refused.
+ error: server port invalid, connection refused.
  
 -run command: java -jar ttweetcli.jar 127.0.0.1 80 cx1
 -error: server port invalid, connection refused.
 +run command: ./ttweetcli 127.0.0.1 80 cx1
-+connection error, please check your server: Connection refused
++error: server ip invalid, connection refused.
  
 -run command: java -jar ttweetcli.jar 127.0.0.1 13000 ""
 -error: username has wrong format, connection refused.

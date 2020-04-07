@@ -24,10 +24,10 @@
 
 // Error Messages 
 #define SARGE       "error: args should contain <ServerPort>\n"
-#define CARGE       "error: args should contain <ServerIP> <ServerPort> <Username>\n"
-#define CONER       "connection error, please check your server: Connection refused\n"
+#define CARGE       "error: args should contain <ServerIP>   <ServerPort>   <Username>\n"
+#define CONER       "error: server ip invalid, connection refused.\n"
 #define INVSERIP    "server ip invalid, connection refused.\n"
-#define INVSERPORT  "server port invalid, connection refused.\n"
+#define INVSERPORT  "error: server port invalid, connection refused.\n"
 #define INVUSER     "username has wrong format, connection refused.\n"
 #define LOGGEDIN    "username illegal, connection refused.\n"
 #define WRONGPARAMS "wrong number of parameters, connection refused.\n"
