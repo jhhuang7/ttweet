@@ -363,10 +363,8 @@ void* new_connection(void* arg) {
     char buffer[BUFFERSIZE] = {0}; 
     char response[BUFFERSIZE] = {0};
     char username[BUFFERSIZE] = {0};
-    
-    while (1) {
-        read(sock, buffer, BUFFERSIZE);
 
+    while (recv(sock, buffer, BUFFERSIZE, 0) > 0) {
         if (strlen(buffer) != 0) {
             printf("Client %s requested: %s\n", username, buffer);
         }
@@ -374,15 +372,13 @@ void* new_connection(void* arg) {
         pthread_mutex_lock(&lock);
         if (strncmp(buffer, CONNCECTCODE, 2) == 0 ) {
             if (!user_connection(connectinfo->users, username, buffer, sock)) {
-                break;
+                memset(username, 0, sizeof(username));
             }
         } else if (strcmp(buffer, MSGNONE) == 0) {
             strcpy(response, MSGNONE);
             send(sock, response, strlen(response), 0);
         } else {
-            if (parse_buffer(connectinfo->users, buffer, username, sock) == 2) {
-                break;
-            }
+            parse_buffer(connectinfo->users, buffer, username, sock);
         }
         pthread_mutex_unlock(&lock);
 
@@ -391,7 +387,6 @@ void* new_connection(void* arg) {
         memset(response, 0, sizeof(response));
     }
 
-    memset(username, 0, sizeof(username));
     pthread_exit(NULL);
     return NULL;
 }
@@ -401,7 +396,7 @@ void* new_connection(void* arg) {
  * Params: Port number.
  * Returns 0 if there's a problem with the connection, 1 on success.
  */
-int network_connection(int port, User* users) {
+int network_connection(int port, User* users) {    
 	struct sockaddr_in serverAddr;
     int serverfd;
     int con;
@@ -434,16 +429,15 @@ int network_connection(int port, User* users) {
     pthread_t pid;
     Connectinfo connectinfo;
 
-	while (1) {
-		sock = accept(serverfd, (struct sockaddr*)&newAddr, &addr_size);
+	while ((sock = accept(serverfd, (struct sockaddr*)&newAddr, &addr_size))) {
+		connectinfo.socket = sock;
+        connectinfo.users = users;
         
 		if (sock < 0) {
 			printf("%s", CONER);
 		    return 0;
 		} else {
             // Use threads to handle multiple clients
-            connectinfo.socket = sock;
-            connectinfo.users = users;
             pthread_create(&pid, NULL, new_connection, &connectinfo);
         }
 	}

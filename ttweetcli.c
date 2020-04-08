@@ -40,10 +40,11 @@ int check_user(int sock, char* username) {
  */
 void* handle_response(void* arg) {
     Response* rsp = (Response*)arg;
+    int sock = rsp->socket;
     char response[BUFFERSIZE] = {0};
     
     while (1) {
-        read(rsp->socket, response, BUFFERSIZE);
+        read(sock, response, BUFFERSIZE);
         printf("%s", response);
         memset(response, 0, sizeof(response));
     }
@@ -94,7 +95,7 @@ int network_connection(int port, char* ip, char* username) {
     Response rsp;
     rsp.socket = sock;
     pthread_create(&threadId, NULL, handle_response, &rsp);
-
+    
 	while (1) {
         fgets(buffer, BUFFERSIZE, stdin);
 
