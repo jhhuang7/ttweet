@@ -436,6 +436,8 @@ int check_args(int argc, char** argv) {
  * Main function of program.
  */
 int main(int argc, char** argv) {
+    signal(SIGPIPE, SIG_IGN);
+
     int args = check_args(argc, argv);
     if (!args) {
         return 0;

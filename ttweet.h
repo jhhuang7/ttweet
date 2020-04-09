@@ -8,6 +8,7 @@
 #include <netinet/in.h> 
 #include <arpa/inet.h> 
 #include <pthread.h>
+#include <signal.h>
 
 // Hash defines (no MAGIC or overly repeated values)
 #define MIN         0
@@ -40,7 +41,7 @@
 #define LOGIN           "username legal, connection established.\n"
 #define BYE             "bye bye\n"
 #define SUCCOP          "operation success\n"
-#define NOFEEDBACK      "\n"
+#define NOFEEDBACK      ""
 
 // Valid Commands
 #define TWT             "tweet​"
@@ -65,17 +66,12 @@ pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 // Structs
 typedef struct {
-    char message[BUFFERSIZE];
-    char hashtag[BUFFERSIZE];
-} Tweet;
-
-typedef struct {
     int socket;
     char* username;
     int numsusbs;
     char* subscriptions[MAXHASH];
     int numtwts;
-    Tweet* tweets;
+    char** tweets;
 } User;
 
 typedef struct {

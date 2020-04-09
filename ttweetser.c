@@ -11,16 +11,16 @@ int handle_tweet(int sock, User* users, int id, char* tweet,
         char** hashtag, int hashes) {
     // Increase size of message list if limit is reached
     if (users[id].numtwts % BUFFERSIZE == 0) {
-        users[id].tweets = (Tweet*)
+        users[id].tweets = (char**)
             realloc(users[id].tweets, sizeof(users[id].tweets) * BUFFERSIZE);
     }
     
     // Store the tweet
-    strcpy(users[id].tweets[users[id].numtwts].message, tweet);
-    strcpy(users[id].tweets[users[id].numtwts].hashtag, "");
+    strcpy(users[id].tweets[users[id].numtwts], tweet);
+    strcat(users[id].tweets[users[id].numtwts], " ");
     for (int i = 0; i < hashes; i++) {
-        strcat(users[id].tweets[users[id].numtwts].hashtag, HASHTAG);
-        strcat(users[id].tweets[users[id].numtwts].hashtag, hashtag[i]);
+        strcat(users[id].tweets[users[id].numtwts], HASHTAG);
+        strcat(users[id].tweets[users[id].numtwts], hashtag[i]);
     }
     users[id].numtwts += 1;
     send(sock, NOFEEDBACK, strlen(NOFEEDBACK), 0);
@@ -132,9 +132,7 @@ int handle_timeline(int sock, User* users, int id) {
         for (int j = 0; j < users[i].numtwts; j++) {
             strcat(response, users[i].username);
             strcat(response, ": ");
-            strcat(response, users[i].tweets[j].message);
-            strcat(response, " ");
-            strcat(response, users[i].tweets[j].hashtag);
+            strcat(response, users[i].tweets[j]);
             strcat(response, "\n");
         }
     }
@@ -181,9 +179,7 @@ int handle_gettweets(int sock, User* users, int id, char* username) {
             for (int j = 0; j < users[i].numtwts; j++) {
                 strcat(response, username);
                 strcat(response, ": ");
-                strcat(response, users[i].tweets[j].message);
-                strcat(response, " ");
-                strcat(response, users[i].tweets[j].hashtag);
+                strcat(response, users[i].tweets[j]);
                 strcat(response, "\n");
             }
             // Send response to client
@@ -216,7 +212,10 @@ int handle_exit(int sock, User* users, int id) {
         strcpy(users[id].subscriptions[i], "\0");
     }
     free(users[id].tweets);
-    users[id].tweets = malloc(sizeof(Tweet) * BUFFERSIZE);
+    users[id].tweets = malloc(sizeof(char*) * BUFFERSIZE);
+    for (int k = 0; k < BUFFERSIZE; k++) {
+        users[id].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
+    }
     strcpy(users[id].username, "\0");
     numusers -= 1;
     return 2;
@@ -442,7 +441,7 @@ int network_connection(int port, User* users) {
         }
 	}
 
-	close(serverfd);
+	// close(serverfd);
     return 1; 
 }
 
@@ -478,7 +477,10 @@ int check_args(int argc, char** argv) {
             users[i].subscriptions[j] = malloc(sizeof(char) * BUFFERSIZE);
         }
         users[i].numtwts = 0;
-        users[i].tweets = malloc(sizeof(Tweet) * BUFFERSIZE);
+        users[i].tweets = malloc(sizeof(char*) * BUFFERSIZE);
+        for (int k = 0; k < BUFFERSIZE; k++) {
+            users[i].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
+        }
     }
 
     // Server running forever
@@ -489,6 +491,8 @@ int check_args(int argc, char** argv) {
  * Main function of program.
  */
 int main(int argc, char** argv) {
+    signal(SIGPIPE, SIG_IGN);
+
     int args = check_args(argc, argv);
     if (!args) {
         return 0;
