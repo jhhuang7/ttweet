@@ -1,13 +1,18 @@
 CFLAGS = -Wall -pedantic -std=gnu99 -g -pthread
-.PHONY: all extra
-.DEFAULT_GOAL := all
+
 all: ttweetser ttweetcli
 
 ttweetser: ttweetser.c
-	gcc $(CFLAGS) ttweetser.c -o ttweetser
 
 ttweetcli: ttweetcli.c
-	gcc $(CFLAGS) ttweetcli.c -o ttweetcli
-	
+
+test: ttweetcli ttweetser
+	python3 judge2.separate.py c
+	mv client.txt our_client.txt
+	mv server.txt our_server.txt
+	git diff --no-index their_client.txt our_client.txt > \
+	    client.diff
+
 clean:
-	rm ttweetser ttweetcli
+	rm ttweetser ttweetcli cs3251*.client.txt network*.client.txt \
+	    cxworks.client.txt receiver.client.txt sender.client.txt
