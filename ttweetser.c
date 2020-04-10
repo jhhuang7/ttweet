@@ -9,20 +9,26 @@
  */
 int handle_tweet(int sock, User* users, int id, char* tweet, 
         char** hashtag, int hashes) {
-    // Increase size of message list if limit is reached
-    if (users[id].numtwts % BUFFERSIZE == 0) {
+    // Increase size of message lists if limit is reached
+    if (users[id].numtwts > 0 && users[id].numtwts % BUFFERSIZE == 0) {
         users[id].tweets = (char**)
             realloc(users[id].tweets, sizeof(users[id].tweets) * BUFFERSIZE);
     }
+    if (numtweets > 0 && numtweets % BUFFERSIZE == 0) {
+        tweets = (Tweet*)realloc(tweets, sizeof(tweets) * BUFFERSIZE);
+    }
     
-    // Store the tweet
+    // Store the tweet with user and globally
     strcpy(users[id].tweets[users[id].numtwts], tweet);
     strcat(users[id].tweets[users[id].numtwts], " ");
     for (int i = 0; i < hashes; i++) {
         strcat(users[id].tweets[users[id].numtwts], HASHTAG);
         strcat(users[id].tweets[users[id].numtwts], hashtag[i]);
     }
+    strcpy(tweets[numtweets].username, users[id].username);
+    strcpy(tweets[numtweets].message, users[id].tweets[users[id].numtwts]);
     users[id].numtwts += 1;
+    numtweets += 1;
     send(sock, NOFEEDBACK, strlen(NOFEEDBACK), 0);
 
     // Deliver to all the clients who are subscribed to the hashtag
@@ -128,11 +134,11 @@ int handle_timeline(int sock, User* users, int id) {
     strcpy(response, "");
 
     // Build up all tweets
-    for (int i = 0; i < numusers; i++) {
-        for (int j = 0; j < users[i].numtwts; j++) {
-            strcat(response, users[i].username);
+    for (int i = 0; i < numtweets; i++) {
+        if (strcmp(tweets[i].username, "") != 0) {
+            strcat(response, tweets[i].username);
             strcat(response, ": ");
-            strcat(response, users[i].tweets[j]);
+            strcat(response, tweets[i].message);
             strcat(response, "\n");
         }
     }
@@ -205,20 +211,26 @@ int handle_exit(int sock, User* users, int id) {
     // Client will automatically print "bye bye"
 
     // Clean up on server side
+    for (int j = 0; j < numtweets; j++) {
+        if (strcmp(users[id].username, tweets[j].username) == 0) {
+            strcpy(tweets[j].username, "");
+            strcpy(tweets[j].message, "");
+        }
+    }
+
+    for (int i = 0; i < MAXHASH; i++) {
+        strcpy(users[id].subscriptions[i], "");
+    }
+    for (int k = 0; k < BUFFERSIZE; k++) {
+        strcpy(users[id].tweets[k], "");
+    }
+    strcpy(users[id].username, "");
     users[id].numsusbs = 0;
     users[id].numtwts = 0;
     users[id].socket = 0;
-    for (int i = 0; i < MAXHASH; i++) {
-        strcpy(users[id].subscriptions[i], "\0");
-    }
-    free(users[id].tweets);
-    users[id].tweets = malloc(sizeof(char*) * BUFFERSIZE);
-    for (int k = 0; k < BUFFERSIZE; k++) {
-        users[id].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
-    }
-    strcpy(users[id].username, "\0");
+
     numusers -= 1;
-    return 2;
+    return 1;
 }
 
 /**
@@ -251,7 +263,7 @@ int user_connection(User* users, char* username, char* buffer, int socket) {
 
     int status = get_user_id(users, name);
     int id;
-    if (status == -1 && numusers <= MAXCONNS) {
+    if (status == -1 && numusers < MAXCONNS) {
         strcpy(username, name);
 
         for (int i = 0; i < MAXCONNS; i++) {
@@ -441,7 +453,7 @@ int network_connection(int port, User* users) {
         }
 	}
 
-	// close(serverfd);
+	close(serverfd);
     return 1; 
 }
 
@@ -468,7 +480,7 @@ int check_args(int argc, char** argv) {
     }
 
     // Initialize list of users for storage
-    User* users = malloc(sizeof(User) * MAXCONNS);
+    User* users = (User*)malloc(sizeof(User) * MAXCONNS);
     for (int i = 0; i < MAXCONNS; i++) {
         users[i].socket = 0;
         users[i].username = malloc(sizeof(char) * BUFFERSIZE);
@@ -481,6 +493,12 @@ int check_args(int argc, char** argv) {
         for (int k = 0; k < BUFFERSIZE; k++) {
             users[i].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
         }
+    }
+
+    tweets = (Tweet*)malloc(sizeof(Tweet) * BUFFERSIZE);
+    for (int a = 0; a < BUFFERSIZE; a++) {
+        tweets[a].username = malloc(sizeof(char) * BUFFERSIZE);
+        tweets[a].message = malloc(sizeof(char) * BUFFERSIZE);
     }
 
     // Server running forever

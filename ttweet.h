@@ -60,11 +60,12 @@
 #define EXITCODE        "-e"
 #define CONNCECTCODE    "-c"
 
-// Global variables
-int numusers = 0;
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
-
 // Structs
+typedef struct {
+    char* username;
+    char* message;
+} Tweet;
+
 typedef struct {
     int socket;
     char* username;
@@ -82,3 +83,9 @@ typedef struct {
     int socket;
     User* users;
 } Connectinfo;
+
+// Global variables
+int numusers = 0;
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+Tweet* tweets;
+int numtweets = 0;
