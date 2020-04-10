@@ -1,6 +1,7 @@
 test_no_server
 
 run command: ./ttweetcli 127.0.0.1 13000 cxworks
+connection error, please check your server: Connection refused
 test_no_server _ end
 
 run command on server: ./ttweetser 13000
@@ -30,289 +31,194 @@ test_single_client
 run command: ./ttweetcli 127.0.0.1 13000 cxworks
 
 user cxworks stdin command: tweet "" #hash
-error happens
 
 user cxworks stdin command: tweet "message" #hash
-error happens
 
 user cxworks stdin command: tweet "message message" #hash
-error happens
 
 user cxworks stdin command: subscribe #echo
-error happens
 
 user cxworks stdin command: tweet " " #echo
-error happens
 
 user cxworks stdin command: tweet "cs3251" #echo
-error happens
 
 user cxworks stdin command: tweet "fsadfsdfd" #echo
-error happens
 
 user cxworks stdin command: tweet "empty message" #echo
-error happens
 
 user cxworks stdin command: tweet "message" #echo
-error happens
 
 user cxworks stdin command: tweet "Empty Message" #echo
-error happens
 
 user cxworks stdin command: tweet "d" #echo
-error happens
 
 user cxworks stdin command: tweet "u" #echo
-error happens
 
 user cxworks stdin command: tweet "download" #echo
-error happens
 
 user cxworks stdin command: tweet "~" #echo
-error happens
 
 user cxworks stdin command: tweet "!" #echo
-error happens
 
 user cxworks stdin command: tweet "@" #echo
-error happens
 
 user cxworks stdin command: tweet "#" #echo
-error happens
 
 user cxworks stdin command: tweet "$" #echo
-error happens
 
 user cxworks stdin command: tweet "%" #echo
-error happens
 
 user cxworks stdin command: tweet "^" #echo
-error happens
 
 user cxworks stdin command: tweet "&" #echo
-error happens
 
 user cxworks stdin command: tweet "*" #echo
-error happens
 
 user cxworks stdin command: tweet "(" #echo
-error happens
 
 user cxworks stdin command: tweet ")" #echo
-error happens
 
 user cxworks stdin command: tweet "_" #echo
-error happens
 
 user cxworks stdin command: tweet "+" #echo
-error happens
 
 user cxworks stdin command: tweet "-" #echo
-error happens
 
 user cxworks stdin command: tweet "=" #echo
-error happens
 
 user cxworks stdin command: tweet "[" #echo
-error happens
 
 user cxworks stdin command: tweet "]" #echo
-error happens
 
 user cxworks stdin command: tweet "{" #echo
-error happens
 
 user cxworks stdin command: tweet "}" #echo
-error happens
 
 user cxworks stdin command: tweet ";" #echo
-error happens
 
 user cxworks stdin command: tweet ":" #echo
-error happens
 
 user cxworks stdin command: tweet "." #echo
-error happens
 
 user cxworks stdin command: tweet "," #echo
-error happens
 
 user cxworks stdin command: tweet "<" #echo
-error happens
 
 user cxworks stdin command: tweet ">" #echo
-error happens
 
 user cxworks stdin command: tweet "/" #echo
-error happens
 
 user cxworks stdin command: tweet "?" #echo
-error happens
 
 user cxworks stdin command: tweet "|" #echo
-error happens
 
 user cxworks stdin command: tweet "\" #echo
-error happens
 
 user cxworks stdin command: tweet "\0" #echo
-error happens
 
 user cxworks stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cxworks stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
 user cxworks stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cxworks stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
 user cxworks stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cxworks stdin command: unsubscribe #echo
-error happens
 
 user cxworks stdin command: tweet " " #echo
-error happens
 
 user cxworks stdin command: tweet "cs3251" #echo
-error happens
 
 user cxworks stdin command: tweet "fsadfsdfd" #echo
-error happens
 
 user cxworks stdin command: tweet "empty message" #echo
-error happens
 
 user cxworks stdin command: tweet "message" #echo
-error happens
 
 user cxworks stdin command: tweet "Empty Message" #echo
-error happens
 
 user cxworks stdin command: tweet "d" #echo
-error happens
 
 user cxworks stdin command: tweet "u" #echo
-error happens
 
 user cxworks stdin command: tweet "download" #echo
-error happens
 
 user cxworks stdin command: tweet "~" #echo
-error happens
 
 user cxworks stdin command: tweet "!" #echo
-error happens
 
 user cxworks stdin command: tweet "@" #echo
-error happens
 
 user cxworks stdin command: tweet "#" #echo
-error happens
 
 user cxworks stdin command: tweet "$" #echo
-error happens
 
 user cxworks stdin command: tweet "%" #echo
-error happens
 
 user cxworks stdin command: tweet "^" #echo
-error happens
 
 user cxworks stdin command: tweet "&" #echo
-error happens
 
 user cxworks stdin command: tweet "*" #echo
-error happens
 
 user cxworks stdin command: tweet "(" #echo
-error happens
 
 user cxworks stdin command: tweet ")" #echo
-error happens
 
 user cxworks stdin command: tweet "_" #echo
-error happens
 
 user cxworks stdin command: tweet "+" #echo
-error happens
 
 user cxworks stdin command: tweet "-" #echo
-error happens
 
 user cxworks stdin command: tweet "=" #echo
-error happens
 
 user cxworks stdin command: tweet "[" #echo
-error happens
 
 user cxworks stdin command: tweet "]" #echo
-error happens
 
 user cxworks stdin command: tweet "{" #echo
-error happens
 
 user cxworks stdin command: tweet "}" #echo
-error happens
 
 user cxworks stdin command: tweet ";" #echo
-error happens
 
 user cxworks stdin command: tweet ":" #echo
-error happens
 
 user cxworks stdin command: tweet "." #echo
-error happens
 
 user cxworks stdin command: tweet "," #echo
-error happens
 
 user cxworks stdin command: tweet "<" #echo
-error happens
 
 user cxworks stdin command: tweet ">" #echo
-error happens
 
 user cxworks stdin command: tweet "/" #echo
-error happens
 
 user cxworks stdin command: tweet "?" #echo
-error happens
 
 user cxworks stdin command: tweet "|" #echo
-error happens
 
 user cxworks stdin command: tweet "\" #echo
-error happens
 
 user cxworks stdin command: tweet "\0" #echo
-error happens
 
 user cxworks stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cxworks stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
 user cxworks stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cxworks stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
 user cxworks stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cxworks stdin command: timeline
-error happens
 
 user cxworks stdin command: exit
-error happens
 test_single_client _ end
 
 test_multi_client
@@ -327,564 +233,386 @@ run command: ./ttweetcli 127.0.0.1 13000 cs32513
 
 run command: ./ttweetcli 127.0.0.1 13000 cs32514
 
-user cs32514 stdin command: tweet "" #hash
-error happens
-
 user cs32510 stdin command: tweet "" #hash
-error happens
 
 user cs32511 stdin command: tweet "" #hash
-error happens
-
-user cs32513 stdin command: tweet "" #hash
-error happens
 
 user cs32512 stdin command: tweet "" #hash
-error happens
 
-user cs32514 stdin command: tweet "message" #hash
-error happens
+user cs32513 stdin command: tweet "" #hash
+
+user cs32514 stdin command: tweet "" #hash
 
 user cs32510 stdin command: tweet "message" #hash
-error happens
 
 user cs32511 stdin command: tweet "message" #hash
-error happens
-
-user cs32513 stdin command: tweet "message" #hash
-error happens
 
 user cs32512 stdin command: tweet "message" #hash
-error happens
 
-user cs32514 stdin command: tweet "message message" #hash
-error happens
+user cs32513 stdin command: tweet "message" #hash
+
+user cs32514 stdin command: tweet "message" #hash
 
 user cs32510 stdin command: tweet "message message" #hash
-error happens
 
 user cs32511 stdin command: tweet "message message" #hash
-error happens
-
-user cs32513 stdin command: tweet "message message" #hash
-error happens
 
 user cs32512 stdin command: tweet "message message" #hash
-error happens
 
-user cs32514 stdin command: subscribe #echo
-error happens
+user cs32513 stdin command: tweet "message message" #hash
+
+user cs32514 stdin command: tweet "message message" #hash
 
 user cs32510 stdin command: subscribe #echo
-error happens
 
 user cs32511 stdin command: subscribe #echo
-error happens
-
-user cs32513 stdin command: subscribe #echo
-error happens
 
 user cs32512 stdin command: subscribe #echo
-error happens
 
-user cs32514 stdin command: tweet " " #echo
-error happens
+user cs32513 stdin command: subscribe #echo
+
+user cs32514 stdin command: subscribe #echo
 
 user cs32510 stdin command: tweet " " #echo
-error happens
 
 user cs32511 stdin command: tweet " " #echo
-error happens
-
-user cs32513 stdin command: tweet " " #echo
-error happens
 
 user cs32512 stdin command: tweet " " #echo
-error happens
 
-user cs32514 stdin command: tweet "cs3251" #echo
-error happens
+user cs32513 stdin command: tweet " " #echo
+
+user cs32514 stdin command: tweet " " #echo
 
 user cs32510 stdin command: tweet "cs3251" #echo
-error happens
 
 user cs32511 stdin command: tweet "cs3251" #echo
-error happens
-
-user cs32513 stdin command: tweet "cs3251" #echo
-error happens
 
 user cs32512 stdin command: tweet "cs3251" #echo
-error happens
 
-user cs32514 stdin command: tweet "fsadfsdfd" #echo
-error happens
+user cs32513 stdin command: tweet "cs3251" #echo
+
+user cs32514 stdin command: tweet "cs3251" #echo
 
 user cs32510 stdin command: tweet "fsadfsdfd" #echo
-error happens
 
 user cs32511 stdin command: tweet "fsadfsdfd" #echo
-error happens
-
-user cs32513 stdin command: tweet "fsadfsdfd" #echo
-error happens
 
 user cs32512 stdin command: tweet "fsadfsdfd" #echo
-error happens
 
-user cs32514 stdin command: tweet "empty message" #echo
-error happens
+user cs32513 stdin command: tweet "fsadfsdfd" #echo
+
+user cs32514 stdin command: tweet "fsadfsdfd" #echo
 
 user cs32510 stdin command: tweet "empty message" #echo
-error happens
 
 user cs32511 stdin command: tweet "empty message" #echo
-error happens
-
-user cs32513 stdin command: tweet "empty message" #echo
-error happens
 
 user cs32512 stdin command: tweet "empty message" #echo
-error happens
 
-user cs32514 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
+user cs32513 stdin command: tweet "empty message" #echo
+
+user cs32514 stdin command: tweet "empty message" #echo
 
 user cs32510 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
 
 user cs32511 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
-
-user cs32513 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
 
 user cs32512 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
 
-user cs32514 stdin command: tweet "\0" #echo
-error happens
+user cs32513 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
+
+user cs32514 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
 
 user cs32510 stdin command: tweet "\0" #echo
-error happens
 
 user cs32511 stdin command: tweet "\0" #echo
-error happens
-
-user cs32513 stdin command: tweet "\0" #echo
-error happens
 
 user cs32512 stdin command: tweet "\0" #echo
-error happens
 
-user cs32514 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
+user cs32513 stdin command: tweet "\0" #echo
+
+user cs32514 stdin command: tweet "\0" #echo
 
 user cs32510 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32511 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
-
-user cs32513 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32512 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
-user cs32514 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
+user cs32513 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
+
+user cs32514 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
 user cs32510 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
 user cs32511 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
-
-user cs32513 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
 user cs32512 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
-user cs32514 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
+user cs32513 stdin command: tweet "                                                                                                                                                     " #echo
+
+user cs32514 stdin command: tweet "                                                                                                                                                     " #echo
 
 user cs32510 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32511 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
-
-user cs32513 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32512 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
-user cs32514 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
+user cs32513 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
+
+user cs32514 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
 user cs32510 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
 user cs32511 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
-
-user cs32513 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
 user cs32512 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
-user cs32514 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
+user cs32513 stdin command: tweet "                                                                                                                                                      " #echo
+
+user cs32514 stdin command: tweet "                                                                                                                                                      " #echo
 
 user cs32510 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32511 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
-
-user cs32513 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32512 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
-user cs32514 stdin command: unsubscribe #echo
-error happens
+user cs32513 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
+
+user cs32514 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
 user cs32510 stdin command: unsubscribe #echo
-error happens
 
 user cs32511 stdin command: unsubscribe #echo
-error happens
-
-user cs32513 stdin command: unsubscribe #echo
-error happens
 
 user cs32512 stdin command: unsubscribe #echo
-error happens
 
-user cs32514 stdin command: tweet " " #echo
-error happens
+user cs32513 stdin command: unsubscribe #echo
+
+user cs32514 stdin command: unsubscribe #echo
 
 user cs32510 stdin command: tweet " " #echo
-error happens
 
 user cs32511 stdin command: tweet " " #echo
-error happens
-
-user cs32513 stdin command: tweet " " #echo
-error happens
 
 user cs32512 stdin command: tweet " " #echo
-error happens
 
-user cs32514 stdin command: tweet "cs3251" #echo
-error happens
+user cs32513 stdin command: tweet " " #echo
+
+user cs32514 stdin command: tweet " " #echo
 
 user cs32510 stdin command: tweet "cs3251" #echo
-error happens
 
 user cs32511 stdin command: tweet "cs3251" #echo
-error happens
-
-user cs32513 stdin command: tweet "cs3251" #echo
-error happens
 
 user cs32512 stdin command: tweet "cs3251" #echo
-error happens
 
-user cs32514 stdin command: tweet "fsadfsdfd" #echo
-error happens
+user cs32513 stdin command: tweet "cs3251" #echo
+
+user cs32514 stdin command: tweet "cs3251" #echo
 
 user cs32510 stdin command: tweet "fsadfsdfd" #echo
-error happens
 
 user cs32511 stdin command: tweet "fsadfsdfd" #echo
-error happens
-
-user cs32513 stdin command: tweet "fsadfsdfd" #echo
-error happens
 
 user cs32512 stdin command: tweet "fsadfsdfd" #echo
-error happens
 
-user cs32514 stdin command: tweet "empty message" #echo
-error happens
+user cs32513 stdin command: tweet "fsadfsdfd" #echo
+
+user cs32514 stdin command: tweet "fsadfsdfd" #echo
 
 user cs32510 stdin command: tweet "empty message" #echo
-error happens
 
 user cs32511 stdin command: tweet "empty message" #echo
-error happens
-
-user cs32513 stdin command: tweet "empty message" #echo
-error happens
 
 user cs32512 stdin command: tweet "empty message" #echo
-error happens
 
-user cs32514 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
+user cs32513 stdin command: tweet "empty message" #echo
+
+user cs32514 stdin command: tweet "empty message" #echo
 
 user cs32510 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
 
 user cs32511 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
-
-user cs32513 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
 
 user cs32512 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
-error happens
 
-user cs32514 stdin command: tweet "\0" #echo
-error happens
+user cs32513 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
+
+user cs32514 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #echo
 
 user cs32510 stdin command: tweet "\0" #echo
-error happens
 
 user cs32511 stdin command: tweet "\0" #echo
-error happens
-
-user cs32513 stdin command: tweet "\0" #echo
-error happens
 
 user cs32512 stdin command: tweet "\0" #echo
-error happens
 
-user cs32514 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
+user cs32513 stdin command: tweet "\0" #echo
+
+user cs32514 stdin command: tweet "\0" #echo
 
 user cs32510 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32511 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
-
-user cs32513 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32512 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
-user cs32514 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
+user cs32513 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
+
+user cs32514 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
 user cs32510 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
 user cs32511 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
-
-user cs32513 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
 user cs32512 stdin command: tweet "                                                                                                                                                     " #echo
-error happens
 
-user cs32514 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
+user cs32513 stdin command: tweet "                                                                                                                                                     " #echo
+
+user cs32514 stdin command: tweet "                                                                                                                                                     " #echo
 
 user cs32510 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32511 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
-
-user cs32513 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32512 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
-user cs32514 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
+user cs32513 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
+
+user cs32514 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
 user cs32510 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
 user cs32511 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
-
-user cs32513 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
 user cs32512 stdin command: tweet "                                                                                                                                                      " #echo
-error happens
 
-user cs32514 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
+user cs32513 stdin command: tweet "                                                                                                                                                      " #echo
+
+user cs32514 stdin command: tweet "                                                                                                                                                      " #echo
 
 user cs32510 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32511 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
-
-user cs32513 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
 user cs32512 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
-error happens
 
-user cs32514 stdin command: timeline
-error happens
+user cs32513 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
-user cs32510 stdin command: timeline
-error happens
-
-user cs32511 stdin command: timeline
-error happens
-
-user cs32513 stdin command: timeline
-error happens
-
-user cs32512 stdin command: timeline
-error happens
-
-user cs32514 stdin command: timeline
-error happens
+user cs32514 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #echo
 
 user cs32510 stdin command: timeline
-error happens
 
 user cs32511 stdin command: timeline
-error happens
-
-user cs32513 stdin command: timeline
-error happens
 
 user cs32512 stdin command: timeline
-error happens
 
-user cs32514 stdin command: getusers
-error happens
+user cs32513 stdin command: timeline
+
+user cs32514 stdin command: timeline
+
+user cs32510 stdin command: timeline
+
+user cs32511 stdin command: timeline
+
+user cs32512 stdin command: timeline
+
+user cs32513 stdin command: timeline
+
+user cs32514 stdin command: timeline
 
 user cs32510 stdin command: getusers
-error happens
 
 user cs32511 stdin command: getusers
-error happens
-
-user cs32513 stdin command: getusers
-error happens
 
 user cs32512 stdin command: getusers
-error happens
 
-user cs32514 stdin command: gettweets cs32514
-error happens
+user cs32513 stdin command: getusers
 
-user cs32514 stdin command: gettweets cs32510
-error happens
-
-user cs32514 stdin command: gettweets cs32511
-error happens
-
-user cs32514 stdin command: gettweets cs32513
-error happens
-
-user cs32514 stdin command: gettweets cs32512
-error happens
-
-user cs32510 stdin command: gettweets cs32514
-error happens
+user cs32514 stdin command: getusers
 
 user cs32510 stdin command: gettweets cs32510
-error happens
 
 user cs32510 stdin command: gettweets cs32511
-error happens
-
-user cs32510 stdin command: gettweets cs32513
-error happens
 
 user cs32510 stdin command: gettweets cs32512
-error happens
 
-user cs32511 stdin command: gettweets cs32514
-error happens
+user cs32510 stdin command: gettweets cs32513
+
+user cs32510 stdin command: gettweets cs32514
 
 user cs32511 stdin command: gettweets cs32510
-error happens
 
 user cs32511 stdin command: gettweets cs32511
-error happens
-
-user cs32511 stdin command: gettweets cs32513
-error happens
 
 user cs32511 stdin command: gettweets cs32512
-error happens
 
-user cs32513 stdin command: gettweets cs32514
-error happens
+user cs32511 stdin command: gettweets cs32513
 
-user cs32513 stdin command: gettweets cs32510
-error happens
-
-user cs32513 stdin command: gettweets cs32511
-error happens
-
-user cs32513 stdin command: gettweets cs32513
-error happens
-
-user cs32513 stdin command: gettweets cs32512
-error happens
-
-user cs32512 stdin command: gettweets cs32514
-error happens
+user cs32511 stdin command: gettweets cs32514
 
 user cs32512 stdin command: gettweets cs32510
-error happens
 
 user cs32512 stdin command: gettweets cs32511
-error happens
-
-user cs32512 stdin command: gettweets cs32513
-error happens
 
 user cs32512 stdin command: gettweets cs32512
-error happens
 
-user cs32514 stdin command: exit
-error happens
+user cs32512 stdin command: gettweets cs32513
+
+user cs32512 stdin command: gettweets cs32514
+
+user cs32513 stdin command: gettweets cs32510
+
+user cs32513 stdin command: gettweets cs32511
+
+user cs32513 stdin command: gettweets cs32512
+
+user cs32513 stdin command: gettweets cs32513
+
+user cs32513 stdin command: gettweets cs32514
+
+user cs32514 stdin command: gettweets cs32510
+
+user cs32514 stdin command: gettweets cs32511
+
+user cs32514 stdin command: gettweets cs32512
+
+user cs32514 stdin command: gettweets cs32513
+
+user cs32514 stdin command: gettweets cs32514
 
 user cs32510 stdin command: exit
-error happens
 
 user cs32511 stdin command: exit
-error happens
-
-user cs32513 stdin command: exit
-error happens
 
 user cs32512 stdin command: exit
-error happens
+
+user cs32513 stdin command: exit
+
+user cs32514 stdin command: exit
 test_multi_client _ end
 
 
 run command: ./ttweetcli 127.0.0.1 13000 cx
 
 run command on same user: ./ttweetcli 127.0.0.1 13000 cx
-this step should be failed
+this step should be failedusername illegal, connection refused.
+
 user cx stdin command: exit
-error happens
+username legal, connection established.
+bye bye
 
 run command on same user: ./ttweetcli 127.0.0.1 13000 cx
 this step should succeed
 user cx stdin command: exit
-error happens
+username legal, connection established.
+bye bye
 
 run command: ./ttweetcli 127.0.0.1 13000 network
 
 user network stdin command: subscribe #ALL
-error happens
 
 run command: ./ttweetcli 127.0.0.1 13000 network0
 
@@ -894,1121 +622,749 @@ run command: ./ttweetcli 127.0.0.1 13000 network2
 
 run command: ./ttweetcli 127.0.0.1 13000 network3
 
-user network2 stdin command: subscribe #0
-error happens
+user network0 stdin command: subscribe #0
 
 user network1 stdin command: subscribe #1
-error happens
 
-user network3 stdin command: subscribe #2
-error happens
+user network2 stdin command: subscribe #2
 
-user network0 stdin command: subscribe #3
-error happens
-
-user network2 stdin command: tweet " " #0#1
-error happens
-
-user network2 stdin command: tweet "cs3251" #0#1
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #0#1
-error happens
-
-user network2 stdin command: tweet "empty message" #0#1
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
-
-user network2 stdin command: tweet "\0" #0#1
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network2 stdin command: tweet " " #1#2
-error happens
-
-user network2 stdin command: tweet "cs3251" #1#2
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #1#2
-error happens
-
-user network2 stdin command: tweet "empty message" #1#2
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
-
-user network2 stdin command: tweet "\0" #1#2
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network2 stdin command: tweet " " #2#3
-error happens
-
-user network2 stdin command: tweet "cs3251" #2#3
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #2#3
-error happens
-
-user network2 stdin command: tweet "empty message" #2#3
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
-
-user network2 stdin command: tweet "\0" #2#3
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network2 stdin command: tweet " " #3#0
-error happens
-
-user network2 stdin command: tweet "cs3251" #3#0
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #3#0
-error happens
-
-user network2 stdin command: tweet "empty message" #3#0
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
-
-user network2 stdin command: tweet "\0" #3#0
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network1 stdin command: tweet " " #0#1
-error happens
-
-user network1 stdin command: tweet "cs3251" #0#1
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #0#1
-error happens
-
-user network1 stdin command: tweet "empty message" #0#1
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
-
-user network1 stdin command: tweet "\0" #0#1
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network1 stdin command: tweet " " #1#2
-error happens
-
-user network1 stdin command: tweet "cs3251" #1#2
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #1#2
-error happens
-
-user network1 stdin command: tweet "empty message" #1#2
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
-
-user network1 stdin command: tweet "\0" #1#2
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network1 stdin command: tweet " " #2#3
-error happens
-
-user network1 stdin command: tweet "cs3251" #2#3
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #2#3
-error happens
-
-user network1 stdin command: tweet "empty message" #2#3
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
-
-user network1 stdin command: tweet "\0" #2#3
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network1 stdin command: tweet " " #3#0
-error happens
-
-user network1 stdin command: tweet "cs3251" #3#0
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #3#0
-error happens
-
-user network1 stdin command: tweet "empty message" #3#0
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
-
-user network1 stdin command: tweet "\0" #3#0
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network3 stdin command: tweet " " #0#1
-error happens
-
-user network3 stdin command: tweet "cs3251" #0#1
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #0#1
-error happens
-
-user network3 stdin command: tweet "empty message" #0#1
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
-
-user network3 stdin command: tweet "\0" #0#1
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network3 stdin command: tweet " " #1#2
-error happens
-
-user network3 stdin command: tweet "cs3251" #1#2
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #1#2
-error happens
-
-user network3 stdin command: tweet "empty message" #1#2
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
-
-user network3 stdin command: tweet "\0" #1#2
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network3 stdin command: tweet " " #2#3
-error happens
-
-user network3 stdin command: tweet "cs3251" #2#3
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #2#3
-error happens
-
-user network3 stdin command: tweet "empty message" #2#3
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
-
-user network3 stdin command: tweet "\0" #2#3
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network3 stdin command: tweet " " #3#0
-error happens
-
-user network3 stdin command: tweet "cs3251" #3#0
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #3#0
-error happens
-
-user network3 stdin command: tweet "empty message" #3#0
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
-
-user network3 stdin command: tweet "\0" #3#0
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
+user network3 stdin command: subscribe #3
 
 user network0 stdin command: tweet " " #0#1
-error happens
 
 user network0 stdin command: tweet "cs3251" #0#1
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #0#1
-error happens
 
 user network0 stdin command: tweet "empty message" #0#1
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
 
 user network0 stdin command: tweet "\0" #0#1
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
 
 user network0 stdin command: tweet " " #1#2
-error happens
 
 user network0 stdin command: tweet "cs3251" #1#2
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #1#2
-error happens
 
 user network0 stdin command: tweet "empty message" #1#2
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
 
 user network0 stdin command: tweet "\0" #1#2
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
 
 user network0 stdin command: tweet " " #2#3
-error happens
 
 user network0 stdin command: tweet "cs3251" #2#3
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #2#3
-error happens
 
 user network0 stdin command: tweet "empty message" #2#3
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
 
 user network0 stdin command: tweet "\0" #2#3
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
 
 user network0 stdin command: tweet " " #3#0
-error happens
 
 user network0 stdin command: tweet "cs3251" #3#0
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #3#0
-error happens
 
 user network0 stdin command: tweet "empty message" #3#0
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
 
 user network0 stdin command: tweet "\0" #3#0
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
+
+user network1 stdin command: tweet " " #0#1
+
+user network1 stdin command: tweet "cs3251" #0#1
+
+user network1 stdin command: tweet "fsadfsdfd" #0#1
+
+user network1 stdin command: tweet "empty message" #0#1
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
+
+user network1 stdin command: tweet "\0" #0#1
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network1 stdin command: tweet "                                                                                                                                                     " #0#1
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network1 stdin command: tweet "                                                                                                                                                      " #0#1
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network1 stdin command: tweet " " #1#2
+
+user network1 stdin command: tweet "cs3251" #1#2
+
+user network1 stdin command: tweet "fsadfsdfd" #1#2
+
+user network1 stdin command: tweet "empty message" #1#2
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
+
+user network1 stdin command: tweet "\0" #1#2
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network1 stdin command: tweet "                                                                                                                                                     " #1#2
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network1 stdin command: tweet "                                                                                                                                                      " #1#2
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network1 stdin command: tweet " " #2#3
+
+user network1 stdin command: tweet "cs3251" #2#3
+
+user network1 stdin command: tweet "fsadfsdfd" #2#3
+
+user network1 stdin command: tweet "empty message" #2#3
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
+
+user network1 stdin command: tweet "\0" #2#3
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network1 stdin command: tweet "                                                                                                                                                     " #2#3
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network1 stdin command: tweet "                                                                                                                                                      " #2#3
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network1 stdin command: tweet " " #3#0
+
+user network1 stdin command: tweet "cs3251" #3#0
+
+user network1 stdin command: tweet "fsadfsdfd" #3#0
+
+user network1 stdin command: tweet "empty message" #3#0
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
+
+user network1 stdin command: tweet "\0" #3#0
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network1 stdin command: tweet "                                                                                                                                                     " #3#0
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network1 stdin command: tweet "                                                                                                                                                      " #3#0
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network2 stdin command: tweet " " #0#1
+
+user network2 stdin command: tweet "cs3251" #0#1
+
+user network2 stdin command: tweet "fsadfsdfd" #0#1
+
+user network2 stdin command: tweet "empty message" #0#1
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
+
+user network2 stdin command: tweet "\0" #0#1
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network2 stdin command: tweet "                                                                                                                                                     " #0#1
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network2 stdin command: tweet "                                                                                                                                                      " #0#1
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network2 stdin command: tweet " " #1#2
+
+user network2 stdin command: tweet "cs3251" #1#2
+
+user network2 stdin command: tweet "fsadfsdfd" #1#2
+
+user network2 stdin command: tweet "empty message" #1#2
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
+
+user network2 stdin command: tweet "\0" #1#2
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network2 stdin command: tweet "                                                                                                                                                     " #1#2
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network2 stdin command: tweet "                                                                                                                                                      " #1#2
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network2 stdin command: tweet " " #2#3
+
+user network2 stdin command: tweet "cs3251" #2#3
+
+user network2 stdin command: tweet "fsadfsdfd" #2#3
+
+user network2 stdin command: tweet "empty message" #2#3
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
+
+user network2 stdin command: tweet "\0" #2#3
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network2 stdin command: tweet "                                                                                                                                                     " #2#3
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network2 stdin command: tweet "                                                                                                                                                      " #2#3
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network2 stdin command: tweet " " #3#0
+
+user network2 stdin command: tweet "cs3251" #3#0
+
+user network2 stdin command: tweet "fsadfsdfd" #3#0
+
+user network2 stdin command: tweet "empty message" #3#0
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
+
+user network2 stdin command: tweet "\0" #3#0
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network2 stdin command: tweet "                                                                                                                                                     " #3#0
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network2 stdin command: tweet "                                                                                                                                                      " #3#0
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network3 stdin command: tweet " " #0#1
+
+user network3 stdin command: tweet "cs3251" #0#1
+
+user network3 stdin command: tweet "fsadfsdfd" #0#1
+
+user network3 stdin command: tweet "empty message" #0#1
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
+
+user network3 stdin command: tweet "\0" #0#1
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network3 stdin command: tweet "                                                                                                                                                     " #0#1
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network3 stdin command: tweet "                                                                                                                                                      " #0#1
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network3 stdin command: tweet " " #1#2
+
+user network3 stdin command: tweet "cs3251" #1#2
+
+user network3 stdin command: tweet "fsadfsdfd" #1#2
+
+user network3 stdin command: tweet "empty message" #1#2
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
+
+user network3 stdin command: tweet "\0" #1#2
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network3 stdin command: tweet "                                                                                                                                                     " #1#2
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network3 stdin command: tweet "                                                                                                                                                      " #1#2
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network3 stdin command: tweet " " #2#3
+
+user network3 stdin command: tweet "cs3251" #2#3
+
+user network3 stdin command: tweet "fsadfsdfd" #2#3
+
+user network3 stdin command: tweet "empty message" #2#3
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
+
+user network3 stdin command: tweet "\0" #2#3
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network3 stdin command: tweet "                                                                                                                                                     " #2#3
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network3 stdin command: tweet "                                                                                                                                                      " #2#3
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network3 stdin command: tweet " " #3#0
+
+user network3 stdin command: tweet "cs3251" #3#0
+
+user network3 stdin command: tweet "fsadfsdfd" #3#0
+
+user network3 stdin command: tweet "empty message" #3#0
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
+
+user network3 stdin command: tweet "\0" #3#0
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network3 stdin command: tweet "                                                                                                                                                     " #3#0
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network3 stdin command: tweet "                                                                                                                                                      " #3#0
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
 
 user network stdin command: unsubscribe #ALL
-error happens
-
-user network2 stdin command: tweet " " #0#1
-error happens
-
-user network2 stdin command: tweet "cs3251" #0#1
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #0#1
-error happens
-
-user network2 stdin command: tweet "empty message" #0#1
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
-
-user network2 stdin command: tweet "\0" #0#1
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network2 stdin command: tweet " " #1#2
-error happens
-
-user network2 stdin command: tweet "cs3251" #1#2
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #1#2
-error happens
-
-user network2 stdin command: tweet "empty message" #1#2
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
-
-user network2 stdin command: tweet "\0" #1#2
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network2 stdin command: tweet " " #2#3
-error happens
-
-user network2 stdin command: tweet "cs3251" #2#3
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #2#3
-error happens
-
-user network2 stdin command: tweet "empty message" #2#3
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
-
-user network2 stdin command: tweet "\0" #2#3
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network2 stdin command: tweet " " #3#0
-error happens
-
-user network2 stdin command: tweet "cs3251" #3#0
-error happens
-
-user network2 stdin command: tweet "fsadfsdfd" #3#0
-error happens
-
-user network2 stdin command: tweet "empty message" #3#0
-error happens
-
-user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
-
-user network2 stdin command: tweet "\0" #3#0
-error happens
-
-user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
-
-user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network2 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
-
-user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network1 stdin command: tweet " " #0#1
-error happens
-
-user network1 stdin command: tweet "cs3251" #0#1
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #0#1
-error happens
-
-user network1 stdin command: tweet "empty message" #0#1
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
-
-user network1 stdin command: tweet "\0" #0#1
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network1 stdin command: tweet " " #1#2
-error happens
-
-user network1 stdin command: tweet "cs3251" #1#2
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #1#2
-error happens
-
-user network1 stdin command: tweet "empty message" #1#2
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
-
-user network1 stdin command: tweet "\0" #1#2
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network1 stdin command: tweet " " #2#3
-error happens
-
-user network1 stdin command: tweet "cs3251" #2#3
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #2#3
-error happens
-
-user network1 stdin command: tweet "empty message" #2#3
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
-
-user network1 stdin command: tweet "\0" #2#3
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network1 stdin command: tweet " " #3#0
-error happens
-
-user network1 stdin command: tweet "cs3251" #3#0
-error happens
-
-user network1 stdin command: tweet "fsadfsdfd" #3#0
-error happens
-
-user network1 stdin command: tweet "empty message" #3#0
-error happens
-
-user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
-
-user network1 stdin command: tweet "\0" #3#0
-error happens
-
-user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
-
-user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network1 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
-
-user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network3 stdin command: tweet " " #0#1
-error happens
-
-user network3 stdin command: tweet "cs3251" #0#1
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #0#1
-error happens
-
-user network3 stdin command: tweet "empty message" #0#1
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
-
-user network3 stdin command: tweet "\0" #0#1
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
-
-user network3 stdin command: tweet " " #1#2
-error happens
-
-user network3 stdin command: tweet "cs3251" #1#2
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #1#2
-error happens
-
-user network3 stdin command: tweet "empty message" #1#2
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
-
-user network3 stdin command: tweet "\0" #1#2
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
-
-user network3 stdin command: tweet " " #2#3
-error happens
-
-user network3 stdin command: tweet "cs3251" #2#3
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #2#3
-error happens
-
-user network3 stdin command: tweet "empty message" #2#3
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
-
-user network3 stdin command: tweet "\0" #2#3
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
-
-user network3 stdin command: tweet " " #3#0
-error happens
-
-user network3 stdin command: tweet "cs3251" #3#0
-error happens
-
-user network3 stdin command: tweet "fsadfsdfd" #3#0
-error happens
-
-user network3 stdin command: tweet "empty message" #3#0
-error happens
-
-user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
-
-user network3 stdin command: tweet "\0" #3#0
-error happens
-
-user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
-
-user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
-
-user network3 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
-
-user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
 
 user network0 stdin command: tweet " " #0#1
-error happens
 
 user network0 stdin command: tweet "cs3251" #0#1
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #0#1
-error happens
 
 user network0 stdin command: tweet "empty message" #0#1
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
-error happens
 
 user network0 stdin command: tweet "\0" #0#1
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #0#1
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #0#1
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
-error happens
 
 user network0 stdin command: tweet " " #1#2
-error happens
 
 user network0 stdin command: tweet "cs3251" #1#2
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #1#2
-error happens
 
 user network0 stdin command: tweet "empty message" #1#2
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
-error happens
 
 user network0 stdin command: tweet "\0" #1#2
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #1#2
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #1#2
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
-error happens
 
 user network0 stdin command: tweet " " #2#3
-error happens
 
 user network0 stdin command: tweet "cs3251" #2#3
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #2#3
-error happens
 
 user network0 stdin command: tweet "empty message" #2#3
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
-error happens
 
 user network0 stdin command: tweet "\0" #2#3
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #2#3
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #2#3
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
-error happens
 
 user network0 stdin command: tweet " " #3#0
-error happens
 
 user network0 stdin command: tweet "cs3251" #3#0
-error happens
 
 user network0 stdin command: tweet "fsadfsdfd" #3#0
-error happens
 
 user network0 stdin command: tweet "empty message" #3#0
-error happens
 
 user network0 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
-error happens
 
 user network0 stdin command: tweet "\0" #3#0
-error happens
 
 user network0 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                     " #3#0
-error happens
 
 user network0 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
 
 user network0 stdin command: tweet "                                                                                                                                                      " #3#0
-error happens
 
 user network0 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
-error happens
 
-user network2 stdin command: timeline
-error happens
+user network1 stdin command: tweet " " #0#1
 
-user network1 stdin command: timeline
-error happens
+user network1 stdin command: tweet "cs3251" #0#1
 
-user network3 stdin command: timeline
-error happens
+user network1 stdin command: tweet "fsadfsdfd" #0#1
+
+user network1 stdin command: tweet "empty message" #0#1
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
+
+user network1 stdin command: tweet "\0" #0#1
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network1 stdin command: tweet "                                                                                                                                                     " #0#1
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network1 stdin command: tweet "                                                                                                                                                      " #0#1
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network1 stdin command: tweet " " #1#2
+
+user network1 stdin command: tweet "cs3251" #1#2
+
+user network1 stdin command: tweet "fsadfsdfd" #1#2
+
+user network1 stdin command: tweet "empty message" #1#2
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
+
+user network1 stdin command: tweet "\0" #1#2
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network1 stdin command: tweet "                                                                                                                                                     " #1#2
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network1 stdin command: tweet "                                                                                                                                                      " #1#2
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network1 stdin command: tweet " " #2#3
+
+user network1 stdin command: tweet "cs3251" #2#3
+
+user network1 stdin command: tweet "fsadfsdfd" #2#3
+
+user network1 stdin command: tweet "empty message" #2#3
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
+
+user network1 stdin command: tweet "\0" #2#3
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network1 stdin command: tweet "                                                                                                                                                     " #2#3
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network1 stdin command: tweet "                                                                                                                                                      " #2#3
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network1 stdin command: tweet " " #3#0
+
+user network1 stdin command: tweet "cs3251" #3#0
+
+user network1 stdin command: tweet "fsadfsdfd" #3#0
+
+user network1 stdin command: tweet "empty message" #3#0
+
+user network1 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
+
+user network1 stdin command: tweet "\0" #3#0
+
+user network1 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network1 stdin command: tweet "                                                                                                                                                     " #3#0
+
+user network1 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network1 stdin command: tweet "                                                                                                                                                      " #3#0
+
+user network1 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network2 stdin command: tweet " " #0#1
+
+user network2 stdin command: tweet "cs3251" #0#1
+
+user network2 stdin command: tweet "fsadfsdfd" #0#1
+
+user network2 stdin command: tweet "empty message" #0#1
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
+
+user network2 stdin command: tweet "\0" #0#1
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network2 stdin command: tweet "                                                                                                                                                     " #0#1
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network2 stdin command: tweet "                                                                                                                                                      " #0#1
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network2 stdin command: tweet " " #1#2
+
+user network2 stdin command: tweet "cs3251" #1#2
+
+user network2 stdin command: tweet "fsadfsdfd" #1#2
+
+user network2 stdin command: tweet "empty message" #1#2
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
+
+user network2 stdin command: tweet "\0" #1#2
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network2 stdin command: tweet "                                                                                                                                                     " #1#2
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network2 stdin command: tweet "                                                                                                                                                      " #1#2
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network2 stdin command: tweet " " #2#3
+
+user network2 stdin command: tweet "cs3251" #2#3
+
+user network2 stdin command: tweet "fsadfsdfd" #2#3
+
+user network2 stdin command: tweet "empty message" #2#3
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
+
+user network2 stdin command: tweet "\0" #2#3
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network2 stdin command: tweet "                                                                                                                                                     " #2#3
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network2 stdin command: tweet "                                                                                                                                                      " #2#3
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network2 stdin command: tweet " " #3#0
+
+user network2 stdin command: tweet "cs3251" #3#0
+
+user network2 stdin command: tweet "fsadfsdfd" #3#0
+
+user network2 stdin command: tweet "empty message" #3#0
+
+user network2 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
+
+user network2 stdin command: tweet "\0" #3#0
+
+user network2 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network2 stdin command: tweet "                                                                                                                                                     " #3#0
+
+user network2 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network2 stdin command: tweet "                                                                                                                                                      " #3#0
+
+user network2 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network3 stdin command: tweet " " #0#1
+
+user network3 stdin command: tweet "cs3251" #0#1
+
+user network3 stdin command: tweet "fsadfsdfd" #0#1
+
+user network3 stdin command: tweet "empty message" #0#1
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #0#1
+
+user network3 stdin command: tweet "\0" #0#1
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network3 stdin command: tweet "                                                                                                                                                     " #0#1
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network3 stdin command: tweet "                                                                                                                                                      " #0#1
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #0#1
+
+user network3 stdin command: tweet " " #1#2
+
+user network3 stdin command: tweet "cs3251" #1#2
+
+user network3 stdin command: tweet "fsadfsdfd" #1#2
+
+user network3 stdin command: tweet "empty message" #1#2
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #1#2
+
+user network3 stdin command: tweet "\0" #1#2
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network3 stdin command: tweet "                                                                                                                                                     " #1#2
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network3 stdin command: tweet "                                                                                                                                                      " #1#2
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #1#2
+
+user network3 stdin command: tweet " " #2#3
+
+user network3 stdin command: tweet "cs3251" #2#3
+
+user network3 stdin command: tweet "fsadfsdfd" #2#3
+
+user network3 stdin command: tweet "empty message" #2#3
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #2#3
+
+user network3 stdin command: tweet "\0" #2#3
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network3 stdin command: tweet "                                                                                                                                                     " #2#3
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network3 stdin command: tweet "                                                                                                                                                      " #2#3
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #2#3
+
+user network3 stdin command: tweet " " #3#0
+
+user network3 stdin command: tweet "cs3251" #3#0
+
+user network3 stdin command: tweet "fsadfsdfd" #3#0
+
+user network3 stdin command: tweet "empty message" #3#0
+
+user network3 stdin command: tweet "~!@#$%^&*()_+-=[]{};:.,<>/?|\" #3#0
+
+user network3 stdin command: tweet "\0" #3#0
+
+user network3 stdin command: tweet "149aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network3 stdin command: tweet "                                                                                                                                                     " #3#0
+
+user network3 stdin command: tweet "150aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
+
+user network3 stdin command: tweet "                                                                                                                                                      " #3#0
+
+user network3 stdin command: tweet "151aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" #3#0
 
 user network0 stdin command: timeline
-error happens
-
-user network stdin command: timeline
-error happens
-
-user network2 stdin command: timeline
-error happens
 
 user network1 stdin command: timeline
-error happens
+
+user network2 stdin command: timeline
 
 user network3 stdin command: timeline
-error happens
-
-user network0 stdin command: timeline
-error happens
 
 user network stdin command: timeline
-error happens
 
-user network2 stdin command: exit
-error happens
+user network0 stdin command: timeline
 
-user network1 stdin command: exit
-error happens
+user network1 stdin command: timeline
 
-user network3 stdin command: exit
-error happens
+user network2 stdin command: timeline
+
+user network3 stdin command: timeline
+
+user network stdin command: timeline
 
 user network0 stdin command: exit
-error happens
+
+user network1 stdin command: exit
+
+user network2 stdin command: exit
+
+user network3 stdin command: exit
 
 user network stdin command: exit
-error happens
 
 run command: ./ttweetcli 127.0.0.1 13000 receiver
 

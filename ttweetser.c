@@ -453,8 +453,24 @@ int network_connection(int port, User* users) {
         }
 	}
 
+	// free malloc'd stuff
+	for (int i = 0; i < MAXCONNS; ++i) {
+		free(users[i].username);
+		for (int j = 0; j < MAXHASH; j++)
+			free(users[i].subscriptions[j]);
+		for (int k = 0; k < BUFFERSIZE; k++)
+			free(users[i].tweets[k]);
+		free(users[i].tweets);
+	}
+	free(users);
+	for (int i = 0; i < BUFFERSIZE; ++i) {
+		free(tweets[i].username);
+		free(tweets[i].message);
+	}
+	free(tweets);
+	// close up socket
 	close(serverfd);
-    return 1; 
+	return 1; 
 }
 
 /**

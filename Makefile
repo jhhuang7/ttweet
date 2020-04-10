@@ -1,4 +1,5 @@
-CFLAGS = -Wall -pedantic -std=gnu99 -g -pthread
+CFLAGS = -Wall -pedantic -std=gnu99 -g -pthread # -fsanitize=address
+# CC = clang
 
 all: ttweetser ttweetcli
 
