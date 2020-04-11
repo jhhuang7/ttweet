@@ -375,7 +375,7 @@ void* new_connection(void* arg) {
     char response[BUFFERSIZE] = {0};
     char username[BUFFERSIZE] = {0};
 
-    while (recv(sock, buffer, BUFFERSIZE-1, 0) > 0) {
+    while (recv(sock, buffer, BUFFERSIZE - 1, 0) > 0) {
         if (strlen(buffer) != 0) {
             printf("Client %s requested: %s\n", username, buffer);
         }
@@ -407,7 +407,7 @@ void* new_connection(void* arg) {
  * Params: Port number.
  * Returns 0 if there's a problem with the connection, 1 on success.
  */
-int network_connection(int port, User* users) {    
+int network_connection(int port) {    
 	struct sockaddr_in serverAddr;
     int serverfd;
     int con;
@@ -434,6 +434,38 @@ int network_connection(int port, User* users) {
 	if (listen(serverfd, 100) != 0) {
 		printf("%s", CONER);
 		return 0;
+	}
+
+    // Initialize list of users for storage once inputs are good
+	User* users = (User*)malloc(sizeof(User) * MAXCONNS);
+	if (users == NULL) fputs("bad malloc 0\n", stderr);
+	for (int i = 0; i < MAXCONNS; i++) {
+		users[i].socket = 0;
+		users[i].username = malloc(sizeof(char) * BUFFERSIZE);
+		if (users[i].username == NULL) fputs("bad malloc 1\n", stderr);
+		users[i].numsusbs = 0;
+		for (int j = 0; j < MAXHASH; j++) {
+			users[i].subscriptions[j] = malloc(sizeof(char) * BUFFERSIZE);
+			if (users[i].subscriptions[j] == NULL)
+				fputs("bad malloc 2\n", stderr);
+		}
+		users[i].numtwts = 0;
+		users[i].tweets = malloc(sizeof(char*) * BUFFERSIZE);
+		if (users[i].tweets == NULL) fputs("bad malloc 3\n", stderr);
+		for (int k = 0; k < BUFFERSIZE; k++) {
+			users[i].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
+			if (users[i].tweets[k] == NULL)
+				fputs("bad malloc 4\n", stderr);
+		}
+	}
+
+	tweets = (Tweet*)malloc(sizeof(Tweet) * BUFFERSIZE);
+	if (tweets == NULL) fputs("bad malloc 5\n", stderr);
+	for (int a = 0; a < BUFFERSIZE; a++) {
+		tweets[a].username = malloc(sizeof(char) * BUFFERSIZE);
+		if (tweets[a].username == NULL) fputs("bad malloc 6\n", stderr);
+		tweets[a].message = malloc(sizeof(char) * BUFFERSIZE);
+		if (tweets[a].message == NULL) fputs("bad malloc 7\n", stderr);
 	}
 
     printf("%s", SERCON); // connected
@@ -468,6 +500,7 @@ int network_connection(int port, User* users) {
 		free(tweets[i].message);
 	}
 	free(tweets);
+    
 	// close up socket
 	close(serverfd);
 	return 1; 
@@ -495,40 +528,8 @@ int check_args(int argc, char** argv) {
         return 0;
     }
 
-	// Initialize list of users for storage
-	User* users = (User*)malloc(sizeof(User) * MAXCONNS);
-	if (users == NULL) fputs("bad malloc 0\n", stderr);
-	for (int i = 0; i < MAXCONNS; i++) {
-		users[i].socket = 0;
-		users[i].username = malloc(sizeof(char) * BUFFERSIZE);
-		if (users[i].username == NULL) fputs("bad malloc 1\n", stderr);
-		users[i].numsusbs = 0;
-		for (int j = 0; j < MAXHASH; j++) {
-			users[i].subscriptions[j] = malloc(sizeof(char) * BUFFERSIZE);
-			if (users[i].subscriptions[j] == NULL)
-				fputs("bad malloc 2\n", stderr);
-		}
-		users[i].numtwts = 0;
-		users[i].tweets = malloc(sizeof(char*) * BUFFERSIZE);
-		if (users[i].tweets == NULL) fputs("bad malloc 3\n", stderr);
-		for (int k = 0; k < BUFFERSIZE; k++) {
-			users[i].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
-			if (users[i].tweets[k] == NULL)
-				fputs("bad malloc 4\n", stderr);
-		}
-	}
-
-	tweets = (Tweet*)malloc(sizeof(Tweet) * BUFFERSIZE);
-	if (tweets == NULL) fputs("bad malloc 5\n", stderr);
-	for (int a = 0; a < BUFFERSIZE; a++) {
-		tweets[a].username = malloc(sizeof(char) * BUFFERSIZE);
-		if (tweets[a].username == NULL) fputs("bad malloc 6\n", stderr);
-		tweets[a].message = malloc(sizeof(char) * BUFFERSIZE);
-		if (tweets[a].message == NULL) fputs("bad malloc 7\n", stderr);
-	}
-
     // Server running forever
-    return network_connection(portnum, users);
+    return network_connection(portnum);
 }
 
 /**
