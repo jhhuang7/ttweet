@@ -436,39 +436,29 @@ int network_connection(int port) {
 		return 0;
 	}
 
-    // Initialize list of users for storage once inputs are good
+    // Initialize list of users for storage once inputs are valid
 	User* users = (User*)malloc(sizeof(User) * MAXCONNS);
-	if (users == NULL) fputs("bad malloc 0\n", stderr);
 	for (int i = 0; i < MAXCONNS; i++) {
 		users[i].socket = 0;
 		users[i].username = malloc(sizeof(char) * BUFFERSIZE);
-		if (users[i].username == NULL) fputs("bad malloc 1\n", stderr);
 		users[i].numsusbs = 0;
 		for (int j = 0; j < MAXHASH; j++) {
 			users[i].subscriptions[j] = malloc(sizeof(char) * BUFFERSIZE);
-			if (users[i].subscriptions[j] == NULL)
-				fputs("bad malloc 2\n", stderr);
 		}
 		users[i].numtwts = 0;
 		users[i].tweets = malloc(sizeof(char*) * BUFFERSIZE);
-		if (users[i].tweets == NULL) fputs("bad malloc 3\n", stderr);
 		for (int k = 0; k < BUFFERSIZE; k++) {
 			users[i].tweets[k] = malloc(sizeof(char) * BUFFERSIZE);
-			if (users[i].tweets[k] == NULL)
-				fputs("bad malloc 4\n", stderr);
 		}
 	}
-
 	tweets = (Tweet*)malloc(sizeof(Tweet) * BUFFERSIZE);
-	if (tweets == NULL) fputs("bad malloc 5\n", stderr);
 	for (int a = 0; a < BUFFERSIZE; a++) {
 		tweets[a].username = malloc(sizeof(char) * BUFFERSIZE);
-		if (tweets[a].username == NULL) fputs("bad malloc 6\n", stderr);
 		tweets[a].message = malloc(sizeof(char) * BUFFERSIZE);
-		if (tweets[a].message == NULL) fputs("bad malloc 7\n", stderr);
-	}
+    }
 
-    printf("%s", SERCON); // connected
+    // Connected
+    printf("%s", SERCON); 
     pthread_t pid;
     Connectinfo connectinfo;
 
@@ -485,24 +475,27 @@ int network_connection(int port) {
         }
 	}
 
-	// free malloc'd stuff
-	for (int i = 0; i < MAXCONNS; ++i) {
+	// Free memory if an exit happens
+	for (int i = 0; i < MAXCONNS; i++) {
 		free(users[i].username);
-		for (int j = 0; j < MAXHASH; j++)
+		for (int j = 0; j < MAXHASH; j++) {
 			free(users[i].subscriptions[j]);
-		for (int k = 0; k < BUFFERSIZE; k++)
+        }
+		for (int k = 0; k < BUFFERSIZE; k++) {
 			free(users[i].tweets[k]);
+        }
 		free(users[i].tweets);
 	}
 	free(users);
-	for (int i = 0; i < BUFFERSIZE; ++i) {
-		free(tweets[i].username);
-		free(tweets[i].message);
+	for (int x = 0; x < BUFFERSIZE; x++) {
+		free(tweets[x].username);
+		free(tweets[x].message);
 	}
 	free(tweets);
     
-	// close up socket
+	// Close up socket
 	close(serverfd);
+    close(sock);
 	return 1; 
 }
 
