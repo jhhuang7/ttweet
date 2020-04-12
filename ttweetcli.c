@@ -431,7 +431,7 @@ int check_args(int argc, char** argv) {
     int portnum = strtol(port, &porterr, 10);
 
     if (portnum <= MIN + 80 ||portnum > MAXPORT || strcmp(porterr, "") != 0) {
-        printf("%s", INVSERPORT);
+        printf("%s", INVSERPORT);sleep(0.5);
         return 0;
     }
 

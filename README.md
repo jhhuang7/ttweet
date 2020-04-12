@@ -1,4 +1,4 @@
-# CS 3251 Computer Networks, April 7 2020, Programming Assignment 2
+# CS 3251 Computer Networks, April 14 2020, Programming Assignment 2
 
 ## PA2Group 49:
 - Juhua Huang (903572368), jhuang499@gatech.edu
