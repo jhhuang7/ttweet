@@ -44,9 +44,14 @@ void* handle_response(void* arg) {
     char response[BUFFERSIZE] = {0};
     
     while (1) {
-        read(sock, response, BUFFERSIZE);
-        printf("%s", response);
+        if (read(sock, response, BUFFERSIZE) > 0)
+        {
+            printf("%s", response);
+        }
         memset(response, 0, sizeof(response));
+        
+        // this sleep call causes the responses to be delayed significantly
+        //sleep(2);
     }
     
     pthread_exit(NULL);
@@ -90,14 +95,22 @@ int network_connection(int port, char* ip, char* username) {
         return 0;
     }
 
-    // Handle forever printing out server messages
+    //Handle forever printing out server messages
     pthread_t threadId;
     Response rsp;
     rsp.socket = sock;
     pthread_create(&threadId, NULL, handle_response, &rsp);
-    
+
+    //this sleep call causes the server connection to close for some reason
+    //sleep(2);
+
 	while (1) {
+
+
         fgets(buffer, BUFFERSIZE, stdin);
+        
+        // this sleep call causes the server connection to close for some reason
+        //sleep(1);
 
         if (parse_client_input(buffer, sock) == VALID + VALID) {
             // Exit program is client wants to exit
@@ -108,6 +121,9 @@ int network_connection(int port, char* ip, char* username) {
         memset(buffer, 0, sizeof(buffer));
         fflush(stdin);
         fflush(stdout);
+
+        //this sleep call changes the client output order but not in any useful way
+        //sleep(1);
 	}
 
     return 1;
@@ -232,6 +248,13 @@ int parse_client_input(char* buffer, int sock) {
 
     int status = handle_client_request(command, second_word, third_word, 
         second_word_char_count, third_word_char_count, sock, word_count);
+
+    // char response[BUFFERSIZE] = {0};
+    // memset(response, 0, sizeof(BUFFERSIZE));
+    // if (read(sock, response, BUFFERSIZE) > 0)
+    // {
+    //     printf("%s", response);
+    // }
     fflush(stdout);
 
     switch (word_count) {
@@ -258,10 +281,7 @@ int parse_client_input(char* buffer, int sock) {
 int handle_client_request(char* command, char* second_word, char* third_word, 
         int second_word_size, int third_word_size, int sock, int word_count) {
     char send_msg[BUFFERSIZE] = {0};
-    char response[BUFFERSIZE] = {0};
-
     memset(send_msg, 0, sizeof(send_msg));
-    memset(response, 0, sizeof(response));
 
     if (strcmp(command, "tweet") == 0) { // "#define TWT" doesn't work here
         if (word_count == 3 && strcmp(second_word, "\"\"") != 0 
