@@ -44,14 +44,13 @@ void* handle_response(void* arg) {
     char response[BUFFERSIZE] = {0};
     
     while (1) {
-        if (read(sock, response, BUFFERSIZE) > 0)
-        {
+        if (read(sock, response, BUFFERSIZE) > 0) {
             printf("%s", response);
         }
         memset(response, 0, sizeof(response));
         
         // this sleep call causes the responses to be delayed significantly
-        //sleep(2);
+        // sleep(2);
     }
     
     pthread_exit(NULL);
@@ -101,16 +100,14 @@ int network_connection(int port, char* ip, char* username) {
     rsp.socket = sock;
     pthread_create(&threadId, NULL, handle_response, &rsp);
 
-    //this sleep call causes the server connection to close for some reason
-    //sleep(2);
+    // this sleep call causes the server connection to close for some reason
+    // sleep(2);
 
 	while (1) {
-
-
         fgets(buffer, BUFFERSIZE, stdin);
         
         // this sleep call causes the server connection to close for some reason
-        //sleep(1);
+        // sleep(1);
 
         if (parse_client_input(buffer, sock) == VALID + VALID) {
             // Exit program is client wants to exit
@@ -122,8 +119,8 @@ int network_connection(int port, char* ip, char* username) {
         fflush(stdin);
         fflush(stdout);
 
-        //this sleep call changes the client output order but not in any useful way
-        //sleep(1);
+        // this sleep call changes the client output (not in any useful way)
+        // sleep(1);
 	}
 
     return 1;
@@ -248,13 +245,6 @@ int parse_client_input(char* buffer, int sock) {
 
     int status = handle_client_request(command, second_word, third_word, 
         second_word_char_count, third_word_char_count, sock, word_count);
-
-    // char response[BUFFERSIZE] = {0};
-    // memset(response, 0, sizeof(BUFFERSIZE));
-    // if (read(sock, response, BUFFERSIZE) > 0)
-    // {
-    //     printf("%s", response);
-    // }
     fflush(stdout);
 
     switch (word_count) {
@@ -465,3 +455,4 @@ int main(int argc, char** argv) {
 
     return 1;   
 }
+ 
