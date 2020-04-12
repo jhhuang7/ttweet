@@ -79,15 +79,16 @@ int handle_subscribe(int sock, User* users, int id, char* hashtag) {
     }
 
     // Store hashtag with user
+    int space;
     for (int i = 0; i < MAXHASH; i++) {
         if (strcmp(users[id].subscriptions[i], "") == 0) {
-            strcpy(users[id].subscriptions[i], hashtag);
-            break;
+            space = i;
         } else if (strcmp(users[id].subscriptions[i], hashtag) == 0) {
             send(sock, response, strlen(response), 0);
             return 0;
         }
     }
+    strcpy(users[id].subscriptions[space], hashtag);
     users[id].numsusbs += 1;
     send(sock, SUCCOP, strlen(SUCCOP), 0);
     return 1;
@@ -102,7 +103,7 @@ int handle_unsubscribe(int sock, User* users, int id, char* hashtag) {
     // If the hashtag is #ALL then remove all subscriptions
     if (strcmp(hashtag, ALL) == 0) {
         for (int i = 0; i < MAXHASH; i++) {
-            strcpy(users[id].subscriptions[i], "\0");
+            strcpy(users[id].subscriptions[i], "");
         }
         users[id].numsusbs = 0;
         send(sock, SUCCOP, strlen(SUCCOP), 0);
@@ -112,7 +113,7 @@ int handle_unsubscribe(int sock, User* users, int id, char* hashtag) {
     // Remove specific hashtag
     for (int i = 0; i < MAXHASH; i++) {
         if (strcmp(users[id].subscriptions[i], hashtag) == 0) {
-            strcpy(users[id].subscriptions[i], "\0");
+            strcpy(users[id].subscriptions[i], "");
             users[id].numsusbs -= 1;
             send(sock, SUCCOP, strlen(SUCCOP), 0);
             return 1;
@@ -371,9 +372,9 @@ void* new_connection(void* arg) {
     Connectinfo* connectinfo = (Connectinfo*)arg;
     int sock = connectinfo->socket;
 
-    char buffer[BUFFERSIZE] = {0}; 
-    char response[BUFFERSIZE] = {0};
-    char username[BUFFERSIZE] = {0};
+    char buffer[BUFFERSIZE]; 
+    char response[BUFFERSIZE];
+    char username[BUFFERSIZE];
 
     while (recv(sock, buffer, BUFFERSIZE - 1, 0) > 0) {
         if (strlen(buffer) != 0) {
