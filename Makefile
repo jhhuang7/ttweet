@@ -9,7 +9,6 @@ ttweetcli: ttweetcli.c
 
 test: ttweetcli ttweetser
 	python3 judge2.separate.py "./"
-	git diff --no-index judge_client.txt client.txt > client.diff
 
 clean:
 	rm ttweetser ttweetcli cs3251*.client.txt network*.client.txt \
