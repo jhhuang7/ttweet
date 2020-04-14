@@ -20,16 +20,7 @@ int check_user(int sock, char* username) {
     strcat(connectmsg, username);
     send(sock, connectmsg, strlen(connectmsg), 0);
 
-    // Check if username is indeed valid
-    char response[BUFFERSIZE] = {0};
-    int status = INVALID;
-    read(sock, response, BUFFERSIZE);
-    if (strcmp(response, LOGIN) == 0) {
-        status = VALID;
-    }
-    printf("%s", response);
-
-    return status;
+    return 1;
 }
 
 /**
@@ -41,16 +32,19 @@ int check_user(int sock, char* username) {
 void* handle_response(void* arg) {
     Response* rsp = (Response*)arg;
     int sock = rsp->socket;
-    char response[BUFFERSIZE] = {0};
+    char response[BUFFERSIZE];
     
     while (1) {
-        if (read(sock, response, BUFFERSIZE) > 0) {
-            printf("%s", response);
-        }
-        memset(response, 0, sizeof(response));
+        read(sock, response, BUFFERSIZE);
         
-        // this sleep call causes the responses to be delayed significantly
-        // sleep(2);
+        printf("%s", response);
+
+        // Check if username is indeed valid
+        if (strcmp(response, LOGGEDIN) == 0) {
+            exit(0);
+        }
+        
+        memset(response, 0, sizeof(response));
     }
     
     pthread_exit(NULL);
@@ -89,25 +83,17 @@ int network_connection(int port, char* ip, char* username) {
         return 0;
 	}
 
-    // Check if given username is already connected.
-    if (!check_user(sock, username)) {
-        return 0;
-    }
-
-    //Handle forever printing out server messages
+    // Handle forever printing out server messages
     pthread_t threadId;
     Response rsp;
     rsp.socket = sock;
     pthread_create(&threadId, NULL, handle_response, &rsp);
 
-    // this sleep call causes the server connection to close for some reason
-    // sleep(2);
+    // Check if given username is already connected.
+    check_user(sock, username);
 
 	while (1) {
         fgets(buffer, BUFFERSIZE, stdin);
-        
-        // this sleep call causes the server connection to close for some reason
-        // sleep(1);
 
         if (parse_client_input(buffer, sock) == VALID + VALID) {
             // Exit program is client wants to exit
@@ -118,9 +104,6 @@ int network_connection(int port, char* ip, char* username) {
         memset(buffer, 0, sizeof(buffer));
         fflush(stdin);
         fflush(stdout);
-
-        // this sleep call changes the client output (not in any useful way)
-        // sleep(1);
 	}
 
     return 1;
