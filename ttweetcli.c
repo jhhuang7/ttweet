@@ -37,7 +37,7 @@ void* handle_response(void* arg) {
     while (1) {
         read(sock, response, BUFFERSIZE);
         
-        printf("%s", response);
+        printf("%s", response); fflush(stdout);
 
         // Check if username is indeed valid
         if (strcmp(response, LOGGEDIN) == 0) {
@@ -64,7 +64,7 @@ int network_connection(int port, char* ip, char* username) {
 
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock < 0) {
-		printf("%s", CONER); 
+		printf("%s", CONER); fflush(stdout);
         return 0;
 	}
 
@@ -73,13 +73,13 @@ int network_connection(int port, char* ip, char* username) {
 	serverAddr.sin_port = htons(port);
 	serverAddr.sin_addr.s_addr = inet_addr(ip);
     if (serverAddr.sin_addr.s_addr <= 0) { 
-        printf("%s", INVSERIP); 
+        printf("%s", INVSERIP); fflush(stdout);
         return 0;
     } 
 
 	con = connect(sock, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if (con < 0){
-		printf("%s", CONER);
+		printf("%s", CONER); fflush(stdout);
         return 0;
 	}
 
@@ -157,7 +157,7 @@ int parse_client_input(char* buffer, int sock) {
                 third_word_char_count = i - 
                     (first_word_char_count + second_word_char_count + 2);
             } else {
-                printf("%s", WRONGPARAMS);
+                printf("%s", WRONGPARAMS); fflush(stdout);
                 return INVALID;
             }
             break;
@@ -180,14 +180,14 @@ int parse_client_input(char* buffer, int sock) {
 
         // last ditch effort to catch when too many arguements are inputted
         if (word_count > 3) {
-            printf("%s", WRONGPARAMS);
+            printf("%s", WRONGPARAMS); fflush(stdout);
             return INVALID;
         }
     }
 
     command = calloc((first_word_char_count + 1), sizeof(char));
     if (command == NULL) {
-        printf("%s\n", WRONGPARAMS);
+        printf("%s\n", WRONGPARAMS); fflush(stdout);
     }
 
     // Extract the command string
@@ -206,14 +206,14 @@ int parse_client_input(char* buffer, int sock) {
         second_word[k] = '\0';
 
         if (strlen(second_word) > MSGMAX + 2) {
-            printf("%s", ILLMSGLEN);
+            printf("%s", ILLMSGLEN); fflush(stdout);
             return INVALID;
         }
 
         if (word_count == 3) {
             third_word = calloc(third_word_char_count, sizeof(char));
             if (third_word == NULL) {
-                printf("%s\n", WRONGPARAMS);
+                printf("%s\n", WRONGPARAMS); fflush(stdout);
             }
 
             char_index_into_buffer = 
@@ -309,7 +309,7 @@ int handle_client_request(char* command, char* second_word, char* third_word,
             strcpy(send_msg, EXITCODE);
             
             send(sock, send_msg, strlen(send_msg), 0);
-            printf("%s", BYE); // Need this read for exit message
+            printf("%s", BYE); fflush(stdout); // Need this read for exit message
             return VALID + VALID;
         }
     }
@@ -343,12 +343,12 @@ int check_alpha_num(char ch) {
  */
 int check_hashtag(char* word, int size) {
     if (size < 2 || size > MAXHASHLEN) {
-        printf("%s", ILLHASH);
+        printf("%s", ILLHASH); fflush(stdout);
         return INVALID;
     }
 
     if (word[0] != '#' || (!check_alpha_num(word[size - 1]))) {
-        printf("%s", ILLHASH);
+        printf("%s", ILLHASH); fflush(stdout);
         return INVALID;
     }
 
@@ -356,7 +356,7 @@ int check_hashtag(char* word, int size) {
         if (word[n] == '#') {
             int p = n + 1;
             if (!(check_alpha_num(word[p]))) {   
-                printf("%s", ILLHASH);
+                printf("%s", ILLHASH); fflush(stdout);
                 return INVALID;
             }
 
@@ -367,7 +367,7 @@ int check_hashtag(char* word, int size) {
                 }
 
                 if (!(check_alpha_num(word[p]))) {   
-                    printf("%s", ILLHASH);
+                    printf("%s", ILLHASH); fflush(stdout);
                     return INVALID;
                 }
 
@@ -387,14 +387,14 @@ int check_hashtag(char* word, int size) {
 int check_args(int argc, char** argv) {
     // Check valid number of arguments
     if (argc != 4) {
-        printf("%s", CARGE);
+        printf("%s", CARGE); fflush(stdout);
         return 0;
     }
 
     // Get and check range of the IP (IP is checked again when connecting)
     char* ip = argv[1];
     if (ip[0] - '2' >= 0) {
-        printf("%s", INVSERIP);
+        printf("%s", INVSERIP); fflush(stdout);
         return 0;
     }
 
@@ -404,7 +404,7 @@ int check_args(int argc, char** argv) {
     int portnum = strtol(port, &porterr, 10);
 
     if (portnum <= MIN + 80 ||portnum > MAXPORT || strcmp(porterr, "") != 0) {
-        printf("%s", INVSERPORT);sleep(0.5);
+        printf("%s", INVSERPORT); fflush(stdout); sleep(0.5);
         return 0;
     }
 
@@ -412,12 +412,12 @@ int check_args(int argc, char** argv) {
     char* username;
     username = argv[3];
     if (strcmp(username, "") == 0) {
-        printf("%s", INVUSER);
+        printf("%s", INVUSER); fflush(stdout);
         return 0;
     }
     for (int i = 0; i < strlen(username); i++) {
         if (!isalnum((int)username[i])) {
-            printf("%s", INVUSER);
+            printf("%s", INVUSER); fflush(stdout);
             return 0;
         }
     }
