@@ -11,6 +11,6 @@ test: ttweetcli ttweetser
 	python3 judge2.separate.py "./"
 
 clean:
-	rm ttweetser ttweetcli cs3251*.client.txt network*.client.txt \
+	rm -r ttweetser ttweetcli cs3251*.client.txt network*.client.txt \
 		cxworks.client.txt receiver.client.txt sender.client.txt \
-		client.txt server.txt
+		client.txt server.txt *.dSYM
