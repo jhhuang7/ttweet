@@ -8,17 +8,25 @@ MAX_CLIENT_NUM = 5
 class judge:
     """
     This is the driver script for GT CS3251, programming assignment 2, 2019 spring
+
     The usage of this script is, put this script under the same folder as your program(not source code, the executable program)
+
     run:
     python3 judge2.py <type>
+
     The type mapping depends on your programming language:{'j':'java ', 'p3':'python3 -u ', 'c':'./', 'jar': 'java -jar '}
-    The default port number for the driver is 15000
+
+    The default port number for the driver is 13000
+
     Feel free to comment or uncomment some functions to test only one part
+
     Feel free to do modifications on this script
+
     Tips:
     1.  There will be several strange cases that the script failed to start your server, you could start your server manually
         under this situation with srv=False in function call
     2.  The full test will cost about 5 mins, please be patient
+
     """
     def __init__(self):
         self.run={'j':'java ', 'p':'python3 -u ', 'c':'./', 'jar': 'java -jar '}
@@ -309,7 +317,7 @@ class judge:
     def test_illegal_input(self, type, name):
         self.file.write('test_illegal_input\n')
         self.file.flush()
-        cmds=[' ', ' 127.0.0.1',' 324.1.1.4 15000 cx1', ' 127.0.0.1 -3 cx1', ' 127.0.0.1 80 cx1', ' 127.0.0.1 15000 ""']
+        cmds=[' ', ' 127.0.0.1',' 324.1.1.4 13000 cx1', ' 127.0.0.1 -3 cx1', ' 127.0.0.1 80 cx1', ' 127.0.0.1 13000 ""']
         for postfix in cmds:
             cmd = self.run[type] + name + postfix
             self.file.write('\nrun command: '+ cmd +'\n')
@@ -334,7 +342,7 @@ class judge:
         return p
 
 
-    def runTest(self, type='p3', port=15000, srv = True):
+    def runTest(self, type='p3', port=13000, srv = True):
         client_names={'j':'ttweetcli','p':'ttweetcli.py','c':'ttweetcli', 'jar': 'ttweetcli.jar'}
         srv_names = {'j': 'ttweetser', 'p': 'ttweetser.py', 'c': 'ttweetser', 'jar': 'ttweetser.jar'}
         for f in os.listdir("."):
@@ -371,4 +379,4 @@ class judge:
 if __name__ == '__main__':
     import sys
     args = sys.argv
-    judge().runTest(args[1],  15000, True)
+    judge().runTest(args[1],  13000, True)
