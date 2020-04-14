@@ -16,7 +16,7 @@ class judge:
 
     The type mapping depends on your programming language:{'j':'java ', 'p3':'python3 -u ', 'c':'./', 'jar': 'java -jar '}
 
-    The default port number for the driver is 13000
+    The default port number for the driver is 2222
 
     Feel free to comment or uncomment some functions to test only one part
 
@@ -317,7 +317,7 @@ class judge:
     def test_illegal_input(self, type, name):
         self.file.write('test_illegal_input\n')
         self.file.flush()
-        cmds=[' ', ' 127.0.0.1',' 324.1.1.4 13000 cx1', ' 127.0.0.1 -3 cx1', ' 127.0.0.1 80 cx1', ' 127.0.0.1 13000 ""']
+        cmds=[' ', ' 127.0.0.1',' 324.1.1.4 2222 cx1', ' 127.0.0.1 -3 cx1', ' 127.0.0.1 80 cx1', ' 127.0.0.1 2222 ""']
         for postfix in cmds:
             cmd = self.run[type] + name + postfix
             self.file.write('\nrun command: '+ cmd +'\n')
@@ -342,7 +342,7 @@ class judge:
         return p
 
 
-    def runTest(self, type='p3', port=13000, srv = True):
+    def runTest(self, type='p3', port=2222, srv = True):
         client_names={'j':'ttweetcli','p':'ttweetcli.py','c':'ttweetcli', 'jar': 'ttweetcli.jar'}
         srv_names = {'j': 'ttweetser', 'p': 'ttweetser.py', 'c': 'ttweetser', 'jar': 'ttweetser.jar'}
         for f in os.listdir("."):
@@ -379,4 +379,4 @@ class judge:
 if __name__ == '__main__':
     import sys
     args = sys.argv
-    judge().runTest(args[1],  13000, True)
+    judge().runTest(args[1],  2222, True)
