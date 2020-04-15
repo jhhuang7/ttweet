@@ -9,7 +9,7 @@
 #include <arpa/inet.h> 
 #include <pthread.h>
 #include <signal.h>
-
+    
 // Hash defines (no MAGIC or overly repeated values)
 #define MIN         0
 #define VALID       1
