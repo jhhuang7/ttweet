@@ -1,7 +1,7 @@
 # [Code](https://github.com/jhhuang7/ttweet)
 
 ## Group Members:
-- Juhua Huang (jhhuang)
+- Juhua Huang (jhhuang7)
 - Lorin Achey (lorinachey)
 - Patrick Coppock (pcoppock1)
 
