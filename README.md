@@ -1,9 +1,9 @@
-# CS 3251 Computer Networks, April 14 2020, Programming Assignment 2
+# [Code](https://github.com/jhhuang7/ttweet)
 
-## PA2Group 49:
-- Juhua Huang (903572368), jhuang499@gatech.edu
-- Lorin Achey (903089055), lorin.achey@gatech.edu
-- Patrick Coppock (903189906), pcoppock3@gatech.edu
+## Group Members:
+- Juhua Huang (jhhuang)
+- Lorin Achey (lorinachey)
+- Patrick Coppock (pcoppock1)
 
 ## Division of Work:
 - Initial arg checking: Juhua
@@ -12,7 +12,7 @@
 - Multi-threading on server to handle multiple clients: Patrick
 - Process requests from client on server side: Juhua
 
-## Descriptions of all files submitted:
+## Descriptions of all files:
 - ttweetser.c: C source code for server
 - ttweetcli.c: C source code for client
 - ttweet.h: Header file used for ttweetser.c and ttweetcli.c
