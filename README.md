@@ -1,7 +1,7 @@
 ## Group Members:
-- Juhua Huang (jhhuang7)
-- Lorin Achey (lorinachey)
-- Patrick Coppock (pcoppock1)
+- Juhua Huang ([jhhuang7](https://github.com/jhhuang7))
+- Lorin Achey ([lorinachey](https://github.com/lorinachey))
+- Patrick Coppock ([pcoppock1](https://github.com/pcoppock1))
 
 ## Division of Work:
 - Initial arg checking: Juhua
